@@ -11,7 +11,7 @@ compiler:
 	javac *.java
 
 clean:
-	rm *.class $(GNAME)*.java $(GNAME)__.g $(GNAME).tokens
+	rm -rf *.class $(GNAME)*.java $(GNAME)__.g $(GNAME).tokens .antlr
 
 
  
