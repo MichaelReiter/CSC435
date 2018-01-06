@@ -1,8 +1,8 @@
 grammar ul;
 
-// options {
-//     backtracking=true
-// }
+options {
+    backtrack=true;
+}
 
 @members {
     protected void mismatch(IntStream input, int ttype, BitSet follow) throws RecognitionException {
@@ -31,16 +31,16 @@ function
         ;
 
 functionDeclaration
-        :    compoundType identifier '(' formalParameters ')'
+        :    compoundType IDENTIFIER '(' formalParameters ')'
         ;
 
 formalParameters
-        :    compoundType identifier moreFormals*
+        :    compoundType IDENTIFIER moreFormals*
         |
         ;
 
 moreFormals
-        :    ',' compoundType identifier
+        :    ',' compoundType IDENTIFIER
         ;
 
 functionBody
@@ -48,12 +48,56 @@ functionBody
         ;
 
 variableDeclaration
-        : compoundType identifier ';'
+        : compoundType IDENTIFIER ';'
         ;
 
 compoundType
         :    TYPE
-        // |    TYPE '[' INTEGERCONSTANT ']'
+        |    TYPE '[' INTEGERCONSTANT ']'
+        ;
+
+statement
+        :    ';'
+        |    expression ';'
+        |    'if' '(' expression ')' block 'else' block
+        |    'if' '(' expression ')' block
+        |    'while' '(' expression ')' block
+        |    'print' expression ';'
+        |    'println' expression ';'
+        |    'return' expression ';'
+        |    IDENTIFIER '=' expression ';'
+        |    IDENTIFIER '[' expression ']' '=' expression ';'
+        ;
+
+block
+        :    '{' statement* '}'
+        ;
+
+expression
+        :    literal
+        |    IDENTIFIER
+        |    IDENTIFIER '[' expression ']'
+        |    IDENTIFIER '(' expressionList ')'
+        |    '(' expression ')'
+        //   TODO expression operator expression
+        ;
+
+expressionList
+        :    expression expressionMore*
+        |
+        ;
+
+expressionMore
+        :    ',' expression
+        ;
+
+literal
+        :    INTEGERCONSTANT
+        |    FLOATCONSTANT
+        |    CHARACTERCONSTANT
+        |    STRINGCONSTANT
+        |    'true'
+        |    'false'
         ;
 
 TYPE
@@ -65,98 +109,24 @@ TYPE
         |    'void'
         ;
 
-statement
-        :    ';'
-        // |    expression ';'
-        // |    IF '(' expression ')' block ELSE block
-        // |    IF '(' expression ')' block
-        // |    WHILE '(' expression ')' block
-        // |    identifier '=' expression ';'
-        ;
-
-block
-        :    '{' statement* '}'
-        ;
-
-expression
-        :    identifier
-        // |    literal
-        // |    expression OPERATOR expression
-        // |    identifier '(' expressionList ')'
-        // |    '(' expression ')'
-        ;
-
-// literal
-//         :    stringConstant
-//         |    INTEGERCONSTANT
-//         |    floatConstant
-//         |    characterConstant
-//         |    TRUE
-//         |    FALSE
-//         ;
-
-// expressionList
-//         :    expression expressionMore*
-//         |
-//         ;
-
-// expressionMore
-//         :    ',' expression
-//         ;
-
 INTEGERCONSTANT
         :    ('0'..'9')+
         ;
 
-// stringConstant
-//         :    '"' CHARACTER* '"'
-//         ;
-
-// characterConstant
-//         :    '\'' CHARACTER '\''
-//         ;
-
-// floatConstant
-//         :    '0'..'9'+ '.' '0'..'9'+
-//         ;
-
-// CHARACTER
-//         :    LETTER
-//         |    '0'..'9'
-//         |    ' '
-//         ;
-
-identifier
-        :    ('_' | LETTER) ('_' | LETTER | '0'..'9')*
+FLOATCONSTANT
+        :    ('0'..'9')+ '.' ('0'..'9')+
         ;
 
-LETTER
-        :    'a'..'z'
-        |    'A'..'Z'
+CHARACTERCONSTANT
+        :    '\'' ( 'a'..'z' | 'A'..'Z' | ' ' | '0'..'9') '\''
         ;
 
-IF               :    'if';
+STRINGCONSTANT
+        :    '"' ( 'a'..'z' | 'A'..'Z' | ' ' | '0'..'9')+ '"'
+        ;
 
-ELSE             :    'else';
-
-WHILE            :    'while';
-
-PRINT            :    'print';
-
-PRINTLN          :    'println';
-
-RETURN           :    'return';
-
-TRUE             :    'true';
-
-FALSE            :    'false';
-
-OPERATOR
-        :    '=='
-        |    '<'
-        |    '+'
-        |    '-'
-        |    '*'
+IDENTIFIER
+        :    (( 'a'..'z' | 'A'..'Z') | '_') (( 'a'..'z' | 'A'..'Z') | '_' | '0'..'9')*
         ;
 
 WHITESPACE
