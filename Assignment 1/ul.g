@@ -1,5 +1,9 @@
 grammar ul;
 
+// options {
+//     backtracking=true
+// }
+
 @members {
     protected void mismatch(IntStream input, int ttype, BitSet follow) throws RecognitionException {
         throw new MismatchedTokenException(ttype, input);
@@ -27,128 +31,109 @@ function
         ;
 
 functionDeclaration
-        :    compoundType IDENTIFIER LEFTPARENTHESIS formalParameters RIGHTPARENTHESIS
+        :    compoundType identifier '(' formalParameters ')'
         ;
 
 formalParameters
-        :    compoundType IDENTIFIER moreFormals*
+        :    compoundType identifier moreFormals*
+        |
         ;
 
 moreFormals
-        :    COMMA compoundType IDENTIFIER
+        :    ',' compoundType identifier
         ;
 
 functionBody
-        :    LEFTBRACE variableDeclaration* statement* RIGHTBRACE
+        :    '{' variableDeclaration* statement* '}'
         ;
 
 variableDeclaration
-        :    compoundType IDENTIFIER SEMICOLON
+        : compoundType identifier ';'
         ;
 
 compoundType
-        :    type
-        |    type LEFTBRACKET integerConstant RIGHTBRACKET
+        :    TYPE
+        // |    TYPE '[' INTEGERCONSTANT ']'
         ;
 
-type
-        :    INT
-        |    FLOAT
-        |    CHAR
-        |    STRING
-        |    BOOLEAN
-        |    VOID
+TYPE
+        :    'int'
+        |    'float'
+        |    'char'
+        |    'string'
+        |    'boolean'
+        |    'void'
         ;
 
 statement
-        :    SEMICOLON
-        |    expression SEMICOLON
-        |    IF LEFTPARENTHESIS expression RIGHTPARENTHESIS block
-        |    IF LEFTPARENTHESIS expression RIGHTPARENTHESIS block ELSE block
-        |    WHILE LEFTPARENTHESIS expression RIGHTPARENTHESIS block
-        |    PRINT expression SEMICOLON
-        |    PRINTLN expression SEMICOLON
-        |    RETURN expression? SEMICOLON
-        |    IDENTIFIER SINGLEEQUALS expression SEMICOLON
-        |    IDENTIFIER LEFTBRACKET expression RIGHTBRACKET SINGLEEQUALS expression SEMICOLON
+        :    ';'
+        // |    expression ';'
+        // |    IF '(' expression ')' block ELSE block
+        // |    IF '(' expression ')' block
+        // |    WHILE '(' expression ')' block
+        // |    identifier '=' expression ';'
         ;
 
 block
-        :    LEFTBRACE statement* RIGHTBRACE
+        :    '{' statement* '}'
         ;
 
 expression
-        :    expression OPERATOR expression
-        |    IDENTIFIER LEFTBRACKET expression RIGHTBRACKET
-        |    IDENTIFIER LEFTPARENTHESIS expressionList RIGHTPARENTHESIS
-        |    IDENTIFIER
-        |    literal
-        |    LEFTPARENTHESIS expression RIGHTPARENTHESIS
+        :    identifier
+        // |    literal
+        // |    expression OPERATOR expression
+        // |    identifier '(' expressionList ')'
+        // |    '(' expression ')'
         ;
 
-literal
-        :    stringConstant
-        |    integerConstant
-        |    floatConstant
-        |    characterConstant
-        |    TRUE
-        |    FALSE
+// literal
+//         :    stringConstant
+//         |    INTEGERCONSTANT
+//         |    floatConstant
+//         |    characterConstant
+//         |    TRUE
+//         |    FALSE
+//         ;
+
+// expressionList
+//         :    expression expressionMore*
+//         |
+//         ;
+
+// expressionMore
+//         :    ',' expression
+//         ;
+
+INTEGERCONSTANT
+        :    ('0'..'9')+
         ;
 
-expressionList
-        :    expression expressionMore*
+// stringConstant
+//         :    '"' CHARACTER* '"'
+//         ;
+
+// characterConstant
+//         :    '\'' CHARACTER '\''
+//         ;
+
+// floatConstant
+//         :    '0'..'9'+ '.' '0'..'9'+
+//         ;
+
+// CHARACTER
+//         :    LETTER
+//         |    '0'..'9'
+//         |    ' '
+//         ;
+
+identifier
+        :    ('_' | LETTER) ('_' | LETTER | '0'..'9')*
         ;
 
-expressionMore
-        :    COMMA expression
+LETTER
+        :    'a'..'z'
+        |    'A'..'Z'
         ;
-
-integerConstant
-        :    DIGIT+
-        ;
-
-stringConstant
-        :    DOUBLEQUOTE CHARACTER* DOUBLEQUOTE
-        ;
-
-characterConstant
-        :    SINGLEQUOTE CHARACTER SINGLEQUOTE
-        ;
-
-floatConstant
-        :    DIGIT+ DECIMALPOINT DIGIT+
-        ;
-
-IDENTIFIER
-        :    (UNDERSCORE | LETTER) (UNDERSCORE | LETTER | DIGIT)*
-        ;
-
-CHARACTER
-        :    LETTER
-        |    DIGIT
-        |    UNDERSCORE
-        |    ' '
-        ;
-
-OPERATOR
-        :    DOUBLEEQUALS
-        |    LESSTHAN
-        |    PLUS
-        |    MINUS
-        |    MULTIPLY
-        ;
-
-INT              :    'int';
-
-FLOAT            :    'float';
-
-CHAR             :    'char';
-
-STRING           :    'string';
-
-BOOLEAN          :    'boolean';
-
-VOID             :    'void';
 
 IF               :    'if';
 
@@ -166,49 +151,12 @@ TRUE             :    'true';
 
 FALSE            :    'false';
 
-LEFTPARENTHESIS  :    '(';
-
-RIGHTPARENTHESIS :    ')';
-
-COMMA            :    ',';
-
-LEFTBRACE        :    '{';
-
-RIGHTBRACE       :    '}';
-
-SEMICOLON        :    ';';
-
-LEFTBRACKET      :    '[';
-
-RIGHTBRACKET     :    ']';
-
-SINGLEQUOTE      :    '\'';
-
-DOUBLEQUOTE      :    '"';
-
-DECIMALPOINT     :    '.';
-
-UNDERSCORE       :    '_';
-
-SINGLEEQUALS     :    '=';
-
-DOUBLEEQUALS     :    '==';
-
-LESSTHAN         :    '<';
-
-PLUS             :    '+';
-
-MINUS            :    '-';
-
-MULTIPLY         :    '*';
-
-LETTER
-        :    'a'..'z'
-        |    'A'..'Z'
-        ;
-
-DIGIT
-        :    '0'..'9'
+OPERATOR
+        :    '=='
+        |    '<'
+        |    '+'
+        |    '-'
+        |    '*'
         ;
 
 WHITESPACE
