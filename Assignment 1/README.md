@@ -7,3 +7,4 @@ This follows the Unnamed Language specification V1.3
 - the empty string is a valid stringconstant (i.e. "" is valid)
 - there is no way to declare a negative number
 - an identifier is "a equare of letters, digits and underscore character" which "cannot start with a digit", so _ is a valid identifier
+- keywords are not valid identifiers
