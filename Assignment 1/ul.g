@@ -23,116 +23,143 @@ options {
 }
 
 program
-        :    function+
-        ;
+    :    function+
+    ;
 
 function
-        :    functionDeclaration functionBody
-        ;
+    :    functionDeclaration functionBody
+    ;
 
 functionDeclaration
-        :    compoundType IDENTIFIER '(' formalParameters ')'
-        ;
+    :    compoundType IDENTIFIER '(' formalParameters ')'
+    ;
 
 formalParameters
-        :    compoundType IDENTIFIER moreFormals*
-        |
-        ;
+    :    compoundType IDENTIFIER moreFormals*
+    |
+    ;
 
 moreFormals
-        :    ',' compoundType IDENTIFIER
-        ;
+    :    ',' compoundType IDENTIFIER
+    ;
 
 functionBody
-        :    '{' variableDeclaration* statement* '}'
-        ;
+    :    '{' variableDeclaration* statement* '}'
+    ;
 
 variableDeclaration
-        : compoundType IDENTIFIER ';'
-        ;
+    : compoundType IDENTIFIER ';'
+    ;
 
 compoundType
-        :    TYPE
-        |    TYPE '[' INTEGERCONSTANT ']'
-        ;
+    :    TYPE
+    |    TYPE '[' INTEGERCONSTANT ']'
+    ;
 
 statement
-        :    ';'
-        |    expression ';'
-        |    'if' '(' expression ')' block 'else' block
-        |    'if' '(' expression ')' block
-        |    'while' '(' expression ')' block
-        |    'print' expression ';'
-        |    'println' expression ';'
-        |    'return' expression ';'
-        |    IDENTIFIER '=' expression ';'
-        |    IDENTIFIER '[' expression ']' '=' expression ';'
-        ;
+    :    ';'
+    |    expression ';'
+    |    'if' '(' expression ')' block 'else' block
+    |    'if' '(' expression ')' block
+    |    'while' '(' expression ')' block
+    |    'print' expression ';'
+    |    'println' expression ';'
+    |    'return' expression ';'
+    |    IDENTIFIER '=' expression ';'
+    |    IDENTIFIER '[' expression ']' '=' expression ';'
+    ;
 
 block
-        :    '{' statement* '}'
-        ;
+    :    '{' statement* '}'
+    ;
 
 expression
-        :    literal
-        |    IDENTIFIER
-        |    IDENTIFIER '[' expression ']'
-        |    IDENTIFIER '(' expressionList ')'
-        |    '(' expression ')'
-        //   TODO expression operator expression
-        ;
+    :    literal
+    |    IDENTIFIER
+    |    IDENTIFIER '[' expression ']'
+    |    IDENTIFIER '(' expressionList ')'
+    // |    '(' expression ')'
+    |    equalityExpression
+    ;
+
+equalityExpression
+    :    lessThanExpression
+    |    equalityExpression '==' lessThanExpression
+    ;
+
+lessThanExpression
+    :    additionExpression
+    |    lessThanExpression '<' additionExpression
+    ;
+
+additionExpression
+    :    multiplyExpression
+    |    additionExpression '+' multiplyExpression
+    |    additionExpression '-' multiplyExpression
+    ;
+
+multiplyExpression
+    :    primaryExpression
+    |    multiplyExpression '<' primaryExpression
+    ;
+
+primaryExpression
+    :    IDENTIFIER
+    |    literal
+    |    '(' expression ')'
+    ;
 
 expressionList
-        :    expression expressionMore*
-        |
-        ;
+    :    expression expressionMore*
+    |
+    ;
 
 expressionMore
-        :    ',' expression
-        ;
+    :    ',' expression
+    ;
 
 literal
-        :    INTEGERCONSTANT
-        |    FLOATCONSTANT
-        |    CHARACTERCONSTANT
-        |    STRINGCONSTANT
-        |    'true'
-        |    'false'
-        ;
+    :    INTEGERCONSTANT
+    |    FLOATCONSTANT
+    |    CHARACTERCONSTANT
+    |    STRINGCONSTANT
+    |    'true'
+    |    'false'
+    ;
 
 TYPE
-        :    'int'
-        |    'float'
-        |    'char'
-        |    'string'
-        |    'boolean'
-        |    'void'
-        ;
+    :    'int'
+    |    'float'
+    |    'char'
+    |    'string'
+    |    'boolean'
+    |    'void'
+    ;
 
 INTEGERCONSTANT
-        :    ('0'..'9')+
-        ;
+    :    ('0'..'9')+
+    ;
 
 FLOATCONSTANT
-        :    ('0'..'9')+ '.' ('0'..'9')+
-        ;
+    :    ('0'..'9')+ '.' ('0'..'9')+
+    ;
 
 CHARACTERCONSTANT
-        :    '\'' ( 'a'..'z' | 'A'..'Z' | ' ' | '0'..'9') '\''
-        ;
+    :    '\'' ( 'a'..'z' | 'A'..'Z' | ' ' | '0'..'9') '\''
+    ;
 
 STRINGCONSTANT
-        :    '"' ( 'a'..'z' | 'A'..'Z' | ' ' | '0'..'9')+ '"'
-        ;
+    :    '"' ( 'a'..'z' | 'A'..'Z' | ' ' | '0'..'9')+ '"'
+    ;
 
 IDENTIFIER
-        :    (( 'a'..'z' | 'A'..'Z') | '_') (( 'a'..'z' | 'A'..'Z') | '_' | '0'..'9')*
-        ;
+    :    (( 'a'..'z' | 'A'..'Z') | '_') (( 'a'..'z' | 'A'..'Z') | '_' | '0'..'9')*
+    ;
 
 WHITESPACE
-        :    ( '\t' | ' ' | ('\r' | '\n') )+ {$channel = HIDDEN;}
-        ;
+    :    ( '\t' | ' ' | ('\r' | '\n') )+ {$channel = HIDDEN;}
+    ;
 
 COMMENT
-        :    '//' ~('\r' | '\n')* ('\r' | '\n') {$channel = HIDDEN;}
-        ;
+    :    '//' ~('\r' | '\n')* ('\r' | '\n') {$channel = HIDDEN;}
+    ;
