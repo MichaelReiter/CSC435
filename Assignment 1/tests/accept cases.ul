@@ -13,6 +13,10 @@ boolean _fdafd() {
     return true;
 }
 
+int[5] foobar() {
+    x;
+}
+
 void d_3(void x) {}
 
 void test(string s, boolean b) {
@@ -66,9 +70,15 @@ void test(string s, boolean b) {
     s[2] = 'c';
     // fadjlkad
     ((x));
+    ;;;;;;;;;;;
 }
 
 int foo() {
     char[5] v;
     bar(1.23);
+    x = 1 + 2;
+    x = 1 - 2;
+    x = 1 * 2;
+    x = 1 < 2;
+    x = 1 == 2;
 }
