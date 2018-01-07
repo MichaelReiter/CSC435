@@ -59,14 +59,14 @@ compoundType
 statement
     :    ';'
     |    expression ';'
-    |    'if' '(' expression ')' block 'else' block
-    |    'if' '(' expression ')' block
-    |    'while' '(' expression ')' block
-    |    'print' expression ';'
-    |    'println' expression ';'
-    |    'return' expression ';'
     |    IDENTIFIER '=' expression ';'
     |    IDENTIFIER '[' expression ']' '=' expression ';'
+    |    'while' '(' expression ')' block
+    |    'return' expression? ';'
+    |    'print' expression ';'
+    |    'println' expression ';'
+    |    'if' '(' expression ')' block 'else' block
+    |    'if' '(' expression ')' block
     ;
 
 block
@@ -77,6 +77,7 @@ primaryExpression
     :    IDENTIFIER
     |    literal
     |    '(' expression ')'
+    |    IDENTIFIER '(' expressionList ')'
     ;
 
 multiplyExpression
