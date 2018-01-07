@@ -118,9 +118,9 @@ equalityExpressionPrime
     ;
 
 expression
-    :    IDENTIFIER '[' expression ']'
+    :    equalityExpression
+    |    IDENTIFIER '[' expression ']'
     |    IDENTIFIER '(' expressionList ')'
-    |    equalityExpression
     ;
 
 expressionList
