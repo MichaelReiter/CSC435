@@ -64,8 +64,11 @@ void test(string s, boolean b) {
     return "test";
     x = 5;
     s[2] = 'c';
+    // fadjlkad
+    ((x));
 }
 
 int foo() {
     char[5] v;
+    bar(1.23);
 }
