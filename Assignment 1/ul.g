@@ -73,40 +73,53 @@ block
     :    '{' statement* '}'
     ;
 
-expression
-    :    literal
-    |    IDENTIFIER
-    |    IDENTIFIER '[' expression ']'
-    |    IDENTIFIER '(' expressionList ')'
-    // |    '(' expression ')'
-    |    equalityExpression
-    ;
-
-equalityExpression
-    :    lessThanExpression
-    |    equalityExpression '==' lessThanExpression
-    ;
-
-lessThanExpression
-    :    additionExpression
-    |    lessThanExpression '<' additionExpression
-    ;
-
-additionExpression
-    :    multiplyExpression
-    |    additionExpression '+' multiplyExpression
-    |    additionExpression '-' multiplyExpression
-    ;
-
-multiplyExpression
-    :    primaryExpression
-    |    multiplyExpression '<' primaryExpression
-    ;
-
 primaryExpression
     :    IDENTIFIER
     |    literal
     |    '(' expression ')'
+    ;
+
+multiplyExpression
+    :    primaryExpression multiplyExpressionPrime
+    ;
+
+multiplyExpressionPrime
+    :    '*' primaryExpression multiplyExpressionPrime
+    |
+    ;
+
+additionExpression
+    :    multiplyExpression additionExpressionPrime
+    ;
+
+additionExpressionPrime
+    :    '+' multiplyExpression additionExpressionPrime
+    |    '-' multiplyExpression additionExpressionPrime
+    |
+    ;
+
+lessThanExpression
+    :    additionExpression lessThanExpressionPrime
+    ;
+
+lessThanExpressionPrime
+    :    '<' additionExpression lessThanExpressionPrime
+    |
+    ;
+
+equalityExpression
+    :    lessThanExpression equalityExpressionPrime
+    ;
+
+equalityExpressionPrime
+    :    '==' lessThanExpression equalityExpressionPrime
+    |
+    ;
+
+expression
+    :    IDENTIFIER '[' expression ']'
+    |    IDENTIFIER '(' expressionList ')'
+    |    equalityExpression
     ;
 
 expressionList
