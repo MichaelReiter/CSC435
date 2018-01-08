@@ -1,0 +1,36 @@
+void [9999] funcna_me8293__4_(string[3] n) {
+    int ___fhafdajlgal;
+    float _3;
+    char[89354332] abcd;
+    string hdajkh3hafadlj;
+    boolean[2] _a_a_a;
+    void what;
+    test = "this is a string";
+
+    if (x < true) {
+        if ("test" + 3 * ' ' < 14 == 456786567) {
+            x = 5.12421421;
+            y = 'z';
+            z = "5735939" * 4;
+        }
+        println x[45 * 0.2];
+        print ("test2343") == bar(foo());
+        println ((18 < 4)) * foo(a, b, c - 12) + (f());
+    }
+    else {
+        while (something) {
+            hajlkajdl * 4 == true;
+        }
+        if ('f' == 5 < 3) {
+
+        }
+        else {
+            x;
+        }
+    }
+    return true;
+    return false;
+    return x*2;
+    return ajafdjkladf_34[34];
+    return foo(34, 2) * bar(a[1.5]);
+}

@@ -71,6 +71,8 @@ void test(string s, boolean b) {
     // fadjlkad
     ((x));
     ;;;;;;;;;;;
+    y = foo(13 * "stringthing");
+    return f() * f() * f() * f() * f() * f() * f() * f() * 'c';
 }
 
 int foo() {
