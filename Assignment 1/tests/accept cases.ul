@@ -66,7 +66,7 @@ void test(string s, boolean b) {
     print x;
     println x;
     return "test";
-    x = 5;
+    x = 05;
     s[2] = 'c';
     // fadjlkad
     ((x));
