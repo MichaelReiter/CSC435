@@ -17,10 +17,10 @@ public class Compiler {
             input = new ANTLRInputStream(new FileInputStream(args[0]));
         }
 
-        // The name of the grammar here is "ul" so ANTLR generates ulLexer and ulParser
-        ulLexer lexer = new ulLexer(input);
+        // The name of the grammar here is "ulNoActions" so ANTLR generates ulNoActionsLexer and ulNoActionsParser
+        ulNoActionsLexer lexer = new ulNoActionsLexer(input);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
-        ulParser parser = new ulParser(tokens);
+        ulNoActionsParser parser = new ulNoActionsParser(tokens);
 
         try {
             parser.program();
