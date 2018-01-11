@@ -28,6 +28,7 @@ void [9999] funcna_me8293__4_(string[3] n) {
             x;
         }
     }
+    a[3.14 + '4' + 2 * 3 - 1 == (9 < "asdf")] = 5;
     return true;
     return false;
     return x*2;

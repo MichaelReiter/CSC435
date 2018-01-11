@@ -1,5 +1,0 @@
-int 3d() {}
-
-void foo() {
-    int x = 5;
-}
