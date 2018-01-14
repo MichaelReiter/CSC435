@@ -175,5 +175,5 @@ WHITESPACE
     ;
 
 COMMENT
-    :    '//' ~('\r' | '\n')* ('\r' | '\n') {$channel = HIDDEN;}
+    :    '//' ~('\r' | '\n')* {$channel = HIDDEN;}
     ;
