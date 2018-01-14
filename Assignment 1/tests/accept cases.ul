@@ -73,7 +73,7 @@ void test(string s, boolean b) {
     ((x));
     ;;;;;;;;;;;
     y = foo(13 * "stringthing");
-    return f() * f() * f() * f() * f() * f() * f() * f() * 'c';
+    return f() * f() * f() * f() * f() * f() * f() * f() * 'c';  // test
 }
 
 int foo() {
@@ -86,3 +86,5 @@ int foo() {
     x = 1 == 2;
     foo    ();
 }
+
+// end of file line comment is allowed
