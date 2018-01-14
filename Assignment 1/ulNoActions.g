@@ -23,7 +23,7 @@ options {
 }
 
 program
-    :    function+
+    :    function+ EOF
     ;
 
 function
