@@ -1,0 +1,9 @@
+void main () {
+	int x; 
+	int y;
+
+	x = 12;
+	y = 22;
+
+	println x - y + x * y;
+}
