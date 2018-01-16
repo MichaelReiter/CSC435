@@ -1,7 +1,6 @@
 void main () {
 	int[5] a;
 	int    b;
-	int println;
 
 	b = 73;
 	
