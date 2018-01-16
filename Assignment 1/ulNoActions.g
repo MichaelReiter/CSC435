@@ -31,7 +31,7 @@ function
     ;
 
 functionDeclaration
-    :    compoundType IDENTIFIER '(' formalParameters ')'
+    :    compoundType IDENTIFIER OPENPARENTHESIS formalParameters CLOSEPARENTHESIS
     ;
 
 formalParameters
@@ -40,45 +40,45 @@ formalParameters
     ;
 
 moreFormals
-    :    ',' compoundType IDENTIFIER
+    :    COMMA compoundType IDENTIFIER
     ;
 
 functionBody
-    :    '{' variableDeclaration* statement* '}'
+    :    OPENBRACE variableDeclaration* statement* CLOSEBRACE
     ;
 
 variableDeclaration
-    : compoundType IDENTIFIER ';'
+    : compoundType IDENTIFIER SEMICOLON
     ;
 
 compoundType
     :    TYPE
-    |    TYPE '[' INTEGERCONSTANT ']'
+    |    TYPE OPENBRACKET INTEGERCONSTANT CLOSEBRACKET
     ;
 
 statement
-    :    ';'
-    |    expression ';'
-    |    IDENTIFIER '=' expression ';'
-    |    IDENTIFIER '[' expression ']' '=' expression ';'
-    |    'while' '(' expression ')' block
-    |    'return' expression? ';'
-    |    'print' expression ';'
-    |    'println' expression ';'
-    |    'if' '(' expression ')' block 'else' block
-    |    'if' '(' expression ')' block
+    :    SEMICOLON
+    |    expression SEMICOLON
+    |    IDENTIFIER SINGLEEQUALS expression SEMICOLON
+    |    IDENTIFIER OPENBRACKET expression CLOSEBRACKET SINGLEEQUALS expression SEMICOLON
+    |    WHILE OPENPARENTHESIS expression CLOSEPARENTHESIS block
+    |    RETURN expression? SEMICOLON
+    |    PRINT expression SEMICOLON
+    |    PRINTLN expression SEMICOLON
+    |    IF OPENPARENTHESIS expression CLOSEPARENTHESIS block ELSE block
+    |    IF OPENPARENTHESIS expression CLOSEPARENTHESIS block
     ;
 
 block
-    :    '{' statement* '}'
+    :    OPENBRACE statement* CLOSEBRACE
     ;
 
 primaryExpression
     :    IDENTIFIER
     |    literal
-    |    '(' expression ')'
-    |    IDENTIFIER '(' expressionList ')'
-    |    IDENTIFIER '[' expression ']'
+    |    OPENPARENTHESIS expression CLOSEPARENTHESIS
+    |    IDENTIFIER OPENPARENTHESIS expressionList CLOSEPARENTHESIS
+    |    IDENTIFIER OPENBRACKET expression CLOSEBRACKET
     ;
 
 multiplyExpression
@@ -86,7 +86,7 @@ multiplyExpression
     ;
 
 multiplyExpressionPrime
-    :    '*' primaryExpression multiplyExpressionPrime
+    :    STAR primaryExpression multiplyExpressionPrime
     |
     ;
 
@@ -95,8 +95,8 @@ additionExpression
     ;
 
 additionExpressionPrime
-    :    '+' multiplyExpression additionExpressionPrime
-    |    '-' multiplyExpression additionExpressionPrime
+    :    PLUS multiplyExpression additionExpressionPrime
+    |    MINUS multiplyExpression additionExpressionPrime
     |
     ;
 
@@ -105,7 +105,7 @@ lessThanExpression
     ;
 
 lessThanExpressionPrime
-    :    '<' additionExpression lessThanExpressionPrime
+    :    LESSTHAN additionExpression lessThanExpressionPrime
     |
     ;
 
@@ -114,14 +114,14 @@ equalityExpression
     ;
 
 equalityExpressionPrime
-    :    '==' lessThanExpression equalityExpressionPrime
+    :    DOUBLEEQUALS lessThanExpression equalityExpressionPrime
     |
     ;
 
 expression
     :    equalityExpression
-    |    IDENTIFIER '[' expression ']'
-    |    IDENTIFIER '(' expressionList ')'
+    |    IDENTIFIER OPENBRACKET expression CLOSEBRACKET
+    |    IDENTIFIER OPENPARENTHESIS expressionList CLOSEPARENTHESIS
     ;
 
 expressionList
@@ -130,7 +130,7 @@ expressionList
     ;
 
 expressionMore
-    :    ',' expression
+    :    COMMA expression
     ;
 
 literal
@@ -138,8 +138,8 @@ literal
     |    FLOATCONSTANT
     |    CHARACTERCONSTANT
     |    STRINGCONSTANT
-    |    'true'
-    |    'false'
+    |    TRUE
+    |    FALSE
     ;
 
 TYPE
@@ -150,6 +150,50 @@ TYPE
     |    'boolean'
     |    'void'
     ;
+
+IF               :    'if';
+
+ELSE             :    'else';
+
+WHILE            :    'while';
+
+PRINT            :    'print';
+
+PRINTLN          :    'println';
+
+RETURN           :    'return';
+
+TRUE             :    'true';
+
+FALSE            :    'false';
+
+SEMICOLON        :    ';';
+
+OPENPARENTHESIS  :    '(';
+
+CLOSEPARENTHESIS :    ')';
+
+OPENBRACKET      :    '[';
+
+CLOSEBRACKET     :    ']';
+
+OPENBRACE        :    '{';
+
+CLOSEBRACE       :    '}';
+
+COMMA            :    ',';
+
+SINGLEEQUALS     :    '=';
+
+STAR             :    '*';
+
+PLUS             :    '+';
+
+MINUS            :    '-';
+
+LESSTHAN         :    '<';
+
+DOUBLEEQUALS     :    '==';
 
 INTEGERCONSTANT
     :    ('0'..'9')+
