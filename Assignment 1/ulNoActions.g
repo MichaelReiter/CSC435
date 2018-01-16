@@ -78,6 +78,7 @@ primaryExpression
     |    literal
     |    '(' expression ')'
     |    IDENTIFIER '(' expressionList ')'
+    |    IDENTIFIER '[' expression ']'
     ;
 
 multiplyExpression
