@@ -1,4 +1,4 @@
-package Type;
+package type;
 
 public abstract class Type {
     public abstract void accept(Visitor v);

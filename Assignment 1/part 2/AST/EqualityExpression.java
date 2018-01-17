@@ -1,4 +1,4 @@
-package AST;
+package ast;
 
 public class EqualityExpression extends Expression {
     public EqualityExpression() {}

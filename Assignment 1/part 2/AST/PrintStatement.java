@@ -1,4 +1,4 @@
-package AST;
+package ast;
 
 public class PrintStatement extends Statement {
     public PrintStatement() {}

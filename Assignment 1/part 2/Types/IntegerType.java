@@ -1,4 +1,4 @@
-package Type;
+package type;
 
 public class IntegerType extends Type {
     public IntegerType() {}
