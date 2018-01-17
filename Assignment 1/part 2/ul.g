@@ -1,4 +1,9 @@
 grammar ul;
+@header
+{
+    import AST.*;
+    import Type.*;
+}
 
 options {
     backtrack=true;
@@ -22,13 +27,25 @@ options {
     }
 }
 
-program
-    :    function+ EOF
+// program
+//     :    function+ EOF
+//     ;
+
+program returns [Program p]
+@init
+{
+    p = new Program();
+}
+    :    (f = function { p.addElement(f); })+ EOF
+
+// function
+//     :    functionDeclaration functionBody
+//     ;
+
+function returns [Function f]
+    :    fd = functionDecl fb = functionBody { f = new Function(fd, fb); }
     ;
 
-function
-    :    functionDeclaration functionBody
-    ;
 
 functionDeclaration
     :    compoundType IDENTIFIER OPENPARENTHESIS formalParameters CLOSEPARENTHESIS
