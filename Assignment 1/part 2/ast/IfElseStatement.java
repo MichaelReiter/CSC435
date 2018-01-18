@@ -1,7 +1,7 @@
 package ast;
 
-public class ArrayAssignment {
-    public ArrayAssignment() {}
+public class IfElseStatement extends Statement {
+    public IfElseStatement() {}
 
     public void accept(Visitor v) {
         v.visit(this);

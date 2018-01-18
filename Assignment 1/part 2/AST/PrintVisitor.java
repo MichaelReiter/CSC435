@@ -1,6 +1,6 @@
 package ast;
 
-import Type.*;
+import type.*;
 
 public class PrintVisitor implements Visitor {
     public PrintVisitor() {}
@@ -80,6 +80,10 @@ public class PrintVisitor implements Visitor {
     }
 
     public void visit(IfStatement i) {
+        // System.out.print();
+    }
+
+    public void visit(IfElseStatement i) {
         // System.out.print();
     }
 

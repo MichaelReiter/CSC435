@@ -1,11 +1,11 @@
 package ast;
 
-import Type.*;
+import type.*;
 
 public interface Visitor {
     public void visit(AddExpression e);
     public void visit(ArrayType a);
-    public void visit(ArrayAssignment s);
+    public void visit(ArrayAssignmentStatement s);
     public void visit(ArrayReference a);
     public void visit(Block b);
     public void visit(BooleanLiteral b);
@@ -22,6 +22,7 @@ public interface Visitor {
     public void visit(Identifier i);
     public void visit(IdentifierValue v);
     public void visit(IfStatement i);
+    public void visit(IfElseStatement i);
     public void visit(IntegerLiteral i);
     public void visit(LessThanExpression e);
     public void visit(MultiplyExpression e);
