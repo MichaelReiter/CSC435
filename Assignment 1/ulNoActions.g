@@ -35,13 +35,13 @@ functionDeclaration
     ;
 
 formalParameters
-    :    compoundType identifier moreFormals*
+    :    compoundType identifier (COMMA compoundType identifier)*
     |
     ;
 
-moreFormals
-    :    COMMA compoundType identifier
-    ;
+// moreFormals
+//     :    COMMA compoundType identifier
+//     ;
 
 functionBody
     :    OPENBRACE variableDeclaration* statement* CLOSEBRACE
@@ -73,12 +73,12 @@ expressionStatement
     :    expression SEMICOLON
     ;
 
-arrayAssignmentStatement
-    :    identifier OPENBRACKET expression CLOSEBRACKET SINGLEEQUALS expression SEMICOLON
-    ;
-
 assignmentStatement
     :    identifier SINGLEEQUALS expression SEMICOLON
+    ;
+
+arrayAssignmentStatement
+    :    identifier OPENBRACKET expression CLOSEBRACKET SINGLEEQUALS expression SEMICOLON
     ;
 
 whileStatement
@@ -97,12 +97,12 @@ printlnStatement
     :    PRINTLN expression SEMICOLON
     ;
 
-ifStatement
-    :    IF OPENPARENTHESIS expression CLOSEPARENTHESIS block
-    ;
-
 ifElseStatement
     :    IF OPENPARENTHESIS expression CLOSEPARENTHESIS block ELSE block
+    ;
+
+ifStatement
+    :    IF OPENPARENTHESIS expression CLOSEPARENTHESIS block
     ;
 
 block
@@ -130,12 +130,7 @@ arrayReference
     ;
 
 multiplyExpression
-    :    atom multiplyExpressionPrime
-    ;
-
-multiplyExpressionPrime
-    :    STAR atom multiplyExpressionPrime
-    |
+    :    atom (STAR atom)*
     ;
 
 addExpression
@@ -149,27 +144,17 @@ addExpressionPrime
     ;
 
 lessThanExpression
-    :    addExpression lessThanExpressionPrime
-    ;
-
-lessThanExpressionPrime
-    :    LESSTHAN addExpression lessThanExpressionPrime
-    |
+    :    addExpression (LESSTHAN addExpression)*
     ;
 
 equalityExpression
-    :    lessThanExpression equalityExpressionPrime
-    ;
-
-equalityExpressionPrime
-    :    DOUBLEEQUALS lessThanExpression equalityExpressionPrime
-    |
+    :    lessThanExpression (DOUBLEEQUALS lessThanExpression)*
     ;
 
 expression
     :    equalityExpression
-    |    identifier OPENBRACKET expression CLOSEBRACKET
-    |    identifier OPENPARENTHESIS expressionList CLOSEPARENTHESIS
+    // |    arrayReference
+    // |    functionCall
     ;
 
 expressionList
@@ -186,15 +171,14 @@ identifier
     ;
 
 literal
-    :    intLiteral
+    :    integerLiteral
     |    floatLiteral
     |    characterLiteral
     |    stringLiteral
-    |    TRUE
-    |    FALSE
+    |    booleanLiteral
     ;
 
-intLiteral
+integerLiteral
     :    INTEGERCONSTANT
     ;
 
@@ -208,6 +192,11 @@ characterLiteral
 
 stringLiteral
     :    STRINGCONSTANT
+    ;
+
+booleanLiteral
+    :    TRUE
+    |    FALSE
     ;
 
 TYPE
