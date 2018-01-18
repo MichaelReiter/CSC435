@@ -31,16 +31,16 @@ function
     ;
 
 functionDeclaration
-    :    compoundType IDENTIFIER OPENPARENTHESIS formalParameters CLOSEPARENTHESIS
+    :    compoundType identifier OPENPARENTHESIS formalParameters CLOSEPARENTHESIS
     ;
 
 formalParameters
-    :    compoundType IDENTIFIER moreFormals*
+    :    compoundType identifier moreFormals*
     |
     ;
 
 moreFormals
-    :    COMMA compoundType IDENTIFIER
+    :    COMMA compoundType identifier
     ;
 
 functionBody
@@ -48,7 +48,7 @@ functionBody
     ;
 
 variableDeclaration
-    : compoundType IDENTIFIER SEMICOLON
+    : compoundType identifier SEMICOLON
     ;
 
 compoundType
@@ -58,54 +58,102 @@ compoundType
 
 statement
     :    SEMICOLON
-    |    expression SEMICOLON
-    |    IDENTIFIER SINGLEEQUALS expression SEMICOLON
-    |    IDENTIFIER OPENBRACKET expression CLOSEBRACKET SINGLEEQUALS expression SEMICOLON
-    |    WHILE OPENPARENTHESIS expression CLOSEPARENTHESIS block
-    |    RETURN expression? SEMICOLON
-    |    PRINT expression SEMICOLON
-    |    PRINTLN expression SEMICOLON
-    |    IF OPENPARENTHESIS expression CLOSEPARENTHESIS block ELSE block
-    |    IF OPENPARENTHESIS expression CLOSEPARENTHESIS block
+    |    expressionStatement
+    |    assignmentStatement
+    |    arrayAssignmentStatement
+    |    whileStatement
+    |    returnStatement
+    |    printStatement
+    |    printlnStatement
+    |    ifElseStatement
+    |    ifStatement
+    ;
+
+expressionStatement
+    :    expression SEMICOLON
+    ;
+
+arrayAssignmentStatement
+    :    identifier OPENBRACKET expression CLOSEBRACKET SINGLEEQUALS expression SEMICOLON
+    ;
+
+assignmentStatement
+    :    identifier SINGLEEQUALS expression SEMICOLON
+    ;
+
+whileStatement
+    :    WHILE OPENPARENTHESIS expression CLOSEPARENTHESIS block
+    ;
+
+returnStatement
+    :    RETURN expression? SEMICOLON
+    ;
+
+printStatement
+    :    PRINT expression SEMICOLON
+    ;
+
+printlnStatement
+    :    PRINTLN expression SEMICOLON
+    ;
+
+ifStatement
+    :    IF OPENPARENTHESIS expression CLOSEPARENTHESIS block
+    ;
+
+ifElseStatement
+    :    IF OPENPARENTHESIS expression CLOSEPARENTHESIS block ELSE block
     ;
 
 block
     :    OPENBRACE statement* CLOSEBRACE
     ;
 
-primaryExpression
-    :    IDENTIFIER
+atom
+    :    identifier
     |    literal
-    |    OPENPARENTHESIS expression CLOSEPARENTHESIS
-    |    IDENTIFIER OPENPARENTHESIS expressionList CLOSEPARENTHESIS
-    |    IDENTIFIER OPENBRACKET expression CLOSEBRACKET
+    |    parenthesisExpression
+    |    functionCall
+    |    arrayReference
+    ;
+
+parenthesisExpression
+    :    OPENPARENTHESIS expression CLOSEPARENTHESIS
+    ;
+
+functionCall
+    :    identifier OPENPARENTHESIS expressionList CLOSEPARENTHESIS
+    ;
+
+arrayReference
+    :    identifier OPENBRACKET expression CLOSEBRACKET
     ;
 
 multiplyExpression
-    :    primaryExpression multiplyExpressionPrime
+    :    atom multiplyExpressionPrime
     ;
 
 multiplyExpressionPrime
-    :    STAR primaryExpression multiplyExpressionPrime
+    :    STAR atom multiplyExpressionPrime
     |
     ;
 
-additionExpression
-    :    multiplyExpression additionExpressionPrime
+addExpression
+    :    multiplyExpression addExpressionPrime
     ;
 
-additionExpressionPrime
-    :    PLUS multiplyExpression additionExpressionPrime
-    |    MINUS multiplyExpression additionExpressionPrime
+addExpressionPrime
+    :    PLUS multiplyExpression addExpressionPrime
+    |    MINUS multiplyExpression addExpressionPrime
     |
     ;
 
 lessThanExpression
-    :    additionExpression lessThanExpressionPrime
+    :    addExpression lessThanExpressionPrime
     ;
 
 lessThanExpressionPrime
-    :    LESSTHAN additionExpression lessThanExpressionPrime
+    :    LESSTHAN addExpression lessThanExpressionPrime
     |
     ;
 
@@ -120,8 +168,8 @@ equalityExpressionPrime
 
 expression
     :    equalityExpression
-    |    IDENTIFIER OPENBRACKET expression CLOSEBRACKET
-    |    IDENTIFIER OPENPARENTHESIS expressionList CLOSEPARENTHESIS
+    |    identifier OPENBRACKET expression CLOSEBRACKET
+    |    identifier OPENPARENTHESIS expressionList CLOSEPARENTHESIS
     ;
 
 expressionList
@@ -133,13 +181,33 @@ expressionMore
     :    COMMA expression
     ;
 
+identifier
+    :    ID
+    ;
+
 literal
-    :    INTEGERCONSTANT
-    |    FLOATCONSTANT
-    |    CHARACTERCONSTANT
-    |    STRINGCONSTANT
+    :    intLiteral
+    |    floatLiteral
+    |    characterLiteral
+    |    stringLiteral
     |    TRUE
     |    FALSE
+    ;
+
+intLiteral
+    :    INTEGERCONSTANT
+    ;
+
+floatLiteral
+    :    FLOATCONSTANT
+    ;
+
+characterLiteral
+    :    CHARACTERCONSTANT
+    ;
+
+stringLiteral
+    :    STRINGCONSTANT
     ;
 
 TYPE
@@ -211,7 +279,7 @@ STRINGCONSTANT
     :    '\u0022' ( 'a'..'z' | 'A'..'Z' | ' ' | '0'..'9')* '\u0022'
     ;
 
-IDENTIFIER
+ID
     :    (( 'a'..'z' | 'A'..'Z') | '_') (( 'a'..'z' | 'A'..'Z') | '_' | '0'..'9')*
     ;
 
