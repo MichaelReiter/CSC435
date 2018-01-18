@@ -1,8 +1,8 @@
 grammar ul;
 @header
 {
-    import AST.*;
-    import Type.*;
+    import ast.*;
+    import type.*;
 }
 
 options {
@@ -27,45 +27,37 @@ options {
     }
 }
 
-// program
-//     :    function+ EOF
-//     ;
-
 program returns [Program p]
 @init
 {
     p = new Program();
 }
     :    (f = function { p.addElement(f); })+ EOF
-
-// function
-//     :    functionDeclaration functionBody
-//     ;
-
-function returns [Function f]
-    :    fd = functionDecl fb = functionBody { f = new Function(fd, fb); }
     ;
 
+function returns [Function f]
+    :    fd = functionDeclaration fb = functionBody { f = new Function(fd, fb); }
+    ;
 
 functionDeclaration
-    :    compoundType IDENTIFIER OPENPARENTHESIS formalParameters CLOSEPARENTHESIS
+    :    compoundType identifier OPENPARENTHESIS formalParameters CLOSEPARENTHESIS
     ;
 
 formalParameters
-    :    compoundType IDENTIFIER moreFormals*
+    :    compoundType identifier (COMMA compoundType identifier)*
     |
     ;
 
-moreFormals
-    :    COMMA compoundType IDENTIFIER
-    ;
+// moreFormals
+//     :    COMMA compoundType identifier
+//     ;
 
 functionBody
     :    OPENBRACE variableDeclaration* statement* CLOSEBRACE
     ;
 
 variableDeclaration
-    : compoundType IDENTIFIER SEMICOLON
+    : compoundType identifier SEMICOLON
     ;
 
 compoundType
@@ -75,70 +67,103 @@ compoundType
 
 statement
     :    SEMICOLON
-    |    expression SEMICOLON
-    |    IDENTIFIER SINGLEEQUALS expression SEMICOLON
-    |    IDENTIFIER OPENBRACKET expression CLOSEBRACKET SINGLEEQUALS expression SEMICOLON
-    |    WHILE OPENPARENTHESIS expression CLOSEPARENTHESIS block
-    |    RETURN expression? SEMICOLON
-    |    PRINT expression SEMICOLON
-    |    PRINTLN expression SEMICOLON
-    |    IF OPENPARENTHESIS expression CLOSEPARENTHESIS block ELSE block
-    |    IF OPENPARENTHESIS expression CLOSEPARENTHESIS block
+    |    expressionStatement
+    |    assignmentStatement
+    |    arrayAssignmentStatement
+    |    whileStatement
+    |    returnStatement
+    |    printStatement
+    |    printlnStatement
+    |    ifElseStatement
+    |    ifStatement
+    ;
+
+expressionStatement
+    :    expression SEMICOLON
+    ;
+
+assignmentStatement
+    :    identifier SINGLEEQUALS expression SEMICOLON
+    ;
+
+arrayAssignmentStatement
+    :    identifier OPENBRACKET expression CLOSEBRACKET SINGLEEQUALS expression SEMICOLON
+    ;
+
+whileStatement
+    :    WHILE OPENPARENTHESIS expression CLOSEPARENTHESIS block
+    ;
+
+returnStatement
+    :    RETURN expression? SEMICOLON
+    ;
+
+printStatement
+    :    PRINT expression SEMICOLON
+    ;
+
+printlnStatement
+    :    PRINTLN expression SEMICOLON
+    ;
+
+ifElseStatement
+    :    IF OPENPARENTHESIS expression CLOSEPARENTHESIS block ELSE block
+    ;
+
+ifStatement
+    :    IF OPENPARENTHESIS expression CLOSEPARENTHESIS block
     ;
 
 block
     :    OPENBRACE statement* CLOSEBRACE
     ;
 
-primaryExpression
-    :    IDENTIFIER
+atom
+    :    identifier
     |    literal
-    |    OPENPARENTHESIS expression CLOSEPARENTHESIS
-    |    IDENTIFIER OPENPARENTHESIS expressionList CLOSEPARENTHESIS
-    |    IDENTIFIER OPENBRACKET expression CLOSEBRACKET
+    |    parenthesisExpression
+    |    functionCall
+    |    arrayReference
+    ;
+
+parenthesisExpression
+    :    OPENPARENTHESIS expression CLOSEPARENTHESIS
+    ;
+
+functionCall
+    :    identifier OPENPARENTHESIS expressionList CLOSEPARENTHESIS
+    ;
+
+arrayReference
+    :    identifier OPENBRACKET expression CLOSEBRACKET
     ;
 
 multiplyExpression
-    :    primaryExpression multiplyExpressionPrime
+    :    atom (STAR atom)*
     ;
 
-multiplyExpressionPrime
-    :    STAR primaryExpression multiplyExpressionPrime
-    |
+addExpression
+    :    multiplyExpression addExpressionPrime
     ;
 
-additionExpression
-    :    multiplyExpression additionExpressionPrime
-    ;
-
-additionExpressionPrime
-    :    PLUS multiplyExpression additionExpressionPrime
-    |    MINUS multiplyExpression additionExpressionPrime
+addExpressionPrime
+    :    PLUS multiplyExpression addExpressionPrime
+    |    MINUS multiplyExpression addExpressionPrime
     |
     ;
 
 lessThanExpression
-    :    additionExpression lessThanExpressionPrime
-    ;
-
-lessThanExpressionPrime
-    :    LESSTHAN additionExpression lessThanExpressionPrime
-    |
+    :    addExpression (LESSTHAN addExpression)*
     ;
 
 equalityExpression
-    :    lessThanExpression equalityExpressionPrime
-    ;
-
-equalityExpressionPrime
-    :    DOUBLEEQUALS lessThanExpression equalityExpressionPrime
-    |
+    :    lessThanExpression (DOUBLEEQUALS lessThanExpression)*
     ;
 
 expression
     :    equalityExpression
-    |    IDENTIFIER OPENBRACKET expression CLOSEBRACKET
-    |    IDENTIFIER OPENPARENTHESIS expressionList CLOSEPARENTHESIS
+    // |    arrayReference
+    // |    functionCall
     ;
 
 expressionList
@@ -150,12 +175,36 @@ expressionMore
     :    COMMA expression
     ;
 
+identifier
+    :    ID
+    ;
+
 literal
+    :    integerLiteral
+    |    floatLiteral
+    |    characterLiteral
+    |    stringLiteral
+    |    booleanLiteral
+    ;
+
+integerLiteral
     :    INTEGERCONSTANT
-    |    FLOATCONSTANT
-    |    CHARACTERCONSTANT
-    |    STRINGCONSTANT
-    |    TRUE
+    ;
+
+floatLiteral
+    :    FLOATCONSTANT
+    ;
+
+characterLiteral
+    :    CHARACTERCONSTANT
+    ;
+
+stringLiteral
+    :    STRINGCONSTANT
+    ;
+
+booleanLiteral
+    :    TRUE
     |    FALSE
     ;
 
@@ -228,7 +277,7 @@ STRINGCONSTANT
     :    '\u0022' ( 'a'..'z' | 'A'..'Z' | ' ' | '0'..'9')* '\u0022'
     ;
 
-IDENTIFIER
+ID
     :    (( 'a'..'z' | 'A'..'Z') | '_') (( 'a'..'z' | 'A'..'Z') | '_' | '0'..'9')*
     ;
 
