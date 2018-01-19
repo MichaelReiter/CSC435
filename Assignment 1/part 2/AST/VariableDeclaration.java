@@ -1,6 +1,6 @@
 package ast;
 
-public class VariableDeclaration {
+public class VariableDeclaration extends ASTNode {
     public VariableDeclaration() {}
 
     public void accept(Visitor v) {

@@ -1,6 +1,6 @@
 package ast;
 
-public class CharacterLiteral {
+public class CharacterLiteral extends Expression {
     public CharacterLiteral() {}
 
     public void accept(Visitor v) {

@@ -39,10 +39,6 @@ formalParameters
     |
     ;
 
-// moreFormals
-//     :    COMMA compoundType identifier
-//     ;
-
 functionBody
     :    OPENBRACE variableDeclaration* statement* CLOSEBRACE
     ;
@@ -158,12 +154,8 @@ expression
     ;
 
 expressionList
-    :    expression expressionMore*
+    :    expression (COMMA expression)*
     |
-    ;
-
-expressionMore
-    :    COMMA expression
     ;
 
 identifier

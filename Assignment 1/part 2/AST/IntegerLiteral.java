@@ -1,6 +1,6 @@
 package ast;
 
-public class IntegerLiteral {
+public class IntegerLiteral extends Expression {
     public IntegerLiteral() {}
 
     public void accept(Visitor v) {

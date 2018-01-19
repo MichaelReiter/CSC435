@@ -1,6 +1,6 @@
 package ast;
 
-public class Block {
+public class Block extends ASTNode {
     public Block() {}
 
     public void accept(Visitor v) {

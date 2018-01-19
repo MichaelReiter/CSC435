@@ -1,6 +1,6 @@
 package ast;
 
-public class FunctionCall {
+public class FunctionCall extends Expression {
     public FunctionCall() {}
 
     public void accept(Visitor v) {

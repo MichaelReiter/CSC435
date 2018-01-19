@@ -1,6 +1,6 @@
 package ast;
 
-public class ExpressionList {
+public class ExpressionList extends ASTNode {
     public ExpressionList() {}
 
     public void accept(Visitor v) {

@@ -2,7 +2,7 @@ package ast;
 
 import java.util.Vector;
 
-public class Program {
+public class Program extends ASTNode {
     public Vector functionList;
 
     public Program() {

@@ -1,6 +1,6 @@
 package ast;
 
-public class FunctionBody {
+public class FunctionBody extends ASTNode {
     public FunctionBody() {}
 
     public void accept(Visitor v) {

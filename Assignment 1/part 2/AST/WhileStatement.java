@@ -1,6 +1,6 @@
 package ast;
 
-public class WhileStatement {
+public class WhileStatement extends Statement {
     public WhileStatement() {}
 
     public void accept(Visitor v) {

@@ -1,6 +1,6 @@
 package ast;
 
-public class ArrayReference {
+public class ArrayReference extends Expression {
     public ArrayReference() {}
 
     public void accept(Visitor v) {

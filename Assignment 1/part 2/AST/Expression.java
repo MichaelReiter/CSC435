@@ -1,6 +1,6 @@
 package ast;
 
-public class Expression {
+public class Expression extends Statement {
     public Expression() {}
 
     public void accept(Visitor v) {
