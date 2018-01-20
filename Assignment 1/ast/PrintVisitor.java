@@ -10,18 +10,26 @@ public class PrintVisitor implements Visitor {
 		System.out.print(" + ");
 		e.e2.accept(this);
     }
+    
+    public void visit(ArrayAssignmentStatement s) {
+        // System.out.print();
+    }
+    
+    public void visit(ArrayReference a) {
+        // System.out.print();
+    }
 
     public void visit(ArrayType a) {
         // System.out.print();
     }
 
-    public void visit(ArrayAssignment s) {
+    public void visit(AssignmentStatement a) {
         // System.out.print();
     }
-
-    public void visit(ArrayReference a) {
-        // System.out.print();
-    }
+    
+    // public void visit(ASTNode a) {
+    //     // System.out.print();
+    // }
 
     public void visit(Block b) {
         // System.out.print();
@@ -37,7 +45,7 @@ public class PrintVisitor implements Visitor {
 
     // public void visit(DoStatement s) {
         // System.out.print();
-    }
+    // }
 
     public void visit(EqualityExpression e) {
         // System.out.print();
@@ -51,7 +59,7 @@ public class PrintVisitor implements Visitor {
         // System.out.print(f.value);
     }
 
-    public void visit(FormalParameter p) {
+    public void visit(FormalParameters p) {
         // System.out.print();
     }
 
@@ -75,15 +83,15 @@ public class PrintVisitor implements Visitor {
         // System.out.print(i.name);
     }
 
-    public void visit(IdentifierValue v) {
+    // public void visit(IdentifierValue v) {
+    //     // System.out.print();
+    // }
+
+    public void visit(IfElseStatement i) {
         // System.out.print();
     }
 
     public void visit(IfStatement i) {
-        // System.out.print();
-    }
-
-    public void visit(IfElseStatement i) {
         // System.out.print();
     }
 
@@ -137,9 +145,9 @@ public class PrintVisitor implements Visitor {
         // System.out.print();
     }
 
-    public void visit(VariableAssignment s) {
-        // System.out.print();
-    }
+    // public void visit(VariableAssignment s) {
+    //     // System.out.print();
+    // }
 
     public void visit(VariableDeclaration v) {
         // System.out.print();

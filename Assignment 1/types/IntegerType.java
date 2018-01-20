@@ -1,14 +1,16 @@
 package type;
 
-public class FloatType extends Type {
-    public FloatType() {}
+import ast.Visitor;
+
+public class IntegerType extends Type {
+    public IntegerType() {}
 
     public String toString() {
-        return "float";
+        return "int";
     }
 
     public boolean equals(Object o) {
-        if (o instanceof FloatType) {
+        if (o instanceof IntegerType) {
             return true;
         } else {
             return false;

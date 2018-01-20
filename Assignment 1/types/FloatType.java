@@ -1,14 +1,16 @@
 package type;
 
-public class BooleanType extends Type {
-    public BooleanType() {}
+import ast.Visitor;
+
+public class FloatType extends Type {
+    public FloatType() {}
 
     public String toString() {
-        return "boolean";
+        return "float";
     }
 
     public boolean equals(Object o) {
-        if (o instanceof BooleanType) {
+        if (o instanceof FloatType) {
             return true;
         } else {
             return false;

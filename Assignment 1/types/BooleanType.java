@@ -1,14 +1,16 @@
 package type;
 
-public class IntegerType extends Type {
-    public IntegerType() {}
+import ast.Visitor;
+
+public class BooleanType extends Type {
+    public BooleanType() {}
 
     public String toString() {
-        return "int";
+        return "boolean";
     }
 
     public boolean equals(Object o) {
-        if (o instanceof IntegerType) {
+        if (o instanceof BooleanType) {
             return true;
         } else {
             return false;

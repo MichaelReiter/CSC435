@@ -1,14 +1,16 @@
 package type;
 
-public class VoidType extends Type {
-    public VoidType() {}
+import ast.Visitor;
+
+public class CharType extends Type {
+    public CharType() {}
 
     public String toString() {
-        return "void";
+        return "char";
     }
 
     public boolean equals(Object o) {
-        if (o instanceof VoidType) {
+        if (o instanceof CharType) {
             return true;
         } else {
             return false;

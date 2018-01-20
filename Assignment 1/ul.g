@@ -1,4 +1,4 @@
-grammar ulNoActions;
+grammar ul;
 
 options {
     backtrack=true;

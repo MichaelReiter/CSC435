@@ -1,14 +1,16 @@
 package type;
 
-public class StringType extends Type {
-    public StringType() {}
+import ast.Visitor;
+
+public class ArrayType extends Type {
+    public ArrayType() {}
 
     public String toString() {
-        return "string";
+        return "array";
     }
 
     public boolean equals(Object o) {
-        if (o instanceof StringType) {
+        if (o instanceof ArrayType) {
             return true;
         } else {
             return false;
