@@ -42,8 +42,8 @@ function returns [Function f]
     ;
 
 functionDeclaration returns [FunctionDeclaration fd]
-    :    tn = compoundType identifier OPENPARENTHESIS formalParameters CLOSEPARENTHESIS
-    { fd = new FunctionDeclaration(tn); }
+    :    tn = compoundType id = identifier OPENPARENTHESIS formalParameters CLOSEPARENTHESIS
+    { fd = new FunctionDeclaration(tn, id); }
     ;
 
 formalParameters returns [FormalParameters args]
@@ -171,8 +171,9 @@ expressionList
     |
     ;
 
-identifier returns [Identifier name]
+identifier returns [Identifier id]
     :    ID
+    { id = new Identifier($ID.text); }
     ;
 
 literal

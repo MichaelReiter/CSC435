@@ -2,12 +2,12 @@ package ast;
 
 public class FunctionDeclaration extends ASTNode {
     TypeNode tn;
-    // Identifier name;
+    Identifier id;
     // FormalParameters args;
 
-    public FunctionDeclaration(TypeNode tn/*, Identifier name, FormalParameters args*/) {
+    public FunctionDeclaration(TypeNode tn, Identifier id/*, FormalParameters args*/) {
         this.tn = tn;
-        // this.name = name;
+        this.id = id;
         // this.args = args;
     }
 

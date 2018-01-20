@@ -78,10 +78,11 @@ public class PrintVisitor implements Visitor {
 
     public void visit(FunctionDeclaration f) {
         f.tn.accept(this);
+        f.id.accept(this);
     }
 
     public void visit(Identifier i) {
-        // System.out.print(i.name);
+        System.out.println(i.name);
     }
 
     // public void visit(IdentifierValue v) {
