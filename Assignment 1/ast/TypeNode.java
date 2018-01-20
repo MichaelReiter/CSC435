@@ -10,8 +10,6 @@ public class TypeNode extends ASTNode {
     }
 
     public void accept(Visitor v) {
-        System.out.println("afhkfa");
         v.visit(this);
-        System.out.println(this);
     }
 }

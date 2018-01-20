@@ -42,8 +42,8 @@ function returns [Function f]
     ;
 
 functionDeclaration returns [FunctionDeclaration fd]
-    :    type = compoundType name = identifier OPENPARENTHESIS args = formalParameters CLOSEPARENTHESIS
-    { fd = new FunctionDeclaration(type, name, args); }
+    :    tn = compoundType identifier OPENPARENTHESIS formalParameters CLOSEPARENTHESIS
+    { fd = new FunctionDeclaration(tn); }
     ;
 
 formalParameters returns [FormalParameters args]
@@ -60,7 +60,8 @@ variableDeclaration
     ;
 
 compoundType returns [TypeNode tn]
-    :    type
+    :    t = type
+    { tn = new TypeNode(t); }
     |    type OPENBRACKET INTEGERCONSTANT CLOSEBRACKET
     ;
 
@@ -203,12 +204,43 @@ booleanLiteral
     |    FALSE
     ;
 
-type
+type returns [Type t]
+    :    intt
+    { t = new IntegerType(); }
+    |    floatt
+    { t = new FloatType(); }
+    |    charr
+    { t = new CharType(); }
+    |    stringg
+    { t = new StringType(); }
+    |    booleann
+    { t = new BooleanType(); }
+    |    voidd
+    { t = new VoidType(); }
+    ;
+
+intt returns [IntegerType i]
     :    INT
-    |    FLOAT
-    |    CHAR
-    |    STRING
-    |    VOID
+    ;
+
+floatt
+    :    FLOAT
+    ;
+
+charr
+    :    CHAR
+    ;
+
+stringg
+    :    STRING
+    ;
+
+booleann
+    :    BOOLEAN
+    ;
+
+voidd
+    :    VOID
     ;
 
 INT              :    'int';

@@ -77,7 +77,7 @@ public class PrintVisitor implements Visitor {
     }
 
     public void visit(FunctionDeclaration f) {
-        // f.tn.accept(this);
+        f.tn.accept(this);
     }
 
     public void visit(Identifier i) {
@@ -139,12 +139,12 @@ public class PrintVisitor implements Visitor {
     }
 
     public void visit(Type t) {
-        // System.out.print();        
+        // TODO change to print
+        System.out.println(t);
     }
 
     public void visit(TypeNode t) {
-        // t.t.accept(this);
-        // System.out.println("t:" + t);
+        t.t.accept(this);
     }
 
     // public void visit(VariableAssignment s) {
