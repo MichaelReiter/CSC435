@@ -59,9 +59,9 @@ variableDeclaration
     : compoundType identifier SEMICOLON
     ;
 
-compoundType returns [TypeNode type]
-    :    TYPE
-    |    TYPE OPENBRACKET INTEGERCONSTANT CLOSEBRACKET
+compoundType returns [TypeNode tn]
+    :    type
+    |    type OPENBRACKET INTEGERCONSTANT CLOSEBRACKET
     ;
 
 statement
@@ -203,14 +203,25 @@ booleanLiteral
     |    FALSE
     ;
 
-TYPE
-    :    'int'
-    |    'float'
-    |    'char'
-    |    'string'
-    |    'boolean'
-    |    'void'
+type
+    :    INT
+    |    FLOAT
+    |    CHAR
+    |    STRING
+    |    VOID
     ;
+
+INT              :    'int';
+
+FLOAT            :    'float';
+
+CHAR             :    'char';
+
+STRING           :    'string';
+
+BOOLEAN          :    'boolean';
+
+VOID             :    'void';
 
 IF               :    'if';
 
