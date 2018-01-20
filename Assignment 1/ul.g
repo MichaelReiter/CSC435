@@ -4,6 +4,12 @@ options {
     backtrack=true;
 }
 
+@header
+{
+    import ast.*;
+    import type.*;
+}
+
 @members {
     protected void mismatch(IntStream input, int ttype, BitSet follow) throws RecognitionException {
         throw new MismatchedTokenException(ttype, input);
@@ -22,24 +28,30 @@ options {
     }
 }
 
-program
-    :    function+ EOF
+program returns [Program p]
+@init
+{
+    p = new Program();
+}
+    : (f = function { p.addElement(f); })+ EOF
     ;
 
-function
-    :    functionDeclaration functionBody
+function returns [Function f]
+    :    fd = functionDeclaration fb = functionBody
+    { f = new Function(fd, fb); }
     ;
 
-functionDeclaration
-    :    compoundType identifier OPENPARENTHESIS formalParameters CLOSEPARENTHESIS
+functionDeclaration returns [FunctionDeclaration fd]
+    :    type = compoundType name = identifier OPENPARENTHESIS args = formalParameters CLOSEPARENTHESIS
+    { fd = new FunctionDeclaration(type, name, args); }
     ;
 
-formalParameters
+formalParameters returns [FormalParameters args]
     :    compoundType identifier (COMMA compoundType identifier)*
     |
     ;
 
-functionBody
+functionBody returns [FunctionBody fb]
     :    OPENBRACE variableDeclaration* statement* CLOSEBRACE
     ;
 
@@ -47,7 +59,7 @@ variableDeclaration
     : compoundType identifier SEMICOLON
     ;
 
-compoundType
+compoundType returns [TypeNode type]
     :    TYPE
     |    TYPE OPENBRACKET INTEGERCONSTANT CLOSEBRACKET
     ;
@@ -158,7 +170,7 @@ expressionList
     |
     ;
 
-identifier
+identifier returns [Identifier name]
     :    ID
     ;
 

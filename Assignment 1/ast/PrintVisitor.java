@@ -6,15 +6,15 @@ public class PrintVisitor implements Visitor {
     public PrintVisitor() {}
 
     public void visit(AddExpression e) {
-        e.e1.accept(this);
-		System.out.print(" + ");
-		e.e2.accept(this);
+        // e.e1.accept(this);
+		// System.out.print(" + ");
+		// e.e2.accept(this);
     }
-    
+
     public void visit(ArrayAssignmentStatement s) {
         // System.out.print();
     }
-    
+
     public void visit(ArrayReference a) {
         // System.out.print();
     }
@@ -64,7 +64,8 @@ public class PrintVisitor implements Visitor {
     }
 
     public void visit(Function f) {
-        // System.out.print();
+        f.fd.accept(this);
+        // f.fb.accept(this);
     }
 
     public void visit(FunctionBody f) {
@@ -76,7 +77,7 @@ public class PrintVisitor implements Visitor {
     }
 
     public void visit(FunctionDeclaration f) {
-        // System.out.print();
+        // f.tn.accept(this);
     }
 
     public void visit(Identifier i) {
@@ -142,7 +143,8 @@ public class PrintVisitor implements Visitor {
     }
 
     public void visit(TypeNode t) {
-        // System.out.print();
+        // t.t.accept(this);
+        // System.out.println("t:" + t);
     }
 
     // public void visit(VariableAssignment s) {

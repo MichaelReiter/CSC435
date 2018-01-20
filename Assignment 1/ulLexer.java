@@ -1,4 +1,4 @@
-// $ANTLR 3.0.1 ul.g 2018-01-20 12:10:51
+// $ANTLR 3.0.1 ul.g 2018-01-20 14:33:30
 
 import org.antlr.runtime.*;
 import java.util.Stack;
@@ -48,7 +48,7 @@ public class ulLexer extends Lexer {
     public final void mTYPE() throws RecognitionException {
         try {
             int _type = TYPE;
-            // ul.g:195:5: ( 'int' | 'float' | 'char' | 'string' | 'boolean' | 'void' )
+            // ul.g:207:5: ( 'int' | 'float' | 'char' | 'string' | 'boolean' | 'void' )
             int alt1=6;
             switch ( input.LA(1) ) {
             case 'i':
@@ -83,14 +83,14 @@ public class ulLexer extends Lexer {
                 break;
             default:
                 NoViableAltException nvae =
-                    new NoViableAltException("194:1: TYPE : ( 'int' | 'float' | 'char' | 'string' | 'boolean' | 'void' );", 1, 0, input);
+                    new NoViableAltException("206:1: TYPE : ( 'int' | 'float' | 'char' | 'string' | 'boolean' | 'void' );", 1, 0, input);
 
                 throw nvae;
             }
 
             switch (alt1) {
                 case 1 :
-                    // ul.g:195:10: 'int'
+                    // ul.g:207:10: 'int'
                     {
                     match("int"); 
 
@@ -98,7 +98,7 @@ public class ulLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // ul.g:196:10: 'float'
+                    // ul.g:208:10: 'float'
                     {
                     match("float"); 
 
@@ -106,7 +106,7 @@ public class ulLexer extends Lexer {
                     }
                     break;
                 case 3 :
-                    // ul.g:197:10: 'char'
+                    // ul.g:209:10: 'char'
                     {
                     match("char"); 
 
@@ -114,7 +114,7 @@ public class ulLexer extends Lexer {
                     }
                     break;
                 case 4 :
-                    // ul.g:198:10: 'string'
+                    // ul.g:210:10: 'string'
                     {
                     match("string"); 
 
@@ -122,7 +122,7 @@ public class ulLexer extends Lexer {
                     }
                     break;
                 case 5 :
-                    // ul.g:199:10: 'boolean'
+                    // ul.g:211:10: 'boolean'
                     {
                     match("boolean"); 
 
@@ -130,7 +130,7 @@ public class ulLexer extends Lexer {
                     }
                     break;
                 case 6 :
-                    // ul.g:200:10: 'void'
+                    // ul.g:212:10: 'void'
                     {
                     match("void"); 
 
@@ -150,8 +150,8 @@ public class ulLexer extends Lexer {
     public final void mIF() throws RecognitionException {
         try {
             int _type = IF;
-            // ul.g:203:18: ( 'if' )
-            // ul.g:203:23: 'if'
+            // ul.g:215:18: ( 'if' )
+            // ul.g:215:23: 'if'
             {
             match("if"); 
 
@@ -169,8 +169,8 @@ public class ulLexer extends Lexer {
     public final void mELSE() throws RecognitionException {
         try {
             int _type = ELSE;
-            // ul.g:205:18: ( 'else' )
-            // ul.g:205:23: 'else'
+            // ul.g:217:18: ( 'else' )
+            // ul.g:217:23: 'else'
             {
             match("else"); 
 
@@ -188,8 +188,8 @@ public class ulLexer extends Lexer {
     public final void mWHILE() throws RecognitionException {
         try {
             int _type = WHILE;
-            // ul.g:207:18: ( 'while' )
-            // ul.g:207:23: 'while'
+            // ul.g:219:18: ( 'while' )
+            // ul.g:219:23: 'while'
             {
             match("while"); 
 
@@ -207,8 +207,8 @@ public class ulLexer extends Lexer {
     public final void mPRINT() throws RecognitionException {
         try {
             int _type = PRINT;
-            // ul.g:209:18: ( 'print' )
-            // ul.g:209:23: 'print'
+            // ul.g:221:18: ( 'print' )
+            // ul.g:221:23: 'print'
             {
             match("print"); 
 
@@ -226,8 +226,8 @@ public class ulLexer extends Lexer {
     public final void mPRINTLN() throws RecognitionException {
         try {
             int _type = PRINTLN;
-            // ul.g:211:18: ( 'println' )
-            // ul.g:211:23: 'println'
+            // ul.g:223:18: ( 'println' )
+            // ul.g:223:23: 'println'
             {
             match("println"); 
 
@@ -245,8 +245,8 @@ public class ulLexer extends Lexer {
     public final void mRETURN() throws RecognitionException {
         try {
             int _type = RETURN;
-            // ul.g:213:18: ( 'return' )
-            // ul.g:213:23: 'return'
+            // ul.g:225:18: ( 'return' )
+            // ul.g:225:23: 'return'
             {
             match("return"); 
 
@@ -264,8 +264,8 @@ public class ulLexer extends Lexer {
     public final void mTRUE() throws RecognitionException {
         try {
             int _type = TRUE;
-            // ul.g:215:18: ( 'true' )
-            // ul.g:215:23: 'true'
+            // ul.g:227:18: ( 'true' )
+            // ul.g:227:23: 'true'
             {
             match("true"); 
 
@@ -283,8 +283,8 @@ public class ulLexer extends Lexer {
     public final void mFALSE() throws RecognitionException {
         try {
             int _type = FALSE;
-            // ul.g:217:18: ( 'false' )
-            // ul.g:217:23: 'false'
+            // ul.g:229:18: ( 'false' )
+            // ul.g:229:23: 'false'
             {
             match("false"); 
 
@@ -302,8 +302,8 @@ public class ulLexer extends Lexer {
     public final void mSEMICOLON() throws RecognitionException {
         try {
             int _type = SEMICOLON;
-            // ul.g:219:18: ( ';' )
-            // ul.g:219:23: ';'
+            // ul.g:231:18: ( ';' )
+            // ul.g:231:23: ';'
             {
             match(';'); 
 
@@ -320,8 +320,8 @@ public class ulLexer extends Lexer {
     public final void mOPENPARENTHESIS() throws RecognitionException {
         try {
             int _type = OPENPARENTHESIS;
-            // ul.g:221:18: ( '(' )
-            // ul.g:221:23: '('
+            // ul.g:233:18: ( '(' )
+            // ul.g:233:23: '('
             {
             match('('); 
 
@@ -338,8 +338,8 @@ public class ulLexer extends Lexer {
     public final void mCLOSEPARENTHESIS() throws RecognitionException {
         try {
             int _type = CLOSEPARENTHESIS;
-            // ul.g:223:18: ( ')' )
-            // ul.g:223:23: ')'
+            // ul.g:235:18: ( ')' )
+            // ul.g:235:23: ')'
             {
             match(')'); 
 
@@ -356,8 +356,8 @@ public class ulLexer extends Lexer {
     public final void mOPENBRACKET() throws RecognitionException {
         try {
             int _type = OPENBRACKET;
-            // ul.g:225:18: ( '[' )
-            // ul.g:225:23: '['
+            // ul.g:237:18: ( '[' )
+            // ul.g:237:23: '['
             {
             match('['); 
 
@@ -374,8 +374,8 @@ public class ulLexer extends Lexer {
     public final void mCLOSEBRACKET() throws RecognitionException {
         try {
             int _type = CLOSEBRACKET;
-            // ul.g:227:18: ( ']' )
-            // ul.g:227:23: ']'
+            // ul.g:239:18: ( ']' )
+            // ul.g:239:23: ']'
             {
             match(']'); 
 
@@ -392,8 +392,8 @@ public class ulLexer extends Lexer {
     public final void mOPENBRACE() throws RecognitionException {
         try {
             int _type = OPENBRACE;
-            // ul.g:229:18: ( '{' )
-            // ul.g:229:23: '{'
+            // ul.g:241:18: ( '{' )
+            // ul.g:241:23: '{'
             {
             match('{'); 
 
@@ -410,8 +410,8 @@ public class ulLexer extends Lexer {
     public final void mCLOSEBRACE() throws RecognitionException {
         try {
             int _type = CLOSEBRACE;
-            // ul.g:231:18: ( '}' )
-            // ul.g:231:23: '}'
+            // ul.g:243:18: ( '}' )
+            // ul.g:243:23: '}'
             {
             match('}'); 
 
@@ -428,8 +428,8 @@ public class ulLexer extends Lexer {
     public final void mCOMMA() throws RecognitionException {
         try {
             int _type = COMMA;
-            // ul.g:233:18: ( ',' )
-            // ul.g:233:23: ','
+            // ul.g:245:18: ( ',' )
+            // ul.g:245:23: ','
             {
             match(','); 
 
@@ -446,8 +446,8 @@ public class ulLexer extends Lexer {
     public final void mSINGLEEQUALS() throws RecognitionException {
         try {
             int _type = SINGLEEQUALS;
-            // ul.g:235:18: ( '=' )
-            // ul.g:235:23: '='
+            // ul.g:247:18: ( '=' )
+            // ul.g:247:23: '='
             {
             match('='); 
 
@@ -464,8 +464,8 @@ public class ulLexer extends Lexer {
     public final void mSTAR() throws RecognitionException {
         try {
             int _type = STAR;
-            // ul.g:237:18: ( '*' )
-            // ul.g:237:23: '*'
+            // ul.g:249:18: ( '*' )
+            // ul.g:249:23: '*'
             {
             match('*'); 
 
@@ -482,8 +482,8 @@ public class ulLexer extends Lexer {
     public final void mPLUS() throws RecognitionException {
         try {
             int _type = PLUS;
-            // ul.g:239:18: ( '+' )
-            // ul.g:239:23: '+'
+            // ul.g:251:18: ( '+' )
+            // ul.g:251:23: '+'
             {
             match('+'); 
 
@@ -500,8 +500,8 @@ public class ulLexer extends Lexer {
     public final void mMINUS() throws RecognitionException {
         try {
             int _type = MINUS;
-            // ul.g:241:18: ( '-' )
-            // ul.g:241:23: '-'
+            // ul.g:253:18: ( '-' )
+            // ul.g:253:23: '-'
             {
             match('-'); 
 
@@ -518,8 +518,8 @@ public class ulLexer extends Lexer {
     public final void mLESSTHAN() throws RecognitionException {
         try {
             int _type = LESSTHAN;
-            // ul.g:243:18: ( '<' )
-            // ul.g:243:23: '<'
+            // ul.g:255:18: ( '<' )
+            // ul.g:255:23: '<'
             {
             match('<'); 
 
@@ -536,8 +536,8 @@ public class ulLexer extends Lexer {
     public final void mDOUBLEEQUALS() throws RecognitionException {
         try {
             int _type = DOUBLEEQUALS;
-            // ul.g:245:18: ( '==' )
-            // ul.g:245:23: '=='
+            // ul.g:257:18: ( '==' )
+            // ul.g:257:23: '=='
             {
             match("=="); 
 
@@ -555,10 +555,10 @@ public class ulLexer extends Lexer {
     public final void mINTEGERCONSTANT() throws RecognitionException {
         try {
             int _type = INTEGERCONSTANT;
-            // ul.g:248:5: ( ( '0' .. '9' )+ )
-            // ul.g:248:10: ( '0' .. '9' )+
+            // ul.g:260:5: ( ( '0' .. '9' )+ )
+            // ul.g:260:10: ( '0' .. '9' )+
             {
-            // ul.g:248:10: ( '0' .. '9' )+
+            // ul.g:260:10: ( '0' .. '9' )+
             int cnt2=0;
             loop2:
             do {
@@ -572,7 +572,7 @@ public class ulLexer extends Lexer {
 
                 switch (alt2) {
             	case 1 :
-            	    // ul.g:248:11: '0' .. '9'
+            	    // ul.g:260:11: '0' .. '9'
             	    {
             	    matchRange('0','9'); 
 
@@ -602,10 +602,10 @@ public class ulLexer extends Lexer {
     public final void mFLOATCONSTANT() throws RecognitionException {
         try {
             int _type = FLOATCONSTANT;
-            // ul.g:252:5: ( ( '0' .. '9' )+ '.' ( '0' .. '9' )+ )
-            // ul.g:252:10: ( '0' .. '9' )+ '.' ( '0' .. '9' )+
+            // ul.g:264:5: ( ( '0' .. '9' )+ '.' ( '0' .. '9' )+ )
+            // ul.g:264:10: ( '0' .. '9' )+ '.' ( '0' .. '9' )+
             {
-            // ul.g:252:10: ( '0' .. '9' )+
+            // ul.g:264:10: ( '0' .. '9' )+
             int cnt3=0;
             loop3:
             do {
@@ -619,7 +619,7 @@ public class ulLexer extends Lexer {
 
                 switch (alt3) {
             	case 1 :
-            	    // ul.g:252:11: '0' .. '9'
+            	    // ul.g:264:11: '0' .. '9'
             	    {
             	    matchRange('0','9'); 
 
@@ -636,7 +636,7 @@ public class ulLexer extends Lexer {
             } while (true);
 
             match('.'); 
-            // ul.g:252:26: ( '0' .. '9' )+
+            // ul.g:264:26: ( '0' .. '9' )+
             int cnt4=0;
             loop4:
             do {
@@ -650,7 +650,7 @@ public class ulLexer extends Lexer {
 
                 switch (alt4) {
             	case 1 :
-            	    // ul.g:252:27: '0' .. '9'
+            	    // ul.g:264:27: '0' .. '9'
             	    {
             	    matchRange('0','9'); 
 
@@ -680,8 +680,8 @@ public class ulLexer extends Lexer {
     public final void mCHARACTERCONSTANT() throws RecognitionException {
         try {
             int _type = CHARACTERCONSTANT;
-            // ul.g:256:5: ( '\\u0027' ( 'a' .. 'z' | 'A' .. 'Z' | ' ' | '0' .. '9' ) '\\u0027' )
-            // ul.g:256:10: '\\u0027' ( 'a' .. 'z' | 'A' .. 'Z' | ' ' | '0' .. '9' ) '\\u0027'
+            // ul.g:268:5: ( '\\u0027' ( 'a' .. 'z' | 'A' .. 'Z' | ' ' | '0' .. '9' ) '\\u0027' )
+            // ul.g:268:10: '\\u0027' ( 'a' .. 'z' | 'A' .. 'Z' | ' ' | '0' .. '9' ) '\\u0027'
             {
             match('\''); 
             if ( input.LA(1)==' '||(input.LA(1)>='0' && input.LA(1)<='9')||(input.LA(1)>='A' && input.LA(1)<='Z')||(input.LA(1)>='a' && input.LA(1)<='z') ) {
@@ -709,11 +709,11 @@ public class ulLexer extends Lexer {
     public final void mSTRINGCONSTANT() throws RecognitionException {
         try {
             int _type = STRINGCONSTANT;
-            // ul.g:260:5: ( '\\u0022' ( 'a' .. 'z' | 'A' .. 'Z' | ' ' | '0' .. '9' )* '\\u0022' )
-            // ul.g:260:10: '\\u0022' ( 'a' .. 'z' | 'A' .. 'Z' | ' ' | '0' .. '9' )* '\\u0022'
+            // ul.g:272:5: ( '\\u0022' ( 'a' .. 'z' | 'A' .. 'Z' | ' ' | '0' .. '9' )* '\\u0022' )
+            // ul.g:272:10: '\\u0022' ( 'a' .. 'z' | 'A' .. 'Z' | ' ' | '0' .. '9' )* '\\u0022'
             {
             match('\"'); 
-            // ul.g:260:19: ( 'a' .. 'z' | 'A' .. 'Z' | ' ' | '0' .. '9' )*
+            // ul.g:272:19: ( 'a' .. 'z' | 'A' .. 'Z' | ' ' | '0' .. '9' )*
             loop5:
             do {
                 int alt5=2;
@@ -762,8 +762,8 @@ public class ulLexer extends Lexer {
     public final void mID() throws RecognitionException {
         try {
             int _type = ID;
-            // ul.g:264:5: ( ( ( 'a' .. 'z' | 'A' .. 'Z' ) | '_' ) ( ( 'a' .. 'z' | 'A' .. 'Z' ) | '_' | '0' .. '9' )* )
-            // ul.g:264:10: ( ( 'a' .. 'z' | 'A' .. 'Z' ) | '_' ) ( ( 'a' .. 'z' | 'A' .. 'Z' ) | '_' | '0' .. '9' )*
+            // ul.g:276:5: ( ( ( 'a' .. 'z' | 'A' .. 'Z' ) | '_' ) ( ( 'a' .. 'z' | 'A' .. 'Z' ) | '_' | '0' .. '9' )* )
+            // ul.g:276:10: ( ( 'a' .. 'z' | 'A' .. 'Z' ) | '_' ) ( ( 'a' .. 'z' | 'A' .. 'Z' ) | '_' | '0' .. '9' )*
             {
             if ( (input.LA(1)>='A' && input.LA(1)<='Z')||input.LA(1)=='_'||(input.LA(1)>='a' && input.LA(1)<='z') ) {
                 input.consume();
@@ -775,7 +775,7 @@ public class ulLexer extends Lexer {
                 recover(mse);    throw mse;
             }
 
-            // ul.g:264:41: ( ( 'a' .. 'z' | 'A' .. 'Z' ) | '_' | '0' .. '9' )*
+            // ul.g:276:41: ( ( 'a' .. 'z' | 'A' .. 'Z' ) | '_' | '0' .. '9' )*
             loop6:
             do {
                 int alt6=2;
@@ -823,10 +823,10 @@ public class ulLexer extends Lexer {
     public final void mWHITESPACE() throws RecognitionException {
         try {
             int _type = WHITESPACE;
-            // ul.g:268:5: ( ( '\\t' | ' ' | ( '\\r' | '\\n' ) )+ )
-            // ul.g:268:10: ( '\\t' | ' ' | ( '\\r' | '\\n' ) )+
+            // ul.g:280:5: ( ( '\\t' | ' ' | ( '\\r' | '\\n' ) )+ )
+            // ul.g:280:10: ( '\\t' | ' ' | ( '\\r' | '\\n' ) )+
             {
-            // ul.g:268:10: ( '\\t' | ' ' | ( '\\r' | '\\n' ) )+
+            // ul.g:280:10: ( '\\t' | ' ' | ( '\\r' | '\\n' ) )+
             int cnt7=0;
             loop7:
             do {
@@ -880,12 +880,12 @@ public class ulLexer extends Lexer {
     public final void mCOMMENT() throws RecognitionException {
         try {
             int _type = COMMENT;
-            // ul.g:272:5: ( '//' (~ ( '\\r' | '\\n' ) )* )
-            // ul.g:272:10: '//' (~ ( '\\r' | '\\n' ) )*
+            // ul.g:284:5: ( '//' (~ ( '\\r' | '\\n' ) )* )
+            // ul.g:284:10: '//' (~ ( '\\r' | '\\n' ) )*
             {
             match("//"); 
 
-            // ul.g:272:15: (~ ( '\\r' | '\\n' ) )*
+            // ul.g:284:15: (~ ( '\\r' | '\\n' ) )*
             loop8:
             do {
                 int alt8=2;
@@ -898,7 +898,7 @@ public class ulLexer extends Lexer {
 
                 switch (alt8) {
             	case 1 :
-            	    // ul.g:272:15: ~ ( '\\r' | '\\n' )
+            	    // ul.g:284:15: ~ ( '\\r' | '\\n' )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='\t')||(input.LA(1)>='\u000B' && input.LA(1)<='\f')||(input.LA(1)>='\u000E' && input.LA(1)<='\uFFFE') ) {
             	        input.consume();

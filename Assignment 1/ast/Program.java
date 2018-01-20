@@ -3,10 +3,10 @@ package ast;
 import java.util.Vector;
 
 public class Program extends ASTNode {
-    public Vector functionList;
+    public Vector<Function> functionList;
 
     public Program() {
-        functionList = new Vector();
+        functionList = new Vector<Function>();
     }
 
     public void addElement(Function f) {
@@ -23,5 +23,6 @@ public class Program extends ASTNode {
 
     public void accept(Visitor v) {
         v.visit(this);
+        System.out.println(this);
     }
 }

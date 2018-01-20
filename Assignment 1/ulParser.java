@@ -1,4 +1,8 @@
-// $ANTLR 3.0.1 ul.g 2018-01-20 12:10:51
+// $ANTLR 3.0.1 ul.g 2018-01-20 14:33:29
+
+    import ast.*;
+    import type.*;
+
 
 import org.antlr.runtime.*;
 import java.util.Stack;
@@ -64,13 +68,21 @@ public class ulParser extends Parser {
 
 
     // $ANTLR start program
-    // ul.g:25:1: program : ( function )+ EOF ;
-    public final void program() throws RecognitionException {
+    // ul.g:31:1: program returns [Program p] : (f= function )+ EOF ;
+    public final Program program() throws RecognitionException {
+        Program p = null;
+
+        Function f = null;
+
+
+
+            p = new Program();
+
         try {
-            // ul.g:26:5: ( ( function )+ EOF )
-            // ul.g:26:10: ( function )+ EOF
+            // ul.g:36:5: ( (f= function )+ EOF )
+            // ul.g:36:7: (f= function )+ EOF
             {
-            // ul.g:26:10: ( function )+
+            // ul.g:36:7: (f= function )+
             int cnt1=0;
             loop1:
             do {
@@ -84,19 +96,22 @@ public class ulParser extends Parser {
 
                 switch (alt1) {
             	case 1 :
-            	    // ul.g:0:0: function
+            	    // ul.g:36:8: f= function
             	    {
-            	    pushFollow(FOLLOW_function_in_program43);
-            	    function();
+            	    pushFollow(FOLLOW_function_in_program60);
+            	    f=function();
             	    _fsp--;
-            	    if (failed) return ;
+            	    if (failed) return p;
+            	    if ( backtracking==0 ) {
+            	       p.addElement(f); 
+            	    }
 
             	    }
             	    break;
 
             	default :
             	    if ( cnt1 >= 1 ) break loop1;
-            	    if (backtracking>0) {failed=true; return ;}
+            	    if (backtracking>0) {failed=true; return p;}
                         EarlyExitException eee =
                             new EarlyExitException(1, input);
                         throw eee;
@@ -104,7 +119,7 @@ public class ulParser extends Parser {
                 cnt1++;
             } while (true);
 
-            match(input,EOF,FOLLOW_EOF_in_program46); if (failed) return ;
+            match(input,EOF,FOLLOW_EOF_in_program66); if (failed) return p;
 
             }
 
@@ -116,26 +131,36 @@ public class ulParser extends Parser {
             }
         finally {
         }
-        return ;
+        return p;
     }
     // $ANTLR end program
 
 
     // $ANTLR start function
-    // ul.g:29:1: function : functionDeclaration functionBody ;
-    public final void function() throws RecognitionException {
+    // ul.g:39:1: function returns [Function f] : fd= functionDeclaration fb= functionBody ;
+    public final Function function() throws RecognitionException {
+        Function f = null;
+
+        FunctionDeclaration fd = null;
+
+        FunctionBody fb = null;
+
+
         try {
-            // ul.g:30:5: ( functionDeclaration functionBody )
-            // ul.g:30:10: functionDeclaration functionBody
+            // ul.g:40:5: (fd= functionDeclaration fb= functionBody )
+            // ul.g:40:10: fd= functionDeclaration fb= functionBody
             {
-            pushFollow(FOLLOW_functionDeclaration_in_function66);
-            functionDeclaration();
+            pushFollow(FOLLOW_functionDeclaration_in_function94);
+            fd=functionDeclaration();
             _fsp--;
-            if (failed) return ;
-            pushFollow(FOLLOW_functionBody_in_function68);
-            functionBody();
+            if (failed) return f;
+            pushFollow(FOLLOW_functionBody_in_function100);
+            fb=functionBody();
             _fsp--;
-            if (failed) return ;
+            if (failed) return f;
+            if ( backtracking==0 ) {
+               f = new Function(fd, fb); 
+            }
 
             }
 
@@ -147,32 +172,44 @@ public class ulParser extends Parser {
             }
         finally {
         }
-        return ;
+        return f;
     }
     // $ANTLR end function
 
 
     // $ANTLR start functionDeclaration
-    // ul.g:33:1: functionDeclaration : compoundType identifier OPENPARENTHESIS formalParameters CLOSEPARENTHESIS ;
-    public final void functionDeclaration() throws RecognitionException {
+    // ul.g:44:1: functionDeclaration returns [FunctionDeclaration fd] : type= compoundType name= identifier OPENPARENTHESIS args= formalParameters CLOSEPARENTHESIS ;
+    public final FunctionDeclaration functionDeclaration() throws RecognitionException {
+        FunctionDeclaration fd = null;
+
+        TypeNode type = null;
+
+        Identifier name = null;
+
+        FormalParameters args = null;
+
+
         try {
-            // ul.g:34:5: ( compoundType identifier OPENPARENTHESIS formalParameters CLOSEPARENTHESIS )
-            // ul.g:34:10: compoundType identifier OPENPARENTHESIS formalParameters CLOSEPARENTHESIS
+            // ul.g:45:5: (type= compoundType name= identifier OPENPARENTHESIS args= formalParameters CLOSEPARENTHESIS )
+            // ul.g:45:10: type= compoundType name= identifier OPENPARENTHESIS args= formalParameters CLOSEPARENTHESIS
             {
-            pushFollow(FOLLOW_compoundType_in_functionDeclaration88);
-            compoundType();
+            pushFollow(FOLLOW_compoundType_in_functionDeclaration134);
+            type=compoundType();
             _fsp--;
-            if (failed) return ;
-            pushFollow(FOLLOW_identifier_in_functionDeclaration90);
-            identifier();
+            if (failed) return fd;
+            pushFollow(FOLLOW_identifier_in_functionDeclaration140);
+            name=identifier();
             _fsp--;
-            if (failed) return ;
-            match(input,OPENPARENTHESIS,FOLLOW_OPENPARENTHESIS_in_functionDeclaration92); if (failed) return ;
-            pushFollow(FOLLOW_formalParameters_in_functionDeclaration94);
-            formalParameters();
+            if (failed) return fd;
+            match(input,OPENPARENTHESIS,FOLLOW_OPENPARENTHESIS_in_functionDeclaration142); if (failed) return fd;
+            pushFollow(FOLLOW_formalParameters_in_functionDeclaration148);
+            args=formalParameters();
             _fsp--;
-            if (failed) return ;
-            match(input,CLOSEPARENTHESIS,FOLLOW_CLOSEPARENTHESIS_in_functionDeclaration96); if (failed) return ;
+            if (failed) return fd;
+            match(input,CLOSEPARENTHESIS,FOLLOW_CLOSEPARENTHESIS_in_functionDeclaration150); if (failed) return fd;
+            if ( backtracking==0 ) {
+               fd = new FunctionDeclaration(type, name, args); 
+            }
 
             }
 
@@ -184,16 +221,18 @@ public class ulParser extends Parser {
             }
         finally {
         }
-        return ;
+        return fd;
     }
     // $ANTLR end functionDeclaration
 
 
     // $ANTLR start formalParameters
-    // ul.g:37:1: formalParameters : ( compoundType identifier ( COMMA compoundType identifier )* | );
-    public final void formalParameters() throws RecognitionException {
+    // ul.g:49:1: formalParameters returns [FormalParameters args] : ( compoundType identifier ( COMMA compoundType identifier )* | );
+    public final FormalParameters formalParameters() throws RecognitionException {
+        FormalParameters args = null;
+
         try {
-            // ul.g:38:5: ( compoundType identifier ( COMMA compoundType identifier )* | )
+            // ul.g:50:5: ( compoundType identifier ( COMMA compoundType identifier )* | )
             int alt3=2;
             int LA3_0 = input.LA(1);
 
@@ -204,25 +243,25 @@ public class ulParser extends Parser {
                 alt3=2;
             }
             else {
-                if (backtracking>0) {failed=true; return ;}
+                if (backtracking>0) {failed=true; return args;}
                 NoViableAltException nvae =
-                    new NoViableAltException("37:1: formalParameters : ( compoundType identifier ( COMMA compoundType identifier )* | );", 3, 0, input);
+                    new NoViableAltException("49:1: formalParameters returns [FormalParameters args] : ( compoundType identifier ( COMMA compoundType identifier )* | );", 3, 0, input);
 
                 throw nvae;
             }
             switch (alt3) {
                 case 1 :
-                    // ul.g:38:10: compoundType identifier ( COMMA compoundType identifier )*
+                    // ul.g:50:10: compoundType identifier ( COMMA compoundType identifier )*
                     {
-                    pushFollow(FOLLOW_compoundType_in_formalParameters116);
+                    pushFollow(FOLLOW_compoundType_in_formalParameters180);
                     compoundType();
                     _fsp--;
-                    if (failed) return ;
-                    pushFollow(FOLLOW_identifier_in_formalParameters118);
+                    if (failed) return args;
+                    pushFollow(FOLLOW_identifier_in_formalParameters182);
                     identifier();
                     _fsp--;
-                    if (failed) return ;
-                    // ul.g:38:34: ( COMMA compoundType identifier )*
+                    if (failed) return args;
+                    // ul.g:50:34: ( COMMA compoundType identifier )*
                     loop2:
                     do {
                         int alt2=2;
@@ -235,17 +274,17 @@ public class ulParser extends Parser {
 
                         switch (alt2) {
                     	case 1 :
-                    	    // ul.g:38:35: COMMA compoundType identifier
+                    	    // ul.g:50:35: COMMA compoundType identifier
                     	    {
-                    	    match(input,COMMA,FOLLOW_COMMA_in_formalParameters121); if (failed) return ;
-                    	    pushFollow(FOLLOW_compoundType_in_formalParameters123);
+                    	    match(input,COMMA,FOLLOW_COMMA_in_formalParameters185); if (failed) return args;
+                    	    pushFollow(FOLLOW_compoundType_in_formalParameters187);
                     	    compoundType();
                     	    _fsp--;
-                    	    if (failed) return ;
-                    	    pushFollow(FOLLOW_identifier_in_formalParameters125);
+                    	    if (failed) return args;
+                    	    pushFollow(FOLLOW_identifier_in_formalParameters189);
                     	    identifier();
                     	    _fsp--;
-                    	    if (failed) return ;
+                    	    if (failed) return args;
 
                     	    }
                     	    break;
@@ -259,7 +298,7 @@ public class ulParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // ul.g:40:5: 
+                    // ul.g:52:5: 
                     {
                     }
                     break;
@@ -273,20 +312,22 @@ public class ulParser extends Parser {
             }
         finally {
         }
-        return ;
+        return args;
     }
     // $ANTLR end formalParameters
 
 
     // $ANTLR start functionBody
-    // ul.g:42:1: functionBody : OPENBRACE ( variableDeclaration )* ( statement )* CLOSEBRACE ;
-    public final void functionBody() throws RecognitionException {
+    // ul.g:54:1: functionBody returns [FunctionBody fb] : OPENBRACE ( variableDeclaration )* ( statement )* CLOSEBRACE ;
+    public final FunctionBody functionBody() throws RecognitionException {
+        FunctionBody fb = null;
+
         try {
-            // ul.g:43:5: ( OPENBRACE ( variableDeclaration )* ( statement )* CLOSEBRACE )
-            // ul.g:43:10: OPENBRACE ( variableDeclaration )* ( statement )* CLOSEBRACE
+            // ul.g:55:5: ( OPENBRACE ( variableDeclaration )* ( statement )* CLOSEBRACE )
+            // ul.g:55:10: OPENBRACE ( variableDeclaration )* ( statement )* CLOSEBRACE
             {
-            match(input,OPENBRACE,FOLLOW_OPENBRACE_in_functionBody153); if (failed) return ;
-            // ul.g:43:20: ( variableDeclaration )*
+            match(input,OPENBRACE,FOLLOW_OPENBRACE_in_functionBody221); if (failed) return fb;
+            // ul.g:55:20: ( variableDeclaration )*
             loop4:
             do {
                 int alt4=2;
@@ -301,10 +342,10 @@ public class ulParser extends Parser {
             	case 1 :
             	    // ul.g:0:0: variableDeclaration
             	    {
-            	    pushFollow(FOLLOW_variableDeclaration_in_functionBody155);
+            	    pushFollow(FOLLOW_variableDeclaration_in_functionBody223);
             	    variableDeclaration();
             	    _fsp--;
-            	    if (failed) return ;
+            	    if (failed) return fb;
 
             	    }
             	    break;
@@ -314,7 +355,7 @@ public class ulParser extends Parser {
                 }
             } while (true);
 
-            // ul.g:43:41: ( statement )*
+            // ul.g:55:41: ( statement )*
             loop5:
             do {
                 int alt5=2;
@@ -329,10 +370,10 @@ public class ulParser extends Parser {
             	case 1 :
             	    // ul.g:0:0: statement
             	    {
-            	    pushFollow(FOLLOW_statement_in_functionBody158);
+            	    pushFollow(FOLLOW_statement_in_functionBody226);
             	    statement();
             	    _fsp--;
-            	    if (failed) return ;
+            	    if (failed) return fb;
 
             	    }
             	    break;
@@ -342,7 +383,7 @@ public class ulParser extends Parser {
                 }
             } while (true);
 
-            match(input,CLOSEBRACE,FOLLOW_CLOSEBRACE_in_functionBody161); if (failed) return ;
+            match(input,CLOSEBRACE,FOLLOW_CLOSEBRACE_in_functionBody229); if (failed) return fb;
 
             }
 
@@ -354,27 +395,27 @@ public class ulParser extends Parser {
             }
         finally {
         }
-        return ;
+        return fb;
     }
     // $ANTLR end functionBody
 
 
     // $ANTLR start variableDeclaration
-    // ul.g:46:1: variableDeclaration : compoundType identifier SEMICOLON ;
+    // ul.g:58:1: variableDeclaration : compoundType identifier SEMICOLON ;
     public final void variableDeclaration() throws RecognitionException {
         try {
-            // ul.g:47:5: ( compoundType identifier SEMICOLON )
-            // ul.g:47:7: compoundType identifier SEMICOLON
+            // ul.g:59:5: ( compoundType identifier SEMICOLON )
+            // ul.g:59:7: compoundType identifier SEMICOLON
             {
-            pushFollow(FOLLOW_compoundType_in_variableDeclaration178);
+            pushFollow(FOLLOW_compoundType_in_variableDeclaration246);
             compoundType();
             _fsp--;
             if (failed) return ;
-            pushFollow(FOLLOW_identifier_in_variableDeclaration180);
+            pushFollow(FOLLOW_identifier_in_variableDeclaration248);
             identifier();
             _fsp--;
             if (failed) return ;
-            match(input,SEMICOLON,FOLLOW_SEMICOLON_in_variableDeclaration182); if (failed) return ;
+            match(input,SEMICOLON,FOLLOW_SEMICOLON_in_variableDeclaration250); if (failed) return ;
 
             }
 
@@ -392,10 +433,12 @@ public class ulParser extends Parser {
 
 
     // $ANTLR start compoundType
-    // ul.g:50:1: compoundType : ( TYPE | TYPE OPENBRACKET INTEGERCONSTANT CLOSEBRACKET );
-    public final void compoundType() throws RecognitionException {
+    // ul.g:62:1: compoundType returns [TypeNode type] : ( TYPE | TYPE OPENBRACKET INTEGERCONSTANT CLOSEBRACKET );
+    public final TypeNode compoundType() throws RecognitionException {
+        TypeNode type = null;
+
         try {
-            // ul.g:51:5: ( TYPE | TYPE OPENBRACKET INTEGERCONSTANT CLOSEBRACKET )
+            // ul.g:63:5: ( TYPE | TYPE OPENBRACKET INTEGERCONSTANT CLOSEBRACKET )
             int alt6=2;
             int LA6_0 = input.LA(1);
 
@@ -409,35 +452,35 @@ public class ulParser extends Parser {
                     alt6=1;
                 }
                 else {
-                    if (backtracking>0) {failed=true; return ;}
+                    if (backtracking>0) {failed=true; return type;}
                     NoViableAltException nvae =
-                        new NoViableAltException("50:1: compoundType : ( TYPE | TYPE OPENBRACKET INTEGERCONSTANT CLOSEBRACKET );", 6, 1, input);
+                        new NoViableAltException("62:1: compoundType returns [TypeNode type] : ( TYPE | TYPE OPENBRACKET INTEGERCONSTANT CLOSEBRACKET );", 6, 1, input);
 
                     throw nvae;
                 }
             }
             else {
-                if (backtracking>0) {failed=true; return ;}
+                if (backtracking>0) {failed=true; return type;}
                 NoViableAltException nvae =
-                    new NoViableAltException("50:1: compoundType : ( TYPE | TYPE OPENBRACKET INTEGERCONSTANT CLOSEBRACKET );", 6, 0, input);
+                    new NoViableAltException("62:1: compoundType returns [TypeNode type] : ( TYPE | TYPE OPENBRACKET INTEGERCONSTANT CLOSEBRACKET );", 6, 0, input);
 
                 throw nvae;
             }
             switch (alt6) {
                 case 1 :
-                    // ul.g:51:10: TYPE
+                    // ul.g:63:10: TYPE
                     {
-                    match(input,TYPE,FOLLOW_TYPE_in_compoundType202); if (failed) return ;
+                    match(input,TYPE,FOLLOW_TYPE_in_compoundType274); if (failed) return type;
 
                     }
                     break;
                 case 2 :
-                    // ul.g:52:10: TYPE OPENBRACKET INTEGERCONSTANT CLOSEBRACKET
+                    // ul.g:64:10: TYPE OPENBRACKET INTEGERCONSTANT CLOSEBRACKET
                     {
-                    match(input,TYPE,FOLLOW_TYPE_in_compoundType213); if (failed) return ;
-                    match(input,OPENBRACKET,FOLLOW_OPENBRACKET_in_compoundType215); if (failed) return ;
-                    match(input,INTEGERCONSTANT,FOLLOW_INTEGERCONSTANT_in_compoundType217); if (failed) return ;
-                    match(input,CLOSEBRACKET,FOLLOW_CLOSEBRACKET_in_compoundType219); if (failed) return ;
+                    match(input,TYPE,FOLLOW_TYPE_in_compoundType285); if (failed) return type;
+                    match(input,OPENBRACKET,FOLLOW_OPENBRACKET_in_compoundType287); if (failed) return type;
+                    match(input,INTEGERCONSTANT,FOLLOW_INTEGERCONSTANT_in_compoundType289); if (failed) return type;
+                    match(input,CLOSEBRACKET,FOLLOW_CLOSEBRACKET_in_compoundType291); if (failed) return type;
 
                     }
                     break;
@@ -451,16 +494,16 @@ public class ulParser extends Parser {
             }
         finally {
         }
-        return ;
+        return type;
     }
     // $ANTLR end compoundType
 
 
     // $ANTLR start statement
-    // ul.g:55:1: statement : ( SEMICOLON | expressionStatement | assignmentStatement | arrayAssignmentStatement | whileStatement | returnStatement | printStatement | printlnStatement | ifElseStatement | ifStatement );
+    // ul.g:67:1: statement : ( SEMICOLON | expressionStatement | assignmentStatement | arrayAssignmentStatement | whileStatement | returnStatement | printStatement | printlnStatement | ifElseStatement | ifStatement );
     public final void statement() throws RecognitionException {
         try {
-            // ul.g:56:5: ( SEMICOLON | expressionStatement | assignmentStatement | arrayAssignmentStatement | whileStatement | returnStatement | printStatement | printlnStatement | ifElseStatement | ifStatement )
+            // ul.g:68:5: ( SEMICOLON | expressionStatement | assignmentStatement | arrayAssignmentStatement | whileStatement | returnStatement | printStatement | printlnStatement | ifElseStatement | ifStatement )
             int alt7=10;
             switch ( input.LA(1) ) {
             case SEMICOLON:
@@ -484,7 +527,7 @@ public class ulParser extends Parser {
                 else {
                     if (backtracking>0) {failed=true; return ;}
                     NoViableAltException nvae =
-                        new NoViableAltException("55:1: statement : ( SEMICOLON | expressionStatement | assignmentStatement | arrayAssignmentStatement | whileStatement | returnStatement | printStatement | printlnStatement | ifElseStatement | ifStatement );", 7, 2, input);
+                        new NoViableAltException("67:1: statement : ( SEMICOLON | expressionStatement | assignmentStatement | arrayAssignmentStatement | whileStatement | returnStatement | printStatement | printlnStatement | ifElseStatement | ifStatement );", 7, 2, input);
 
                     throw nvae;
                 }
@@ -534,7 +577,7 @@ public class ulParser extends Parser {
                 else {
                     if (backtracking>0) {failed=true; return ;}
                     NoViableAltException nvae =
-                        new NoViableAltException("55:1: statement : ( SEMICOLON | expressionStatement | assignmentStatement | arrayAssignmentStatement | whileStatement | returnStatement | printStatement | printlnStatement | ifElseStatement | ifStatement );", 7, 13, input);
+                        new NoViableAltException("67:1: statement : ( SEMICOLON | expressionStatement | assignmentStatement | arrayAssignmentStatement | whileStatement | returnStatement | printStatement | printlnStatement | ifElseStatement | ifStatement );", 7, 13, input);
 
                     throw nvae;
                 }
@@ -543,23 +586,23 @@ public class ulParser extends Parser {
             default:
                 if (backtracking>0) {failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("55:1: statement : ( SEMICOLON | expressionStatement | assignmentStatement | arrayAssignmentStatement | whileStatement | returnStatement | printStatement | printlnStatement | ifElseStatement | ifStatement );", 7, 0, input);
+                    new NoViableAltException("67:1: statement : ( SEMICOLON | expressionStatement | assignmentStatement | arrayAssignmentStatement | whileStatement | returnStatement | printStatement | printlnStatement | ifElseStatement | ifStatement );", 7, 0, input);
 
                 throw nvae;
             }
 
             switch (alt7) {
                 case 1 :
-                    // ul.g:56:10: SEMICOLON
+                    // ul.g:68:10: SEMICOLON
                     {
-                    match(input,SEMICOLON,FOLLOW_SEMICOLON_in_statement239); if (failed) return ;
+                    match(input,SEMICOLON,FOLLOW_SEMICOLON_in_statement311); if (failed) return ;
 
                     }
                     break;
                 case 2 :
-                    // ul.g:57:10: expressionStatement
+                    // ul.g:69:10: expressionStatement
                     {
-                    pushFollow(FOLLOW_expressionStatement_in_statement250);
+                    pushFollow(FOLLOW_expressionStatement_in_statement322);
                     expressionStatement();
                     _fsp--;
                     if (failed) return ;
@@ -567,9 +610,9 @@ public class ulParser extends Parser {
                     }
                     break;
                 case 3 :
-                    // ul.g:58:10: assignmentStatement
+                    // ul.g:70:10: assignmentStatement
                     {
-                    pushFollow(FOLLOW_assignmentStatement_in_statement261);
+                    pushFollow(FOLLOW_assignmentStatement_in_statement333);
                     assignmentStatement();
                     _fsp--;
                     if (failed) return ;
@@ -577,9 +620,9 @@ public class ulParser extends Parser {
                     }
                     break;
                 case 4 :
-                    // ul.g:59:10: arrayAssignmentStatement
+                    // ul.g:71:10: arrayAssignmentStatement
                     {
-                    pushFollow(FOLLOW_arrayAssignmentStatement_in_statement272);
+                    pushFollow(FOLLOW_arrayAssignmentStatement_in_statement344);
                     arrayAssignmentStatement();
                     _fsp--;
                     if (failed) return ;
@@ -587,9 +630,9 @@ public class ulParser extends Parser {
                     }
                     break;
                 case 5 :
-                    // ul.g:60:10: whileStatement
+                    // ul.g:72:10: whileStatement
                     {
-                    pushFollow(FOLLOW_whileStatement_in_statement283);
+                    pushFollow(FOLLOW_whileStatement_in_statement355);
                     whileStatement();
                     _fsp--;
                     if (failed) return ;
@@ -597,9 +640,9 @@ public class ulParser extends Parser {
                     }
                     break;
                 case 6 :
-                    // ul.g:61:10: returnStatement
+                    // ul.g:73:10: returnStatement
                     {
-                    pushFollow(FOLLOW_returnStatement_in_statement294);
+                    pushFollow(FOLLOW_returnStatement_in_statement366);
                     returnStatement();
                     _fsp--;
                     if (failed) return ;
@@ -607,9 +650,9 @@ public class ulParser extends Parser {
                     }
                     break;
                 case 7 :
-                    // ul.g:62:10: printStatement
+                    // ul.g:74:10: printStatement
                     {
-                    pushFollow(FOLLOW_printStatement_in_statement305);
+                    pushFollow(FOLLOW_printStatement_in_statement377);
                     printStatement();
                     _fsp--;
                     if (failed) return ;
@@ -617,9 +660,9 @@ public class ulParser extends Parser {
                     }
                     break;
                 case 8 :
-                    // ul.g:63:10: printlnStatement
+                    // ul.g:75:10: printlnStatement
                     {
-                    pushFollow(FOLLOW_printlnStatement_in_statement316);
+                    pushFollow(FOLLOW_printlnStatement_in_statement388);
                     printlnStatement();
                     _fsp--;
                     if (failed) return ;
@@ -627,9 +670,9 @@ public class ulParser extends Parser {
                     }
                     break;
                 case 9 :
-                    // ul.g:64:10: ifElseStatement
+                    // ul.g:76:10: ifElseStatement
                     {
-                    pushFollow(FOLLOW_ifElseStatement_in_statement327);
+                    pushFollow(FOLLOW_ifElseStatement_in_statement399);
                     ifElseStatement();
                     _fsp--;
                     if (failed) return ;
@@ -637,9 +680,9 @@ public class ulParser extends Parser {
                     }
                     break;
                 case 10 :
-                    // ul.g:65:10: ifStatement
+                    // ul.g:77:10: ifStatement
                     {
-                    pushFollow(FOLLOW_ifStatement_in_statement338);
+                    pushFollow(FOLLOW_ifStatement_in_statement410);
                     ifStatement();
                     _fsp--;
                     if (failed) return ;
@@ -662,17 +705,17 @@ public class ulParser extends Parser {
 
 
     // $ANTLR start expressionStatement
-    // ul.g:68:1: expressionStatement : expression SEMICOLON ;
+    // ul.g:80:1: expressionStatement : expression SEMICOLON ;
     public final void expressionStatement() throws RecognitionException {
         try {
-            // ul.g:69:5: ( expression SEMICOLON )
-            // ul.g:69:10: expression SEMICOLON
+            // ul.g:81:5: ( expression SEMICOLON )
+            // ul.g:81:10: expression SEMICOLON
             {
-            pushFollow(FOLLOW_expression_in_expressionStatement358);
+            pushFollow(FOLLOW_expression_in_expressionStatement430);
             expression();
             _fsp--;
             if (failed) return ;
-            match(input,SEMICOLON,FOLLOW_SEMICOLON_in_expressionStatement360); if (failed) return ;
+            match(input,SEMICOLON,FOLLOW_SEMICOLON_in_expressionStatement432); if (failed) return ;
 
             }
 
@@ -690,22 +733,22 @@ public class ulParser extends Parser {
 
 
     // $ANTLR start assignmentStatement
-    // ul.g:72:1: assignmentStatement : identifier SINGLEEQUALS expression SEMICOLON ;
+    // ul.g:84:1: assignmentStatement : identifier SINGLEEQUALS expression SEMICOLON ;
     public final void assignmentStatement() throws RecognitionException {
         try {
-            // ul.g:73:5: ( identifier SINGLEEQUALS expression SEMICOLON )
-            // ul.g:73:10: identifier SINGLEEQUALS expression SEMICOLON
+            // ul.g:85:5: ( identifier SINGLEEQUALS expression SEMICOLON )
+            // ul.g:85:10: identifier SINGLEEQUALS expression SEMICOLON
             {
-            pushFollow(FOLLOW_identifier_in_assignmentStatement380);
+            pushFollow(FOLLOW_identifier_in_assignmentStatement452);
             identifier();
             _fsp--;
             if (failed) return ;
-            match(input,SINGLEEQUALS,FOLLOW_SINGLEEQUALS_in_assignmentStatement382); if (failed) return ;
-            pushFollow(FOLLOW_expression_in_assignmentStatement384);
+            match(input,SINGLEEQUALS,FOLLOW_SINGLEEQUALS_in_assignmentStatement454); if (failed) return ;
+            pushFollow(FOLLOW_expression_in_assignmentStatement456);
             expression();
             _fsp--;
             if (failed) return ;
-            match(input,SEMICOLON,FOLLOW_SEMICOLON_in_assignmentStatement386); if (failed) return ;
+            match(input,SEMICOLON,FOLLOW_SEMICOLON_in_assignmentStatement458); if (failed) return ;
 
             }
 
@@ -723,28 +766,28 @@ public class ulParser extends Parser {
 
 
     // $ANTLR start arrayAssignmentStatement
-    // ul.g:76:1: arrayAssignmentStatement : identifier OPENBRACKET expression CLOSEBRACKET SINGLEEQUALS expression SEMICOLON ;
+    // ul.g:88:1: arrayAssignmentStatement : identifier OPENBRACKET expression CLOSEBRACKET SINGLEEQUALS expression SEMICOLON ;
     public final void arrayAssignmentStatement() throws RecognitionException {
         try {
-            // ul.g:77:5: ( identifier OPENBRACKET expression CLOSEBRACKET SINGLEEQUALS expression SEMICOLON )
-            // ul.g:77:10: identifier OPENBRACKET expression CLOSEBRACKET SINGLEEQUALS expression SEMICOLON
+            // ul.g:89:5: ( identifier OPENBRACKET expression CLOSEBRACKET SINGLEEQUALS expression SEMICOLON )
+            // ul.g:89:10: identifier OPENBRACKET expression CLOSEBRACKET SINGLEEQUALS expression SEMICOLON
             {
-            pushFollow(FOLLOW_identifier_in_arrayAssignmentStatement406);
+            pushFollow(FOLLOW_identifier_in_arrayAssignmentStatement478);
             identifier();
             _fsp--;
             if (failed) return ;
-            match(input,OPENBRACKET,FOLLOW_OPENBRACKET_in_arrayAssignmentStatement408); if (failed) return ;
-            pushFollow(FOLLOW_expression_in_arrayAssignmentStatement410);
+            match(input,OPENBRACKET,FOLLOW_OPENBRACKET_in_arrayAssignmentStatement480); if (failed) return ;
+            pushFollow(FOLLOW_expression_in_arrayAssignmentStatement482);
             expression();
             _fsp--;
             if (failed) return ;
-            match(input,CLOSEBRACKET,FOLLOW_CLOSEBRACKET_in_arrayAssignmentStatement412); if (failed) return ;
-            match(input,SINGLEEQUALS,FOLLOW_SINGLEEQUALS_in_arrayAssignmentStatement414); if (failed) return ;
-            pushFollow(FOLLOW_expression_in_arrayAssignmentStatement416);
+            match(input,CLOSEBRACKET,FOLLOW_CLOSEBRACKET_in_arrayAssignmentStatement484); if (failed) return ;
+            match(input,SINGLEEQUALS,FOLLOW_SINGLEEQUALS_in_arrayAssignmentStatement486); if (failed) return ;
+            pushFollow(FOLLOW_expression_in_arrayAssignmentStatement488);
             expression();
             _fsp--;
             if (failed) return ;
-            match(input,SEMICOLON,FOLLOW_SEMICOLON_in_arrayAssignmentStatement418); if (failed) return ;
+            match(input,SEMICOLON,FOLLOW_SEMICOLON_in_arrayAssignmentStatement490); if (failed) return ;
 
             }
 
@@ -762,20 +805,20 @@ public class ulParser extends Parser {
 
 
     // $ANTLR start whileStatement
-    // ul.g:80:1: whileStatement : WHILE OPENPARENTHESIS expression CLOSEPARENTHESIS block ;
+    // ul.g:92:1: whileStatement : WHILE OPENPARENTHESIS expression CLOSEPARENTHESIS block ;
     public final void whileStatement() throws RecognitionException {
         try {
-            // ul.g:81:5: ( WHILE OPENPARENTHESIS expression CLOSEPARENTHESIS block )
-            // ul.g:81:10: WHILE OPENPARENTHESIS expression CLOSEPARENTHESIS block
+            // ul.g:93:5: ( WHILE OPENPARENTHESIS expression CLOSEPARENTHESIS block )
+            // ul.g:93:10: WHILE OPENPARENTHESIS expression CLOSEPARENTHESIS block
             {
-            match(input,WHILE,FOLLOW_WHILE_in_whileStatement438); if (failed) return ;
-            match(input,OPENPARENTHESIS,FOLLOW_OPENPARENTHESIS_in_whileStatement440); if (failed) return ;
-            pushFollow(FOLLOW_expression_in_whileStatement442);
+            match(input,WHILE,FOLLOW_WHILE_in_whileStatement510); if (failed) return ;
+            match(input,OPENPARENTHESIS,FOLLOW_OPENPARENTHESIS_in_whileStatement512); if (failed) return ;
+            pushFollow(FOLLOW_expression_in_whileStatement514);
             expression();
             _fsp--;
             if (failed) return ;
-            match(input,CLOSEPARENTHESIS,FOLLOW_CLOSEPARENTHESIS_in_whileStatement444); if (failed) return ;
-            pushFollow(FOLLOW_block_in_whileStatement446);
+            match(input,CLOSEPARENTHESIS,FOLLOW_CLOSEPARENTHESIS_in_whileStatement516); if (failed) return ;
+            pushFollow(FOLLOW_block_in_whileStatement518);
             block();
             _fsp--;
             if (failed) return ;
@@ -796,14 +839,14 @@ public class ulParser extends Parser {
 
 
     // $ANTLR start returnStatement
-    // ul.g:84:1: returnStatement : RETURN ( expression )? SEMICOLON ;
+    // ul.g:96:1: returnStatement : RETURN ( expression )? SEMICOLON ;
     public final void returnStatement() throws RecognitionException {
         try {
-            // ul.g:85:5: ( RETURN ( expression )? SEMICOLON )
-            // ul.g:85:10: RETURN ( expression )? SEMICOLON
+            // ul.g:97:5: ( RETURN ( expression )? SEMICOLON )
+            // ul.g:97:10: RETURN ( expression )? SEMICOLON
             {
-            match(input,RETURN,FOLLOW_RETURN_in_returnStatement466); if (failed) return ;
-            // ul.g:85:17: ( expression )?
+            match(input,RETURN,FOLLOW_RETURN_in_returnStatement538); if (failed) return ;
+            // ul.g:97:17: ( expression )?
             int alt8=2;
             int LA8_0 = input.LA(1);
 
@@ -814,7 +857,7 @@ public class ulParser extends Parser {
                 case 1 :
                     // ul.g:0:0: expression
                     {
-                    pushFollow(FOLLOW_expression_in_returnStatement468);
+                    pushFollow(FOLLOW_expression_in_returnStatement540);
                     expression();
                     _fsp--;
                     if (failed) return ;
@@ -824,7 +867,7 @@ public class ulParser extends Parser {
 
             }
 
-            match(input,SEMICOLON,FOLLOW_SEMICOLON_in_returnStatement471); if (failed) return ;
+            match(input,SEMICOLON,FOLLOW_SEMICOLON_in_returnStatement543); if (failed) return ;
 
             }
 
@@ -842,18 +885,18 @@ public class ulParser extends Parser {
 
 
     // $ANTLR start printStatement
-    // ul.g:88:1: printStatement : PRINT expression SEMICOLON ;
+    // ul.g:100:1: printStatement : PRINT expression SEMICOLON ;
     public final void printStatement() throws RecognitionException {
         try {
-            // ul.g:89:5: ( PRINT expression SEMICOLON )
-            // ul.g:89:10: PRINT expression SEMICOLON
+            // ul.g:101:5: ( PRINT expression SEMICOLON )
+            // ul.g:101:10: PRINT expression SEMICOLON
             {
-            match(input,PRINT,FOLLOW_PRINT_in_printStatement491); if (failed) return ;
-            pushFollow(FOLLOW_expression_in_printStatement493);
+            match(input,PRINT,FOLLOW_PRINT_in_printStatement563); if (failed) return ;
+            pushFollow(FOLLOW_expression_in_printStatement565);
             expression();
             _fsp--;
             if (failed) return ;
-            match(input,SEMICOLON,FOLLOW_SEMICOLON_in_printStatement495); if (failed) return ;
+            match(input,SEMICOLON,FOLLOW_SEMICOLON_in_printStatement567); if (failed) return ;
 
             }
 
@@ -871,18 +914,18 @@ public class ulParser extends Parser {
 
 
     // $ANTLR start printlnStatement
-    // ul.g:92:1: printlnStatement : PRINTLN expression SEMICOLON ;
+    // ul.g:104:1: printlnStatement : PRINTLN expression SEMICOLON ;
     public final void printlnStatement() throws RecognitionException {
         try {
-            // ul.g:93:5: ( PRINTLN expression SEMICOLON )
-            // ul.g:93:10: PRINTLN expression SEMICOLON
+            // ul.g:105:5: ( PRINTLN expression SEMICOLON )
+            // ul.g:105:10: PRINTLN expression SEMICOLON
             {
-            match(input,PRINTLN,FOLLOW_PRINTLN_in_printlnStatement515); if (failed) return ;
-            pushFollow(FOLLOW_expression_in_printlnStatement517);
+            match(input,PRINTLN,FOLLOW_PRINTLN_in_printlnStatement587); if (failed) return ;
+            pushFollow(FOLLOW_expression_in_printlnStatement589);
             expression();
             _fsp--;
             if (failed) return ;
-            match(input,SEMICOLON,FOLLOW_SEMICOLON_in_printlnStatement519); if (failed) return ;
+            match(input,SEMICOLON,FOLLOW_SEMICOLON_in_printlnStatement591); if (failed) return ;
 
             }
 
@@ -900,25 +943,25 @@ public class ulParser extends Parser {
 
 
     // $ANTLR start ifElseStatement
-    // ul.g:96:1: ifElseStatement : IF OPENPARENTHESIS expression CLOSEPARENTHESIS block ELSE block ;
+    // ul.g:108:1: ifElseStatement : IF OPENPARENTHESIS expression CLOSEPARENTHESIS block ELSE block ;
     public final void ifElseStatement() throws RecognitionException {
         try {
-            // ul.g:97:5: ( IF OPENPARENTHESIS expression CLOSEPARENTHESIS block ELSE block )
-            // ul.g:97:10: IF OPENPARENTHESIS expression CLOSEPARENTHESIS block ELSE block
+            // ul.g:109:5: ( IF OPENPARENTHESIS expression CLOSEPARENTHESIS block ELSE block )
+            // ul.g:109:10: IF OPENPARENTHESIS expression CLOSEPARENTHESIS block ELSE block
             {
-            match(input,IF,FOLLOW_IF_in_ifElseStatement539); if (failed) return ;
-            match(input,OPENPARENTHESIS,FOLLOW_OPENPARENTHESIS_in_ifElseStatement541); if (failed) return ;
-            pushFollow(FOLLOW_expression_in_ifElseStatement543);
+            match(input,IF,FOLLOW_IF_in_ifElseStatement611); if (failed) return ;
+            match(input,OPENPARENTHESIS,FOLLOW_OPENPARENTHESIS_in_ifElseStatement613); if (failed) return ;
+            pushFollow(FOLLOW_expression_in_ifElseStatement615);
             expression();
             _fsp--;
             if (failed) return ;
-            match(input,CLOSEPARENTHESIS,FOLLOW_CLOSEPARENTHESIS_in_ifElseStatement545); if (failed) return ;
-            pushFollow(FOLLOW_block_in_ifElseStatement547);
+            match(input,CLOSEPARENTHESIS,FOLLOW_CLOSEPARENTHESIS_in_ifElseStatement617); if (failed) return ;
+            pushFollow(FOLLOW_block_in_ifElseStatement619);
             block();
             _fsp--;
             if (failed) return ;
-            match(input,ELSE,FOLLOW_ELSE_in_ifElseStatement549); if (failed) return ;
-            pushFollow(FOLLOW_block_in_ifElseStatement551);
+            match(input,ELSE,FOLLOW_ELSE_in_ifElseStatement621); if (failed) return ;
+            pushFollow(FOLLOW_block_in_ifElseStatement623);
             block();
             _fsp--;
             if (failed) return ;
@@ -939,20 +982,20 @@ public class ulParser extends Parser {
 
 
     // $ANTLR start ifStatement
-    // ul.g:100:1: ifStatement : IF OPENPARENTHESIS expression CLOSEPARENTHESIS block ;
+    // ul.g:112:1: ifStatement : IF OPENPARENTHESIS expression CLOSEPARENTHESIS block ;
     public final void ifStatement() throws RecognitionException {
         try {
-            // ul.g:101:5: ( IF OPENPARENTHESIS expression CLOSEPARENTHESIS block )
-            // ul.g:101:10: IF OPENPARENTHESIS expression CLOSEPARENTHESIS block
+            // ul.g:113:5: ( IF OPENPARENTHESIS expression CLOSEPARENTHESIS block )
+            // ul.g:113:10: IF OPENPARENTHESIS expression CLOSEPARENTHESIS block
             {
-            match(input,IF,FOLLOW_IF_in_ifStatement571); if (failed) return ;
-            match(input,OPENPARENTHESIS,FOLLOW_OPENPARENTHESIS_in_ifStatement573); if (failed) return ;
-            pushFollow(FOLLOW_expression_in_ifStatement575);
+            match(input,IF,FOLLOW_IF_in_ifStatement643); if (failed) return ;
+            match(input,OPENPARENTHESIS,FOLLOW_OPENPARENTHESIS_in_ifStatement645); if (failed) return ;
+            pushFollow(FOLLOW_expression_in_ifStatement647);
             expression();
             _fsp--;
             if (failed) return ;
-            match(input,CLOSEPARENTHESIS,FOLLOW_CLOSEPARENTHESIS_in_ifStatement577); if (failed) return ;
-            pushFollow(FOLLOW_block_in_ifStatement579);
+            match(input,CLOSEPARENTHESIS,FOLLOW_CLOSEPARENTHESIS_in_ifStatement649); if (failed) return ;
+            pushFollow(FOLLOW_block_in_ifStatement651);
             block();
             _fsp--;
             if (failed) return ;
@@ -973,14 +1016,14 @@ public class ulParser extends Parser {
 
 
     // $ANTLR start block
-    // ul.g:104:1: block : OPENBRACE ( statement )* CLOSEBRACE ;
+    // ul.g:116:1: block : OPENBRACE ( statement )* CLOSEBRACE ;
     public final void block() throws RecognitionException {
         try {
-            // ul.g:105:5: ( OPENBRACE ( statement )* CLOSEBRACE )
-            // ul.g:105:10: OPENBRACE ( statement )* CLOSEBRACE
+            // ul.g:117:5: ( OPENBRACE ( statement )* CLOSEBRACE )
+            // ul.g:117:10: OPENBRACE ( statement )* CLOSEBRACE
             {
-            match(input,OPENBRACE,FOLLOW_OPENBRACE_in_block599); if (failed) return ;
-            // ul.g:105:20: ( statement )*
+            match(input,OPENBRACE,FOLLOW_OPENBRACE_in_block671); if (failed) return ;
+            // ul.g:117:20: ( statement )*
             loop9:
             do {
                 int alt9=2;
@@ -995,7 +1038,7 @@ public class ulParser extends Parser {
             	case 1 :
             	    // ul.g:0:0: statement
             	    {
-            	    pushFollow(FOLLOW_statement_in_block601);
+            	    pushFollow(FOLLOW_statement_in_block673);
             	    statement();
             	    _fsp--;
             	    if (failed) return ;
@@ -1008,7 +1051,7 @@ public class ulParser extends Parser {
                 }
             } while (true);
 
-            match(input,CLOSEBRACE,FOLLOW_CLOSEBRACE_in_block604); if (failed) return ;
+            match(input,CLOSEBRACE,FOLLOW_CLOSEBRACE_in_block676); if (failed) return ;
 
             }
 
@@ -1026,10 +1069,10 @@ public class ulParser extends Parser {
 
 
     // $ANTLR start atom
-    // ul.g:108:1: atom : ( identifier | literal | parenthesisExpression | functionCall | arrayReference );
+    // ul.g:120:1: atom : ( identifier | literal | parenthesisExpression | functionCall | arrayReference );
     public final void atom() throws RecognitionException {
         try {
-            // ul.g:109:5: ( identifier | literal | parenthesisExpression | functionCall | arrayReference )
+            // ul.g:121:5: ( identifier | literal | parenthesisExpression | functionCall | arrayReference )
             int alt10=5;
             switch ( input.LA(1) ) {
             case ID:
@@ -1062,7 +1105,7 @@ public class ulParser extends Parser {
                 default:
                     if (backtracking>0) {failed=true; return ;}
                     NoViableAltException nvae =
-                        new NoViableAltException("108:1: atom : ( identifier | literal | parenthesisExpression | functionCall | arrayReference );", 10, 1, input);
+                        new NoViableAltException("120:1: atom : ( identifier | literal | parenthesisExpression | functionCall | arrayReference );", 10, 1, input);
 
                     throw nvae;
                 }
@@ -1087,16 +1130,16 @@ public class ulParser extends Parser {
             default:
                 if (backtracking>0) {failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("108:1: atom : ( identifier | literal | parenthesisExpression | functionCall | arrayReference );", 10, 0, input);
+                    new NoViableAltException("120:1: atom : ( identifier | literal | parenthesisExpression | functionCall | arrayReference );", 10, 0, input);
 
                 throw nvae;
             }
 
             switch (alt10) {
                 case 1 :
-                    // ul.g:109:10: identifier
+                    // ul.g:121:10: identifier
                     {
-                    pushFollow(FOLLOW_identifier_in_atom624);
+                    pushFollow(FOLLOW_identifier_in_atom696);
                     identifier();
                     _fsp--;
                     if (failed) return ;
@@ -1104,9 +1147,9 @@ public class ulParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // ul.g:110:10: literal
+                    // ul.g:122:10: literal
                     {
-                    pushFollow(FOLLOW_literal_in_atom635);
+                    pushFollow(FOLLOW_literal_in_atom707);
                     literal();
                     _fsp--;
                     if (failed) return ;
@@ -1114,9 +1157,9 @@ public class ulParser extends Parser {
                     }
                     break;
                 case 3 :
-                    // ul.g:111:10: parenthesisExpression
+                    // ul.g:123:10: parenthesisExpression
                     {
-                    pushFollow(FOLLOW_parenthesisExpression_in_atom646);
+                    pushFollow(FOLLOW_parenthesisExpression_in_atom718);
                     parenthesisExpression();
                     _fsp--;
                     if (failed) return ;
@@ -1124,9 +1167,9 @@ public class ulParser extends Parser {
                     }
                     break;
                 case 4 :
-                    // ul.g:112:10: functionCall
+                    // ul.g:124:10: functionCall
                     {
-                    pushFollow(FOLLOW_functionCall_in_atom657);
+                    pushFollow(FOLLOW_functionCall_in_atom729);
                     functionCall();
                     _fsp--;
                     if (failed) return ;
@@ -1134,9 +1177,9 @@ public class ulParser extends Parser {
                     }
                     break;
                 case 5 :
-                    // ul.g:113:10: arrayReference
+                    // ul.g:125:10: arrayReference
                     {
-                    pushFollow(FOLLOW_arrayReference_in_atom668);
+                    pushFollow(FOLLOW_arrayReference_in_atom740);
                     arrayReference();
                     _fsp--;
                     if (failed) return ;
@@ -1159,18 +1202,18 @@ public class ulParser extends Parser {
 
 
     // $ANTLR start parenthesisExpression
-    // ul.g:116:1: parenthesisExpression : OPENPARENTHESIS expression CLOSEPARENTHESIS ;
+    // ul.g:128:1: parenthesisExpression : OPENPARENTHESIS expression CLOSEPARENTHESIS ;
     public final void parenthesisExpression() throws RecognitionException {
         try {
-            // ul.g:117:5: ( OPENPARENTHESIS expression CLOSEPARENTHESIS )
-            // ul.g:117:10: OPENPARENTHESIS expression CLOSEPARENTHESIS
+            // ul.g:129:5: ( OPENPARENTHESIS expression CLOSEPARENTHESIS )
+            // ul.g:129:10: OPENPARENTHESIS expression CLOSEPARENTHESIS
             {
-            match(input,OPENPARENTHESIS,FOLLOW_OPENPARENTHESIS_in_parenthesisExpression688); if (failed) return ;
-            pushFollow(FOLLOW_expression_in_parenthesisExpression690);
+            match(input,OPENPARENTHESIS,FOLLOW_OPENPARENTHESIS_in_parenthesisExpression760); if (failed) return ;
+            pushFollow(FOLLOW_expression_in_parenthesisExpression762);
             expression();
             _fsp--;
             if (failed) return ;
-            match(input,CLOSEPARENTHESIS,FOLLOW_CLOSEPARENTHESIS_in_parenthesisExpression692); if (failed) return ;
+            match(input,CLOSEPARENTHESIS,FOLLOW_CLOSEPARENTHESIS_in_parenthesisExpression764); if (failed) return ;
 
             }
 
@@ -1188,22 +1231,22 @@ public class ulParser extends Parser {
 
 
     // $ANTLR start functionCall
-    // ul.g:120:1: functionCall : identifier OPENPARENTHESIS expressionList CLOSEPARENTHESIS ;
+    // ul.g:132:1: functionCall : identifier OPENPARENTHESIS expressionList CLOSEPARENTHESIS ;
     public final void functionCall() throws RecognitionException {
         try {
-            // ul.g:121:5: ( identifier OPENPARENTHESIS expressionList CLOSEPARENTHESIS )
-            // ul.g:121:10: identifier OPENPARENTHESIS expressionList CLOSEPARENTHESIS
+            // ul.g:133:5: ( identifier OPENPARENTHESIS expressionList CLOSEPARENTHESIS )
+            // ul.g:133:10: identifier OPENPARENTHESIS expressionList CLOSEPARENTHESIS
             {
-            pushFollow(FOLLOW_identifier_in_functionCall712);
+            pushFollow(FOLLOW_identifier_in_functionCall784);
             identifier();
             _fsp--;
             if (failed) return ;
-            match(input,OPENPARENTHESIS,FOLLOW_OPENPARENTHESIS_in_functionCall714); if (failed) return ;
-            pushFollow(FOLLOW_expressionList_in_functionCall716);
+            match(input,OPENPARENTHESIS,FOLLOW_OPENPARENTHESIS_in_functionCall786); if (failed) return ;
+            pushFollow(FOLLOW_expressionList_in_functionCall788);
             expressionList();
             _fsp--;
             if (failed) return ;
-            match(input,CLOSEPARENTHESIS,FOLLOW_CLOSEPARENTHESIS_in_functionCall718); if (failed) return ;
+            match(input,CLOSEPARENTHESIS,FOLLOW_CLOSEPARENTHESIS_in_functionCall790); if (failed) return ;
 
             }
 
@@ -1221,22 +1264,22 @@ public class ulParser extends Parser {
 
 
     // $ANTLR start arrayReference
-    // ul.g:124:1: arrayReference : identifier OPENBRACKET expression CLOSEBRACKET ;
+    // ul.g:136:1: arrayReference : identifier OPENBRACKET expression CLOSEBRACKET ;
     public final void arrayReference() throws RecognitionException {
         try {
-            // ul.g:125:5: ( identifier OPENBRACKET expression CLOSEBRACKET )
-            // ul.g:125:10: identifier OPENBRACKET expression CLOSEBRACKET
+            // ul.g:137:5: ( identifier OPENBRACKET expression CLOSEBRACKET )
+            // ul.g:137:10: identifier OPENBRACKET expression CLOSEBRACKET
             {
-            pushFollow(FOLLOW_identifier_in_arrayReference738);
+            pushFollow(FOLLOW_identifier_in_arrayReference810);
             identifier();
             _fsp--;
             if (failed) return ;
-            match(input,OPENBRACKET,FOLLOW_OPENBRACKET_in_arrayReference740); if (failed) return ;
-            pushFollow(FOLLOW_expression_in_arrayReference742);
+            match(input,OPENBRACKET,FOLLOW_OPENBRACKET_in_arrayReference812); if (failed) return ;
+            pushFollow(FOLLOW_expression_in_arrayReference814);
             expression();
             _fsp--;
             if (failed) return ;
-            match(input,CLOSEBRACKET,FOLLOW_CLOSEBRACKET_in_arrayReference744); if (failed) return ;
+            match(input,CLOSEBRACKET,FOLLOW_CLOSEBRACKET_in_arrayReference816); if (failed) return ;
 
             }
 
@@ -1254,17 +1297,17 @@ public class ulParser extends Parser {
 
 
     // $ANTLR start multiplyExpression
-    // ul.g:128:1: multiplyExpression : atom ( STAR atom )* ;
+    // ul.g:140:1: multiplyExpression : atom ( STAR atom )* ;
     public final void multiplyExpression() throws RecognitionException {
         try {
-            // ul.g:129:5: ( atom ( STAR atom )* )
-            // ul.g:129:10: atom ( STAR atom )*
+            // ul.g:141:5: ( atom ( STAR atom )* )
+            // ul.g:141:10: atom ( STAR atom )*
             {
-            pushFollow(FOLLOW_atom_in_multiplyExpression764);
+            pushFollow(FOLLOW_atom_in_multiplyExpression836);
             atom();
             _fsp--;
             if (failed) return ;
-            // ul.g:129:15: ( STAR atom )*
+            // ul.g:141:15: ( STAR atom )*
             loop11:
             do {
                 int alt11=2;
@@ -1277,10 +1320,10 @@ public class ulParser extends Parser {
 
                 switch (alt11) {
             	case 1 :
-            	    // ul.g:129:16: STAR atom
+            	    // ul.g:141:16: STAR atom
             	    {
-            	    match(input,STAR,FOLLOW_STAR_in_multiplyExpression767); if (failed) return ;
-            	    pushFollow(FOLLOW_atom_in_multiplyExpression769);
+            	    match(input,STAR,FOLLOW_STAR_in_multiplyExpression839); if (failed) return ;
+            	    pushFollow(FOLLOW_atom_in_multiplyExpression841);
             	    atom();
             	    _fsp--;
             	    if (failed) return ;
@@ -1310,17 +1353,17 @@ public class ulParser extends Parser {
 
 
     // $ANTLR start addExpression
-    // ul.g:132:1: addExpression : multiplyExpression addExpressionPrime ;
+    // ul.g:144:1: addExpression : multiplyExpression addExpressionPrime ;
     public final void addExpression() throws RecognitionException {
         try {
-            // ul.g:133:5: ( multiplyExpression addExpressionPrime )
-            // ul.g:133:10: multiplyExpression addExpressionPrime
+            // ul.g:145:5: ( multiplyExpression addExpressionPrime )
+            // ul.g:145:10: multiplyExpression addExpressionPrime
             {
-            pushFollow(FOLLOW_multiplyExpression_in_addExpression791);
+            pushFollow(FOLLOW_multiplyExpression_in_addExpression863);
             multiplyExpression();
             _fsp--;
             if (failed) return ;
-            pushFollow(FOLLOW_addExpressionPrime_in_addExpression793);
+            pushFollow(FOLLOW_addExpressionPrime_in_addExpression865);
             addExpressionPrime();
             _fsp--;
             if (failed) return ;
@@ -1341,10 +1384,10 @@ public class ulParser extends Parser {
 
 
     // $ANTLR start addExpressionPrime
-    // ul.g:136:1: addExpressionPrime : ( PLUS multiplyExpression addExpressionPrime | MINUS multiplyExpression addExpressionPrime | );
+    // ul.g:148:1: addExpressionPrime : ( PLUS multiplyExpression addExpressionPrime | MINUS multiplyExpression addExpressionPrime | );
     public final void addExpressionPrime() throws RecognitionException {
         try {
-            // ul.g:137:5: ( PLUS multiplyExpression addExpressionPrime | MINUS multiplyExpression addExpressionPrime | )
+            // ul.g:149:5: ( PLUS multiplyExpression addExpressionPrime | MINUS multiplyExpression addExpressionPrime | )
             int alt12=3;
             switch ( input.LA(1) ) {
             case PLUS:
@@ -1371,21 +1414,21 @@ public class ulParser extends Parser {
             default:
                 if (backtracking>0) {failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("136:1: addExpressionPrime : ( PLUS multiplyExpression addExpressionPrime | MINUS multiplyExpression addExpressionPrime | );", 12, 0, input);
+                    new NoViableAltException("148:1: addExpressionPrime : ( PLUS multiplyExpression addExpressionPrime | MINUS multiplyExpression addExpressionPrime | );", 12, 0, input);
 
                 throw nvae;
             }
 
             switch (alt12) {
                 case 1 :
-                    // ul.g:137:10: PLUS multiplyExpression addExpressionPrime
+                    // ul.g:149:10: PLUS multiplyExpression addExpressionPrime
                     {
-                    match(input,PLUS,FOLLOW_PLUS_in_addExpressionPrime813); if (failed) return ;
-                    pushFollow(FOLLOW_multiplyExpression_in_addExpressionPrime815);
+                    match(input,PLUS,FOLLOW_PLUS_in_addExpressionPrime885); if (failed) return ;
+                    pushFollow(FOLLOW_multiplyExpression_in_addExpressionPrime887);
                     multiplyExpression();
                     _fsp--;
                     if (failed) return ;
-                    pushFollow(FOLLOW_addExpressionPrime_in_addExpressionPrime817);
+                    pushFollow(FOLLOW_addExpressionPrime_in_addExpressionPrime889);
                     addExpressionPrime();
                     _fsp--;
                     if (failed) return ;
@@ -1393,14 +1436,14 @@ public class ulParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // ul.g:138:10: MINUS multiplyExpression addExpressionPrime
+                    // ul.g:150:10: MINUS multiplyExpression addExpressionPrime
                     {
-                    match(input,MINUS,FOLLOW_MINUS_in_addExpressionPrime828); if (failed) return ;
-                    pushFollow(FOLLOW_multiplyExpression_in_addExpressionPrime830);
+                    match(input,MINUS,FOLLOW_MINUS_in_addExpressionPrime900); if (failed) return ;
+                    pushFollow(FOLLOW_multiplyExpression_in_addExpressionPrime902);
                     multiplyExpression();
                     _fsp--;
                     if (failed) return ;
-                    pushFollow(FOLLOW_addExpressionPrime_in_addExpressionPrime832);
+                    pushFollow(FOLLOW_addExpressionPrime_in_addExpressionPrime904);
                     addExpressionPrime();
                     _fsp--;
                     if (failed) return ;
@@ -1408,7 +1451,7 @@ public class ulParser extends Parser {
                     }
                     break;
                 case 3 :
-                    // ul.g:140:5: 
+                    // ul.g:152:5: 
                     {
                     }
                     break;
@@ -1428,17 +1471,17 @@ public class ulParser extends Parser {
 
 
     // $ANTLR start lessThanExpression
-    // ul.g:142:1: lessThanExpression : addExpression ( LESSTHAN addExpression )* ;
+    // ul.g:154:1: lessThanExpression : addExpression ( LESSTHAN addExpression )* ;
     public final void lessThanExpression() throws RecognitionException {
         try {
-            // ul.g:143:5: ( addExpression ( LESSTHAN addExpression )* )
-            // ul.g:143:10: addExpression ( LESSTHAN addExpression )*
+            // ul.g:155:5: ( addExpression ( LESSTHAN addExpression )* )
+            // ul.g:155:10: addExpression ( LESSTHAN addExpression )*
             {
-            pushFollow(FOLLOW_addExpression_in_lessThanExpression858);
+            pushFollow(FOLLOW_addExpression_in_lessThanExpression930);
             addExpression();
             _fsp--;
             if (failed) return ;
-            // ul.g:143:24: ( LESSTHAN addExpression )*
+            // ul.g:155:24: ( LESSTHAN addExpression )*
             loop13:
             do {
                 int alt13=2;
@@ -1451,10 +1494,10 @@ public class ulParser extends Parser {
 
                 switch (alt13) {
             	case 1 :
-            	    // ul.g:143:25: LESSTHAN addExpression
+            	    // ul.g:155:25: LESSTHAN addExpression
             	    {
-            	    match(input,LESSTHAN,FOLLOW_LESSTHAN_in_lessThanExpression861); if (failed) return ;
-            	    pushFollow(FOLLOW_addExpression_in_lessThanExpression863);
+            	    match(input,LESSTHAN,FOLLOW_LESSTHAN_in_lessThanExpression933); if (failed) return ;
+            	    pushFollow(FOLLOW_addExpression_in_lessThanExpression935);
             	    addExpression();
             	    _fsp--;
             	    if (failed) return ;
@@ -1484,17 +1527,17 @@ public class ulParser extends Parser {
 
 
     // $ANTLR start equalityExpression
-    // ul.g:146:1: equalityExpression : lessThanExpression ( DOUBLEEQUALS lessThanExpression )* ;
+    // ul.g:158:1: equalityExpression : lessThanExpression ( DOUBLEEQUALS lessThanExpression )* ;
     public final void equalityExpression() throws RecognitionException {
         try {
-            // ul.g:147:5: ( lessThanExpression ( DOUBLEEQUALS lessThanExpression )* )
-            // ul.g:147:10: lessThanExpression ( DOUBLEEQUALS lessThanExpression )*
+            // ul.g:159:5: ( lessThanExpression ( DOUBLEEQUALS lessThanExpression )* )
+            // ul.g:159:10: lessThanExpression ( DOUBLEEQUALS lessThanExpression )*
             {
-            pushFollow(FOLLOW_lessThanExpression_in_equalityExpression885);
+            pushFollow(FOLLOW_lessThanExpression_in_equalityExpression957);
             lessThanExpression();
             _fsp--;
             if (failed) return ;
-            // ul.g:147:29: ( DOUBLEEQUALS lessThanExpression )*
+            // ul.g:159:29: ( DOUBLEEQUALS lessThanExpression )*
             loop14:
             do {
                 int alt14=2;
@@ -1507,10 +1550,10 @@ public class ulParser extends Parser {
 
                 switch (alt14) {
             	case 1 :
-            	    // ul.g:147:30: DOUBLEEQUALS lessThanExpression
+            	    // ul.g:159:30: DOUBLEEQUALS lessThanExpression
             	    {
-            	    match(input,DOUBLEEQUALS,FOLLOW_DOUBLEEQUALS_in_equalityExpression888); if (failed) return ;
-            	    pushFollow(FOLLOW_lessThanExpression_in_equalityExpression890);
+            	    match(input,DOUBLEEQUALS,FOLLOW_DOUBLEEQUALS_in_equalityExpression960); if (failed) return ;
+            	    pushFollow(FOLLOW_lessThanExpression_in_equalityExpression962);
             	    lessThanExpression();
             	    _fsp--;
             	    if (failed) return ;
@@ -1540,13 +1583,13 @@ public class ulParser extends Parser {
 
 
     // $ANTLR start expression
-    // ul.g:150:1: expression : equalityExpression ;
+    // ul.g:162:1: expression : equalityExpression ;
     public final void expression() throws RecognitionException {
         try {
-            // ul.g:151:5: ( equalityExpression )
-            // ul.g:151:10: equalityExpression
+            // ul.g:163:5: ( equalityExpression )
+            // ul.g:163:10: equalityExpression
             {
-            pushFollow(FOLLOW_equalityExpression_in_expression912);
+            pushFollow(FOLLOW_equalityExpression_in_expression984);
             equalityExpression();
             _fsp--;
             if (failed) return ;
@@ -1567,10 +1610,10 @@ public class ulParser extends Parser {
 
 
     // $ANTLR start expressionList
-    // ul.g:156:1: expressionList : ( expression ( COMMA expression )* | );
+    // ul.g:168:1: expressionList : ( expression ( COMMA expression )* | );
     public final void expressionList() throws RecognitionException {
         try {
-            // ul.g:157:5: ( expression ( COMMA expression )* | )
+            // ul.g:169:5: ( expression ( COMMA expression )* | )
             int alt16=2;
             int LA16_0 = input.LA(1);
 
@@ -1583,19 +1626,19 @@ public class ulParser extends Parser {
             else {
                 if (backtracking>0) {failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("156:1: expressionList : ( expression ( COMMA expression )* | );", 16, 0, input);
+                    new NoViableAltException("168:1: expressionList : ( expression ( COMMA expression )* | );", 16, 0, input);
 
                 throw nvae;
             }
             switch (alt16) {
                 case 1 :
-                    // ul.g:157:10: expression ( COMMA expression )*
+                    // ul.g:169:10: expression ( COMMA expression )*
                     {
-                    pushFollow(FOLLOW_expression_in_expressionList942);
+                    pushFollow(FOLLOW_expression_in_expressionList1014);
                     expression();
                     _fsp--;
                     if (failed) return ;
-                    // ul.g:157:21: ( COMMA expression )*
+                    // ul.g:169:21: ( COMMA expression )*
                     loop15:
                     do {
                         int alt15=2;
@@ -1608,10 +1651,10 @@ public class ulParser extends Parser {
 
                         switch (alt15) {
                     	case 1 :
-                    	    // ul.g:157:22: COMMA expression
+                    	    // ul.g:169:22: COMMA expression
                     	    {
-                    	    match(input,COMMA,FOLLOW_COMMA_in_expressionList945); if (failed) return ;
-                    	    pushFollow(FOLLOW_expression_in_expressionList947);
+                    	    match(input,COMMA,FOLLOW_COMMA_in_expressionList1017); if (failed) return ;
+                    	    pushFollow(FOLLOW_expression_in_expressionList1019);
                     	    expression();
                     	    _fsp--;
                     	    if (failed) return ;
@@ -1628,7 +1671,7 @@ public class ulParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // ul.g:159:5: 
+                    // ul.g:171:5: 
                     {
                     }
                     break;
@@ -1648,13 +1691,15 @@ public class ulParser extends Parser {
 
 
     // $ANTLR start identifier
-    // ul.g:161:1: identifier : ID ;
-    public final void identifier() throws RecognitionException {
+    // ul.g:173:1: identifier returns [Identifier name] : ID ;
+    public final Identifier identifier() throws RecognitionException {
+        Identifier name = null;
+
         try {
-            // ul.g:162:5: ( ID )
-            // ul.g:162:10: ID
+            // ul.g:174:5: ( ID )
+            // ul.g:174:10: ID
             {
-            match(input,ID,FOLLOW_ID_in_identifier975); if (failed) return ;
+            match(input,ID,FOLLOW_ID_in_identifier1051); if (failed) return name;
 
             }
 
@@ -1666,16 +1711,16 @@ public class ulParser extends Parser {
             }
         finally {
         }
-        return ;
+        return name;
     }
     // $ANTLR end identifier
 
 
     // $ANTLR start literal
-    // ul.g:165:1: literal : ( integerLiteral | floatLiteral | characterLiteral | stringLiteral | booleanLiteral );
+    // ul.g:177:1: literal : ( integerLiteral | floatLiteral | characterLiteral | stringLiteral | booleanLiteral );
     public final void literal() throws RecognitionException {
         try {
-            // ul.g:166:5: ( integerLiteral | floatLiteral | characterLiteral | stringLiteral | booleanLiteral )
+            // ul.g:178:5: ( integerLiteral | floatLiteral | characterLiteral | stringLiteral | booleanLiteral )
             int alt17=5;
             switch ( input.LA(1) ) {
             case INTEGERCONSTANT:
@@ -1707,16 +1752,16 @@ public class ulParser extends Parser {
             default:
                 if (backtracking>0) {failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("165:1: literal : ( integerLiteral | floatLiteral | characterLiteral | stringLiteral | booleanLiteral );", 17, 0, input);
+                    new NoViableAltException("177:1: literal : ( integerLiteral | floatLiteral | characterLiteral | stringLiteral | booleanLiteral );", 17, 0, input);
 
                 throw nvae;
             }
 
             switch (alt17) {
                 case 1 :
-                    // ul.g:166:10: integerLiteral
+                    // ul.g:178:10: integerLiteral
                     {
-                    pushFollow(FOLLOW_integerLiteral_in_literal995);
+                    pushFollow(FOLLOW_integerLiteral_in_literal1071);
                     integerLiteral();
                     _fsp--;
                     if (failed) return ;
@@ -1724,9 +1769,9 @@ public class ulParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // ul.g:167:10: floatLiteral
+                    // ul.g:179:10: floatLiteral
                     {
-                    pushFollow(FOLLOW_floatLiteral_in_literal1006);
+                    pushFollow(FOLLOW_floatLiteral_in_literal1082);
                     floatLiteral();
                     _fsp--;
                     if (failed) return ;
@@ -1734,9 +1779,9 @@ public class ulParser extends Parser {
                     }
                     break;
                 case 3 :
-                    // ul.g:168:10: characterLiteral
+                    // ul.g:180:10: characterLiteral
                     {
-                    pushFollow(FOLLOW_characterLiteral_in_literal1017);
+                    pushFollow(FOLLOW_characterLiteral_in_literal1093);
                     characterLiteral();
                     _fsp--;
                     if (failed) return ;
@@ -1744,9 +1789,9 @@ public class ulParser extends Parser {
                     }
                     break;
                 case 4 :
-                    // ul.g:169:10: stringLiteral
+                    // ul.g:181:10: stringLiteral
                     {
-                    pushFollow(FOLLOW_stringLiteral_in_literal1028);
+                    pushFollow(FOLLOW_stringLiteral_in_literal1104);
                     stringLiteral();
                     _fsp--;
                     if (failed) return ;
@@ -1754,9 +1799,9 @@ public class ulParser extends Parser {
                     }
                     break;
                 case 5 :
-                    // ul.g:170:10: booleanLiteral
+                    // ul.g:182:10: booleanLiteral
                     {
-                    pushFollow(FOLLOW_booleanLiteral_in_literal1039);
+                    pushFollow(FOLLOW_booleanLiteral_in_literal1115);
                     booleanLiteral();
                     _fsp--;
                     if (failed) return ;
@@ -1779,13 +1824,13 @@ public class ulParser extends Parser {
 
 
     // $ANTLR start integerLiteral
-    // ul.g:173:1: integerLiteral : INTEGERCONSTANT ;
+    // ul.g:185:1: integerLiteral : INTEGERCONSTANT ;
     public final void integerLiteral() throws RecognitionException {
         try {
-            // ul.g:174:5: ( INTEGERCONSTANT )
-            // ul.g:174:10: INTEGERCONSTANT
+            // ul.g:186:5: ( INTEGERCONSTANT )
+            // ul.g:186:10: INTEGERCONSTANT
             {
-            match(input,INTEGERCONSTANT,FOLLOW_INTEGERCONSTANT_in_integerLiteral1059); if (failed) return ;
+            match(input,INTEGERCONSTANT,FOLLOW_INTEGERCONSTANT_in_integerLiteral1135); if (failed) return ;
 
             }
 
@@ -1803,13 +1848,13 @@ public class ulParser extends Parser {
 
 
     // $ANTLR start floatLiteral
-    // ul.g:177:1: floatLiteral : FLOATCONSTANT ;
+    // ul.g:189:1: floatLiteral : FLOATCONSTANT ;
     public final void floatLiteral() throws RecognitionException {
         try {
-            // ul.g:178:5: ( FLOATCONSTANT )
-            // ul.g:178:10: FLOATCONSTANT
+            // ul.g:190:5: ( FLOATCONSTANT )
+            // ul.g:190:10: FLOATCONSTANT
             {
-            match(input,FLOATCONSTANT,FOLLOW_FLOATCONSTANT_in_floatLiteral1079); if (failed) return ;
+            match(input,FLOATCONSTANT,FOLLOW_FLOATCONSTANT_in_floatLiteral1155); if (failed) return ;
 
             }
 
@@ -1827,13 +1872,13 @@ public class ulParser extends Parser {
 
 
     // $ANTLR start characterLiteral
-    // ul.g:181:1: characterLiteral : CHARACTERCONSTANT ;
+    // ul.g:193:1: characterLiteral : CHARACTERCONSTANT ;
     public final void characterLiteral() throws RecognitionException {
         try {
-            // ul.g:182:5: ( CHARACTERCONSTANT )
-            // ul.g:182:10: CHARACTERCONSTANT
+            // ul.g:194:5: ( CHARACTERCONSTANT )
+            // ul.g:194:10: CHARACTERCONSTANT
             {
-            match(input,CHARACTERCONSTANT,FOLLOW_CHARACTERCONSTANT_in_characterLiteral1099); if (failed) return ;
+            match(input,CHARACTERCONSTANT,FOLLOW_CHARACTERCONSTANT_in_characterLiteral1175); if (failed) return ;
 
             }
 
@@ -1851,13 +1896,13 @@ public class ulParser extends Parser {
 
 
     // $ANTLR start stringLiteral
-    // ul.g:185:1: stringLiteral : STRINGCONSTANT ;
+    // ul.g:197:1: stringLiteral : STRINGCONSTANT ;
     public final void stringLiteral() throws RecognitionException {
         try {
-            // ul.g:186:5: ( STRINGCONSTANT )
-            // ul.g:186:10: STRINGCONSTANT
+            // ul.g:198:5: ( STRINGCONSTANT )
+            // ul.g:198:10: STRINGCONSTANT
             {
-            match(input,STRINGCONSTANT,FOLLOW_STRINGCONSTANT_in_stringLiteral1119); if (failed) return ;
+            match(input,STRINGCONSTANT,FOLLOW_STRINGCONSTANT_in_stringLiteral1195); if (failed) return ;
 
             }
 
@@ -1875,10 +1920,10 @@ public class ulParser extends Parser {
 
 
     // $ANTLR start booleanLiteral
-    // ul.g:189:1: booleanLiteral : ( TRUE | FALSE );
+    // ul.g:201:1: booleanLiteral : ( TRUE | FALSE );
     public final void booleanLiteral() throws RecognitionException {
         try {
-            // ul.g:190:5: ( TRUE | FALSE )
+            // ul.g:202:5: ( TRUE | FALSE )
             // ul.g:
             {
             if ( (input.LA(1)>=TRUE && input.LA(1)<=FALSE) ) {
@@ -1909,10 +1954,10 @@ public class ulParser extends Parser {
 
     // $ANTLR start synpred8
     public final void synpred8_fragment() throws RecognitionException {   
-        // ul.g:57:10: ( expressionStatement )
-        // ul.g:57:10: expressionStatement
+        // ul.g:69:10: ( expressionStatement )
+        // ul.g:69:10: expressionStatement
         {
-        pushFollow(FOLLOW_expressionStatement_in_synpred8250);
+        pushFollow(FOLLOW_expressionStatement_in_synpred8322);
         expressionStatement();
         _fsp--;
         if (failed) return ;
@@ -1923,10 +1968,10 @@ public class ulParser extends Parser {
 
     // $ANTLR start synpred9
     public final void synpred9_fragment() throws RecognitionException {   
-        // ul.g:58:10: ( assignmentStatement )
-        // ul.g:58:10: assignmentStatement
+        // ul.g:70:10: ( assignmentStatement )
+        // ul.g:70:10: assignmentStatement
         {
-        pushFollow(FOLLOW_assignmentStatement_in_synpred9261);
+        pushFollow(FOLLOW_assignmentStatement_in_synpred9333);
         assignmentStatement();
         _fsp--;
         if (failed) return ;
@@ -1937,10 +1982,10 @@ public class ulParser extends Parser {
 
     // $ANTLR start synpred10
     public final void synpred10_fragment() throws RecognitionException {   
-        // ul.g:59:10: ( arrayAssignmentStatement )
-        // ul.g:59:10: arrayAssignmentStatement
+        // ul.g:71:10: ( arrayAssignmentStatement )
+        // ul.g:71:10: arrayAssignmentStatement
         {
-        pushFollow(FOLLOW_arrayAssignmentStatement_in_synpred10272);
+        pushFollow(FOLLOW_arrayAssignmentStatement_in_synpred10344);
         arrayAssignmentStatement();
         _fsp--;
         if (failed) return ;
@@ -1951,10 +1996,10 @@ public class ulParser extends Parser {
 
     // $ANTLR start synpred15
     public final void synpred15_fragment() throws RecognitionException {   
-        // ul.g:64:10: ( ifElseStatement )
-        // ul.g:64:10: ifElseStatement
+        // ul.g:76:10: ( ifElseStatement )
+        // ul.g:76:10: ifElseStatement
         {
-        pushFollow(FOLLOW_ifElseStatement_in_synpred15327);
+        pushFollow(FOLLOW_ifElseStatement_in_synpred15399);
         ifElseStatement();
         _fsp--;
         if (failed) return ;
@@ -2023,135 +2068,135 @@ public class ulParser extends Parser {
 
  
 
-    public static final BitSet FOLLOW_function_in_program43 = new BitSet(new long[]{0x0000000000000400L});
-    public static final BitSet FOLLOW_EOF_in_program46 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_functionDeclaration_in_function66 = new BitSet(new long[]{0x0000000000000080L});
-    public static final BitSet FOLLOW_functionBody_in_function68 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_compoundType_in_functionDeclaration88 = new BitSet(new long[]{0x0000000004000000L});
-    public static final BitSet FOLLOW_identifier_in_functionDeclaration90 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_OPENPARENTHESIS_in_functionDeclaration92 = new BitSet(new long[]{0x0000000000000420L});
-    public static final BitSet FOLLOW_formalParameters_in_functionDeclaration94 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_CLOSEPARENTHESIS_in_functionDeclaration96 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_compoundType_in_formalParameters116 = new BitSet(new long[]{0x0000000004000000L});
-    public static final BitSet FOLLOW_identifier_in_formalParameters118 = new BitSet(new long[]{0x0000000000000042L});
-    public static final BitSet FOLLOW_COMMA_in_formalParameters121 = new BitSet(new long[]{0x0000000000000400L});
-    public static final BitSet FOLLOW_compoundType_in_formalParameters123 = new BitSet(new long[]{0x0000000004000000L});
-    public static final BitSet FOLLOW_identifier_in_formalParameters125 = new BitSet(new long[]{0x0000000000000042L});
-    public static final BitSet FOLLOW_OPENBRACE_in_functionBody153 = new BitSet(new long[]{0x00000000FC0F9710L});
-    public static final BitSet FOLLOW_variableDeclaration_in_functionBody155 = new BitSet(new long[]{0x00000000FC0F9710L});
-    public static final BitSet FOLLOW_statement_in_functionBody158 = new BitSet(new long[]{0x00000000FC0F9310L});
-    public static final BitSet FOLLOW_CLOSEBRACE_in_functionBody161 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_compoundType_in_variableDeclaration178 = new BitSet(new long[]{0x0000000004000000L});
-    public static final BitSet FOLLOW_identifier_in_variableDeclaration180 = new BitSet(new long[]{0x0000000000000200L});
-    public static final BitSet FOLLOW_SEMICOLON_in_variableDeclaration182 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_TYPE_in_compoundType202 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_TYPE_in_compoundType213 = new BitSet(new long[]{0x0000000000000800L});
-    public static final BitSet FOLLOW_OPENBRACKET_in_compoundType215 = new BitSet(new long[]{0x0000000000001000L});
-    public static final BitSet FOLLOW_INTEGERCONSTANT_in_compoundType217 = new BitSet(new long[]{0x0000000000002000L});
-    public static final BitSet FOLLOW_CLOSEBRACKET_in_compoundType219 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_SEMICOLON_in_statement239 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_expressionStatement_in_statement250 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_assignmentStatement_in_statement261 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_arrayAssignmentStatement_in_statement272 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_whileStatement_in_statement283 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_returnStatement_in_statement294 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_printStatement_in_statement305 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_printlnStatement_in_statement316 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ifElseStatement_in_statement327 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ifStatement_in_statement338 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_expression_in_expressionStatement358 = new BitSet(new long[]{0x0000000000000200L});
-    public static final BitSet FOLLOW_SEMICOLON_in_expressionStatement360 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_identifier_in_assignmentStatement380 = new BitSet(new long[]{0x0000000000004000L});
-    public static final BitSet FOLLOW_SINGLEEQUALS_in_assignmentStatement382 = new BitSet(new long[]{0x00000000FC001010L});
-    public static final BitSet FOLLOW_expression_in_assignmentStatement384 = new BitSet(new long[]{0x0000000000000200L});
-    public static final BitSet FOLLOW_SEMICOLON_in_assignmentStatement386 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_identifier_in_arrayAssignmentStatement406 = new BitSet(new long[]{0x0000000000000800L});
-    public static final BitSet FOLLOW_OPENBRACKET_in_arrayAssignmentStatement408 = new BitSet(new long[]{0x00000000FC001010L});
-    public static final BitSet FOLLOW_expression_in_arrayAssignmentStatement410 = new BitSet(new long[]{0x0000000000002000L});
-    public static final BitSet FOLLOW_CLOSEBRACKET_in_arrayAssignmentStatement412 = new BitSet(new long[]{0x0000000000004000L});
-    public static final BitSet FOLLOW_SINGLEEQUALS_in_arrayAssignmentStatement414 = new BitSet(new long[]{0x00000000FC001010L});
-    public static final BitSet FOLLOW_expression_in_arrayAssignmentStatement416 = new BitSet(new long[]{0x0000000000000200L});
-    public static final BitSet FOLLOW_SEMICOLON_in_arrayAssignmentStatement418 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_WHILE_in_whileStatement438 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_OPENPARENTHESIS_in_whileStatement440 = new BitSet(new long[]{0x00000000FC001010L});
-    public static final BitSet FOLLOW_expression_in_whileStatement442 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_CLOSEPARENTHESIS_in_whileStatement444 = new BitSet(new long[]{0x0000000000000080L});
-    public static final BitSet FOLLOW_block_in_whileStatement446 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RETURN_in_returnStatement466 = new BitSet(new long[]{0x00000000FC001210L});
-    public static final BitSet FOLLOW_expression_in_returnStatement468 = new BitSet(new long[]{0x0000000000000200L});
-    public static final BitSet FOLLOW_SEMICOLON_in_returnStatement471 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_PRINT_in_printStatement491 = new BitSet(new long[]{0x00000000FC001010L});
-    public static final BitSet FOLLOW_expression_in_printStatement493 = new BitSet(new long[]{0x0000000000000200L});
-    public static final BitSet FOLLOW_SEMICOLON_in_printStatement495 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_PRINTLN_in_printlnStatement515 = new BitSet(new long[]{0x00000000FC001010L});
-    public static final BitSet FOLLOW_expression_in_printlnStatement517 = new BitSet(new long[]{0x0000000000000200L});
-    public static final BitSet FOLLOW_SEMICOLON_in_printlnStatement519 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_IF_in_ifElseStatement539 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_OPENPARENTHESIS_in_ifElseStatement541 = new BitSet(new long[]{0x00000000FC001010L});
-    public static final BitSet FOLLOW_expression_in_ifElseStatement543 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_CLOSEPARENTHESIS_in_ifElseStatement545 = new BitSet(new long[]{0x0000000000000080L});
-    public static final BitSet FOLLOW_block_in_ifElseStatement547 = new BitSet(new long[]{0x0000000000100000L});
-    public static final BitSet FOLLOW_ELSE_in_ifElseStatement549 = new BitSet(new long[]{0x0000000000000080L});
-    public static final BitSet FOLLOW_block_in_ifElseStatement551 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_IF_in_ifStatement571 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_OPENPARENTHESIS_in_ifStatement573 = new BitSet(new long[]{0x00000000FC001010L});
-    public static final BitSet FOLLOW_expression_in_ifStatement575 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_CLOSEPARENTHESIS_in_ifStatement577 = new BitSet(new long[]{0x0000000000000080L});
-    public static final BitSet FOLLOW_block_in_ifStatement579 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_OPENBRACE_in_block599 = new BitSet(new long[]{0x00000000FC0F9310L});
-    public static final BitSet FOLLOW_statement_in_block601 = new BitSet(new long[]{0x00000000FC0F9310L});
-    public static final BitSet FOLLOW_CLOSEBRACE_in_block604 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_identifier_in_atom624 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_literal_in_atom635 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_parenthesisExpression_in_atom646 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_functionCall_in_atom657 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_arrayReference_in_atom668 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_OPENPARENTHESIS_in_parenthesisExpression688 = new BitSet(new long[]{0x00000000FC001010L});
-    public static final BitSet FOLLOW_expression_in_parenthesisExpression690 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_CLOSEPARENTHESIS_in_parenthesisExpression692 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_identifier_in_functionCall712 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_OPENPARENTHESIS_in_functionCall714 = new BitSet(new long[]{0x00000000FC001030L});
-    public static final BitSet FOLLOW_expressionList_in_functionCall716 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_CLOSEPARENTHESIS_in_functionCall718 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_identifier_in_arrayReference738 = new BitSet(new long[]{0x0000000000000800L});
-    public static final BitSet FOLLOW_OPENBRACKET_in_arrayReference740 = new BitSet(new long[]{0x00000000FC001010L});
-    public static final BitSet FOLLOW_expression_in_arrayReference742 = new BitSet(new long[]{0x0000000000002000L});
-    public static final BitSet FOLLOW_CLOSEBRACKET_in_arrayReference744 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_atom_in_multiplyExpression764 = new BitSet(new long[]{0x0000000000200002L});
-    public static final BitSet FOLLOW_STAR_in_multiplyExpression767 = new BitSet(new long[]{0x00000000FC001010L});
-    public static final BitSet FOLLOW_atom_in_multiplyExpression769 = new BitSet(new long[]{0x0000000000200002L});
-    public static final BitSet FOLLOW_multiplyExpression_in_addExpression791 = new BitSet(new long[]{0x0000000000C00002L});
-    public static final BitSet FOLLOW_addExpressionPrime_in_addExpression793 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_PLUS_in_addExpressionPrime813 = new BitSet(new long[]{0x00000000FC001010L});
-    public static final BitSet FOLLOW_multiplyExpression_in_addExpressionPrime815 = new BitSet(new long[]{0x0000000000C00000L});
-    public static final BitSet FOLLOW_addExpressionPrime_in_addExpressionPrime817 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_MINUS_in_addExpressionPrime828 = new BitSet(new long[]{0x00000000FC001010L});
-    public static final BitSet FOLLOW_multiplyExpression_in_addExpressionPrime830 = new BitSet(new long[]{0x0000000000C00000L});
-    public static final BitSet FOLLOW_addExpressionPrime_in_addExpressionPrime832 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_addExpression_in_lessThanExpression858 = new BitSet(new long[]{0x0000000001000002L});
-    public static final BitSet FOLLOW_LESSTHAN_in_lessThanExpression861 = new BitSet(new long[]{0x00000000FC001010L});
-    public static final BitSet FOLLOW_addExpression_in_lessThanExpression863 = new BitSet(new long[]{0x0000000001000002L});
-    public static final BitSet FOLLOW_lessThanExpression_in_equalityExpression885 = new BitSet(new long[]{0x0000000002000002L});
-    public static final BitSet FOLLOW_DOUBLEEQUALS_in_equalityExpression888 = new BitSet(new long[]{0x00000000FC001010L});
-    public static final BitSet FOLLOW_lessThanExpression_in_equalityExpression890 = new BitSet(new long[]{0x0000000002000002L});
-    public static final BitSet FOLLOW_equalityExpression_in_expression912 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_expression_in_expressionList942 = new BitSet(new long[]{0x0000000000000042L});
-    public static final BitSet FOLLOW_COMMA_in_expressionList945 = new BitSet(new long[]{0x00000000FC001010L});
-    public static final BitSet FOLLOW_expression_in_expressionList947 = new BitSet(new long[]{0x0000000000000042L});
-    public static final BitSet FOLLOW_ID_in_identifier975 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_integerLiteral_in_literal995 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_floatLiteral_in_literal1006 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_characterLiteral_in_literal1017 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_stringLiteral_in_literal1028 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_booleanLiteral_in_literal1039 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_INTEGERCONSTANT_in_integerLiteral1059 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_FLOATCONSTANT_in_floatLiteral1079 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_CHARACTERCONSTANT_in_characterLiteral1099 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_STRINGCONSTANT_in_stringLiteral1119 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_function_in_program60 = new BitSet(new long[]{0x0000000000000400L});
+    public static final BitSet FOLLOW_EOF_in_program66 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_functionDeclaration_in_function94 = new BitSet(new long[]{0x0000000000000080L});
+    public static final BitSet FOLLOW_functionBody_in_function100 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_compoundType_in_functionDeclaration134 = new BitSet(new long[]{0x0000000004000000L});
+    public static final BitSet FOLLOW_identifier_in_functionDeclaration140 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_OPENPARENTHESIS_in_functionDeclaration142 = new BitSet(new long[]{0x0000000000000420L});
+    public static final BitSet FOLLOW_formalParameters_in_functionDeclaration148 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_CLOSEPARENTHESIS_in_functionDeclaration150 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_compoundType_in_formalParameters180 = new BitSet(new long[]{0x0000000004000000L});
+    public static final BitSet FOLLOW_identifier_in_formalParameters182 = new BitSet(new long[]{0x0000000000000042L});
+    public static final BitSet FOLLOW_COMMA_in_formalParameters185 = new BitSet(new long[]{0x0000000000000400L});
+    public static final BitSet FOLLOW_compoundType_in_formalParameters187 = new BitSet(new long[]{0x0000000004000000L});
+    public static final BitSet FOLLOW_identifier_in_formalParameters189 = new BitSet(new long[]{0x0000000000000042L});
+    public static final BitSet FOLLOW_OPENBRACE_in_functionBody221 = new BitSet(new long[]{0x00000000FC0F9710L});
+    public static final BitSet FOLLOW_variableDeclaration_in_functionBody223 = new BitSet(new long[]{0x00000000FC0F9710L});
+    public static final BitSet FOLLOW_statement_in_functionBody226 = new BitSet(new long[]{0x00000000FC0F9310L});
+    public static final BitSet FOLLOW_CLOSEBRACE_in_functionBody229 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_compoundType_in_variableDeclaration246 = new BitSet(new long[]{0x0000000004000000L});
+    public static final BitSet FOLLOW_identifier_in_variableDeclaration248 = new BitSet(new long[]{0x0000000000000200L});
+    public static final BitSet FOLLOW_SEMICOLON_in_variableDeclaration250 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_TYPE_in_compoundType274 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_TYPE_in_compoundType285 = new BitSet(new long[]{0x0000000000000800L});
+    public static final BitSet FOLLOW_OPENBRACKET_in_compoundType287 = new BitSet(new long[]{0x0000000000001000L});
+    public static final BitSet FOLLOW_INTEGERCONSTANT_in_compoundType289 = new BitSet(new long[]{0x0000000000002000L});
+    public static final BitSet FOLLOW_CLOSEBRACKET_in_compoundType291 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_SEMICOLON_in_statement311 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_expressionStatement_in_statement322 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_assignmentStatement_in_statement333 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_arrayAssignmentStatement_in_statement344 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_whileStatement_in_statement355 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_returnStatement_in_statement366 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_printStatement_in_statement377 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_printlnStatement_in_statement388 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ifElseStatement_in_statement399 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ifStatement_in_statement410 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_expression_in_expressionStatement430 = new BitSet(new long[]{0x0000000000000200L});
+    public static final BitSet FOLLOW_SEMICOLON_in_expressionStatement432 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_identifier_in_assignmentStatement452 = new BitSet(new long[]{0x0000000000004000L});
+    public static final BitSet FOLLOW_SINGLEEQUALS_in_assignmentStatement454 = new BitSet(new long[]{0x00000000FC001010L});
+    public static final BitSet FOLLOW_expression_in_assignmentStatement456 = new BitSet(new long[]{0x0000000000000200L});
+    public static final BitSet FOLLOW_SEMICOLON_in_assignmentStatement458 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_identifier_in_arrayAssignmentStatement478 = new BitSet(new long[]{0x0000000000000800L});
+    public static final BitSet FOLLOW_OPENBRACKET_in_arrayAssignmentStatement480 = new BitSet(new long[]{0x00000000FC001010L});
+    public static final BitSet FOLLOW_expression_in_arrayAssignmentStatement482 = new BitSet(new long[]{0x0000000000002000L});
+    public static final BitSet FOLLOW_CLOSEBRACKET_in_arrayAssignmentStatement484 = new BitSet(new long[]{0x0000000000004000L});
+    public static final BitSet FOLLOW_SINGLEEQUALS_in_arrayAssignmentStatement486 = new BitSet(new long[]{0x00000000FC001010L});
+    public static final BitSet FOLLOW_expression_in_arrayAssignmentStatement488 = new BitSet(new long[]{0x0000000000000200L});
+    public static final BitSet FOLLOW_SEMICOLON_in_arrayAssignmentStatement490 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_WHILE_in_whileStatement510 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_OPENPARENTHESIS_in_whileStatement512 = new BitSet(new long[]{0x00000000FC001010L});
+    public static final BitSet FOLLOW_expression_in_whileStatement514 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_CLOSEPARENTHESIS_in_whileStatement516 = new BitSet(new long[]{0x0000000000000080L});
+    public static final BitSet FOLLOW_block_in_whileStatement518 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RETURN_in_returnStatement538 = new BitSet(new long[]{0x00000000FC001210L});
+    public static final BitSet FOLLOW_expression_in_returnStatement540 = new BitSet(new long[]{0x0000000000000200L});
+    public static final BitSet FOLLOW_SEMICOLON_in_returnStatement543 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_PRINT_in_printStatement563 = new BitSet(new long[]{0x00000000FC001010L});
+    public static final BitSet FOLLOW_expression_in_printStatement565 = new BitSet(new long[]{0x0000000000000200L});
+    public static final BitSet FOLLOW_SEMICOLON_in_printStatement567 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_PRINTLN_in_printlnStatement587 = new BitSet(new long[]{0x00000000FC001010L});
+    public static final BitSet FOLLOW_expression_in_printlnStatement589 = new BitSet(new long[]{0x0000000000000200L});
+    public static final BitSet FOLLOW_SEMICOLON_in_printlnStatement591 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_IF_in_ifElseStatement611 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_OPENPARENTHESIS_in_ifElseStatement613 = new BitSet(new long[]{0x00000000FC001010L});
+    public static final BitSet FOLLOW_expression_in_ifElseStatement615 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_CLOSEPARENTHESIS_in_ifElseStatement617 = new BitSet(new long[]{0x0000000000000080L});
+    public static final BitSet FOLLOW_block_in_ifElseStatement619 = new BitSet(new long[]{0x0000000000100000L});
+    public static final BitSet FOLLOW_ELSE_in_ifElseStatement621 = new BitSet(new long[]{0x0000000000000080L});
+    public static final BitSet FOLLOW_block_in_ifElseStatement623 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_IF_in_ifStatement643 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_OPENPARENTHESIS_in_ifStatement645 = new BitSet(new long[]{0x00000000FC001010L});
+    public static final BitSet FOLLOW_expression_in_ifStatement647 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_CLOSEPARENTHESIS_in_ifStatement649 = new BitSet(new long[]{0x0000000000000080L});
+    public static final BitSet FOLLOW_block_in_ifStatement651 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_OPENBRACE_in_block671 = new BitSet(new long[]{0x00000000FC0F9310L});
+    public static final BitSet FOLLOW_statement_in_block673 = new BitSet(new long[]{0x00000000FC0F9310L});
+    public static final BitSet FOLLOW_CLOSEBRACE_in_block676 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_identifier_in_atom696 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_literal_in_atom707 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_parenthesisExpression_in_atom718 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_functionCall_in_atom729 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_arrayReference_in_atom740 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_OPENPARENTHESIS_in_parenthesisExpression760 = new BitSet(new long[]{0x00000000FC001010L});
+    public static final BitSet FOLLOW_expression_in_parenthesisExpression762 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_CLOSEPARENTHESIS_in_parenthesisExpression764 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_identifier_in_functionCall784 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_OPENPARENTHESIS_in_functionCall786 = new BitSet(new long[]{0x00000000FC001030L});
+    public static final BitSet FOLLOW_expressionList_in_functionCall788 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_CLOSEPARENTHESIS_in_functionCall790 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_identifier_in_arrayReference810 = new BitSet(new long[]{0x0000000000000800L});
+    public static final BitSet FOLLOW_OPENBRACKET_in_arrayReference812 = new BitSet(new long[]{0x00000000FC001010L});
+    public static final BitSet FOLLOW_expression_in_arrayReference814 = new BitSet(new long[]{0x0000000000002000L});
+    public static final BitSet FOLLOW_CLOSEBRACKET_in_arrayReference816 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_atom_in_multiplyExpression836 = new BitSet(new long[]{0x0000000000200002L});
+    public static final BitSet FOLLOW_STAR_in_multiplyExpression839 = new BitSet(new long[]{0x00000000FC001010L});
+    public static final BitSet FOLLOW_atom_in_multiplyExpression841 = new BitSet(new long[]{0x0000000000200002L});
+    public static final BitSet FOLLOW_multiplyExpression_in_addExpression863 = new BitSet(new long[]{0x0000000000C00002L});
+    public static final BitSet FOLLOW_addExpressionPrime_in_addExpression865 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_PLUS_in_addExpressionPrime885 = new BitSet(new long[]{0x00000000FC001010L});
+    public static final BitSet FOLLOW_multiplyExpression_in_addExpressionPrime887 = new BitSet(new long[]{0x0000000000C00000L});
+    public static final BitSet FOLLOW_addExpressionPrime_in_addExpressionPrime889 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_MINUS_in_addExpressionPrime900 = new BitSet(new long[]{0x00000000FC001010L});
+    public static final BitSet FOLLOW_multiplyExpression_in_addExpressionPrime902 = new BitSet(new long[]{0x0000000000C00000L});
+    public static final BitSet FOLLOW_addExpressionPrime_in_addExpressionPrime904 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_addExpression_in_lessThanExpression930 = new BitSet(new long[]{0x0000000001000002L});
+    public static final BitSet FOLLOW_LESSTHAN_in_lessThanExpression933 = new BitSet(new long[]{0x00000000FC001010L});
+    public static final BitSet FOLLOW_addExpression_in_lessThanExpression935 = new BitSet(new long[]{0x0000000001000002L});
+    public static final BitSet FOLLOW_lessThanExpression_in_equalityExpression957 = new BitSet(new long[]{0x0000000002000002L});
+    public static final BitSet FOLLOW_DOUBLEEQUALS_in_equalityExpression960 = new BitSet(new long[]{0x00000000FC001010L});
+    public static final BitSet FOLLOW_lessThanExpression_in_equalityExpression962 = new BitSet(new long[]{0x0000000002000002L});
+    public static final BitSet FOLLOW_equalityExpression_in_expression984 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_expression_in_expressionList1014 = new BitSet(new long[]{0x0000000000000042L});
+    public static final BitSet FOLLOW_COMMA_in_expressionList1017 = new BitSet(new long[]{0x00000000FC001010L});
+    public static final BitSet FOLLOW_expression_in_expressionList1019 = new BitSet(new long[]{0x0000000000000042L});
+    public static final BitSet FOLLOW_ID_in_identifier1051 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_integerLiteral_in_literal1071 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_floatLiteral_in_literal1082 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_characterLiteral_in_literal1093 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_stringLiteral_in_literal1104 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_booleanLiteral_in_literal1115 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_INTEGERCONSTANT_in_integerLiteral1135 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_FLOATCONSTANT_in_floatLiteral1155 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_CHARACTERCONSTANT_in_characterLiteral1175 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_STRINGCONSTANT_in_stringLiteral1195 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_set_in_booleanLiteral0 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_expressionStatement_in_synpred8250 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_assignmentStatement_in_synpred9261 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_arrayAssignmentStatement_in_synpred10272 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ifElseStatement_in_synpred15327 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_expressionStatement_in_synpred8322 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_assignmentStatement_in_synpred9333 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_arrayAssignmentStatement_in_synpred10344 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ifElseStatement_in_synpred15399 = new BitSet(new long[]{0x0000000000000002L});
 
 }
