@@ -68,7 +68,7 @@ functionBody returns [FunctionBody fb]
 {
     fb = new FunctionBody();
 }
-    :    OPENBRACE (vd = variableDeclaration { fb.addVariableDeclaration(vd); })* statement* CLOSEBRACE
+    :    OPENBRACE (vd = variableDeclaration { fb.addVariableDeclaration(vd); })* (s = statement { fb.addStatement(s); })* CLOSEBRACE
     ;
 
 variableDeclaration returns [VariableDeclaration vd]
@@ -87,15 +87,15 @@ compoundType returns [TypeNode tn]
     }
     ;
 
-statement
-    :    SEMICOLON
-    |    expressionStatement
-    |    assignmentStatement
-    |    arrayAssignmentStatement
-    |    whileStatement
-    |    returnStatement
-    |    printStatement
-    |    printlnStatement
+statement returns [ast.Statement s]
+    // :    SEMICOLON
+    // |    expressionStatement
+    // |    assignmentStatement
+    // |    arrayAssignmentStatement
+    // |    whileStatement
+    :    r = returnStatement { s = r; }
+    |    p = printStatement { s = p; }
+    |    pln = printlnStatement { s = pln; }
     |    ifElseStatement
     |    ifStatement
     ;
@@ -116,16 +116,20 @@ whileStatement
     :    WHILE OPENPARENTHESIS expression CLOSEPARENTHESIS block
     ;
 
-returnStatement
-    :    RETURN expression? SEMICOLON
+// TODO add expression
+returnStatement returns [ReturnStatement r]
+    :    RETURN (e = expression)? SEMICOLON
+    { r = new ReturnStatement(e); }
     ;
 
-printStatement
+printStatement returns [PrintStatement p]
     :    PRINT expression SEMICOLON
+    { p = new PrintStatement(); }
     ;
 
-printlnStatement
+printlnStatement returns [PrintlnStatement pln]
     :    PRINTLN expression SEMICOLON
+    { pln = new PrintlnStatement(); }
     ;
 
 ifElseStatement
@@ -176,8 +180,9 @@ equalityExpression
     :    lessThanExpression (DOUBLEEQUALS lessThanExpression)*
     ;
 
-expression
+expression returns [Expression e]
     :    equalityExpression
+    // { e = new EqualityExpression(); }
     ;
 
 expressionList

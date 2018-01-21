@@ -1,6 +1,10 @@
 void foo(int x, float abc) {
     char a;
     boolean y;
+
+    print 3;
+    println 3;
+    return 3;
 }
 
 string[3] test() {

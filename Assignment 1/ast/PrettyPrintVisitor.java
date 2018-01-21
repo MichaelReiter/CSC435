@@ -1,6 +1,8 @@
 package ast;
 
 import java.lang.StringBuilder;
+
+import jdk.nashorn.internal.ir.Statement;
 import type.*;
 
 public class PrettyPrintVisitor implements Visitor {
@@ -90,6 +92,9 @@ public class PrettyPrintVisitor implements Visitor {
         for (VariableDeclaration vd : f.variableDeclarations) {
             vd.accept(this);
         }
+        for (ast.Statement s : f.statements) {
+            s.accept(this);
+        }
         System.out.println();
         System.out.println("}");
     }
@@ -139,11 +144,13 @@ public class PrettyPrintVisitor implements Visitor {
     }
 
     public void visit(PrintlnStatement s) {
-        // System.out.print();
+        this.printIndentation();
+        System.out.println("println;");
     }
 
     public void visit(PrintStatement s) {
-        // System.out.print();
+        this.printIndentation();
+        System.out.println("print;");
     }
 
     public void visit(Program p) {
@@ -153,7 +160,8 @@ public class PrettyPrintVisitor implements Visitor {
     }
 
     public void visit(ReturnStatement s) {
-        // System.out.print();
+        this.printIndentation();
+        System.out.println("return;");
     }
 
     public void visit(StringLiteral s) {
@@ -177,6 +185,16 @@ public class PrettyPrintVisitor implements Visitor {
     // }
 
     public void visit(VariableDeclaration v) {
+        this.printIndentation();
+        v.d.accept(this);
+        System.out.println(";");
+    }
+
+    public void visit(WhileStatement s) {
+        // System.out.print();
+    }
+
+    private void printIndentation() {
         int totalIndentation = 4 * this.indentationDepth;
         StringBuilder sb = new StringBuilder(totalIndentation);
         for (int i = 0; i < totalIndentation; i++){
@@ -184,11 +202,5 @@ public class PrettyPrintVisitor implements Visitor {
         }
         String spaces = sb.toString();
         System.out.print(spaces);
-        v.d.accept(this);
-        System.out.println(";");
-    }
-
-    public void visit(WhileStatement s) {
-        // System.out.print();
     }
 }
