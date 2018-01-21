@@ -76,12 +76,19 @@ public class PrettyPrintVisitor implements Visitor {
         // System.out.print();
     // }
 
+    public void visit(EmptyStatement e) {
+        this.printIndentation();        
+        System.out.println(";");
+    }
+
     public void visit(EqualityExpression e) {
         // System.out.print();
     }
 
     public void visit(ExpressionStatement e) {
-        // System.out.print();
+        this.printIndentation();
+        // e.e.accept(this);
+        System.out.println(";");
     }
 
     public void visit(FloatLiteral f) {

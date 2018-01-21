@@ -13,6 +13,7 @@ public interface Visitor {
     public void visit(CharacterLiteral c);
     public void visit(Declaration d);
     // public void visit(DoStatement s);
+    public void visit(EmptyStatement e);
     public void visit(EqualityExpression e);
     public void visit(ExpressionStatement e);
     public void visit(FloatLiteral f);

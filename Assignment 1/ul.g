@@ -88,9 +88,9 @@ compoundType returns [TypeNode tn]
     ;
 
 statement returns [ast.Statement s]
-    // :    SEMICOLON
-    // |    expressionStatement
-    :    as = assignmentStatement { s = as; }
+    :    es = emptyStatement { s = es; }
+    |    exprs = expressionStatement { s = exprs; }
+    |    as = assignmentStatement { s = as; }
     |    aas = arrayAssignmentStatement { s = aas; }
     |    w = whileStatement { s = w; }
     |    r = returnStatement { s = r; }
@@ -108,8 +108,14 @@ statementList returns [StatementList sl]
     :    (s = statement { sl.addStatement(s); })*
     ;
 
-expressionStatement
-    :    expression SEMICOLON
+emptyStatement returns [EmptyStatement es]
+    :    SEMICOLON
+    { es = new EmptyStatement(); }
+    ;
+
+expressionStatement returns [ExpressionStatement exprs]
+    :    e = expression SEMICOLON
+    { exprs = new ExpressionStatement(e); }
     ;
 
 assignmentStatement returns [AssignmentStatement as]

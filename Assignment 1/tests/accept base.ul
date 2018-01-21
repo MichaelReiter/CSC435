@@ -27,6 +27,8 @@ string[3] test()
 
 char bar(boolean b)
 {
+    ;
+    x;
     x = 5;
     a[1] = 50;
     while (true)
