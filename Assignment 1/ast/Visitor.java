@@ -16,6 +16,7 @@ public interface Visitor {
     public void visit(Declaration d);
     public void visit(EmptyStatement e);
     public void visit(EqualityExpression e);
+    public void visit(ExpressionList e);
     public void visit(ExpressionStatement e);
     public void visit(FloatLiteral f);
     public void visit(FormalParameters p);

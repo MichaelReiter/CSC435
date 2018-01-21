@@ -171,7 +171,7 @@ atom returns [Atom a]
     :    ide = identifierExpression { a = ide; }
     |    l = literal { a = l; }
     |    pe = parenthesisExpression { a = pe; }
-    |    functionCall
+    |    fc = functionCall { a = fc; }
     |    are = arrayReferenceExpression { a = are; }
     ;
 
@@ -185,8 +185,9 @@ parenthesisExpression returns [ParenthesisExpression pe]
     { pe = new ParenthesisExpression(e); }
     ;
 
-functionCall
-    :    identifier OPENPARENTHESIS expressionList CLOSEPARENTHESIS
+functionCall returns [FunctionCall fc]
+    :    id = identifier OPENPARENTHESIS el = expressionList CLOSEPARENTHESIS
+    { fc = new FunctionCall(id, el); }
     ;
 
 arrayReferenceExpression returns [ArrayReferenceExpression are]
@@ -219,8 +220,12 @@ expression returns [Expression e]
     :    ee = equalityExpression { e = ee; }
     ;
 
-expressionList
-    :    expression (COMMA expression)*
+expressionList returns [ExpressionList el]
+@init
+{
+    el = new ExpressionList();
+}
+    :    e1 = expression { el.addElement(e1); } (COMMA e2 = expression { el.addElement(e2); })*
     |
     ;
 

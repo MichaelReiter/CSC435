@@ -88,6 +88,16 @@ public class PrettyPrintVisitor implements Visitor {
         e.accept(this);
     }
 
+    public void visit(ExpressionList e) {
+        for (int i = 0; i < e.l.size(); i++) {
+            Expression expr = e.elementAt(i);
+            expr.accept(this);
+            if (i != e.l.size() - 1) {
+                System.out.print(", ");
+            }
+        }
+    }
+
     public void visit(ExpressionStatement e) {
         this.printIndentation();
         e.e.accept(this);
@@ -127,7 +137,10 @@ public class PrettyPrintVisitor implements Visitor {
     }
 
     public void visit(FunctionCall f) {
-        // System.out.print();
+        f.id.accept(this);
+        System.out.print("(");
+        f.el.accept(this);
+        System.out.print(")");
     }
 
     public void visit(FunctionDeclaration f) {

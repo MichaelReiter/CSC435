@@ -15,6 +15,7 @@ string[3] test()
 {
     float z;
 
+    foo(1, 2.5, true, 'z', "words", false);
     if (false)
     {
         return;
@@ -27,7 +28,7 @@ string[3] test()
 
 char bar(boolean b)
 {
-    int x;    
+    int x;
 
     ;
     x;
