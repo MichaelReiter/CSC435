@@ -22,14 +22,14 @@ public class PrettyPrintVisitor implements Visitor {
         this.printIndentation();
         s.a.accept(this);
         System.out.print(" = ");
-        // s.e1.accept(this);
+        s.e.accept(this);
         System.out.println(";");
     }
 
     public void visit(ArrayReference a) {
         a.id.accept(this);
         System.out.print("[");
-        // a.e.accept(this);
+        a.e.accept(this);
         System.out.print("]");
     }
 
@@ -179,14 +179,16 @@ public class PrettyPrintVisitor implements Visitor {
 
     public void visit(PrintlnStatement s) {
         this.printIndentation();
-        System.out.print("println");
-        // s.e.accept(this);
+        System.out.print("println ");
+        s.e.accept(this);
         System.out.println(";");
     }
 
     public void visit(PrintStatement s) {
         this.printIndentation();
-        System.out.println("print;");
+        System.out.print("print ");
+        s.e.accept(this);
+        System.out.println(";");
     }
 
     public void visit(Program p) {
@@ -197,7 +199,12 @@ public class PrettyPrintVisitor implements Visitor {
 
     public void visit(ReturnStatement s) {
         this.printIndentation();
-        System.out.println("return;");
+        System.out.print("return");
+        if (s.e != null) {
+            System.out.print(" ");
+            s.e.accept(this);
+        }
+        System.out.println(";");
     }
 
     public void visit(StatementList sl) {

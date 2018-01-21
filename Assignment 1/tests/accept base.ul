@@ -27,6 +27,8 @@ string[3] test()
 
 char bar(boolean b)
 {
+    int x;    
+
     ;
     x;
     x = 5;
@@ -36,6 +38,6 @@ char bar(boolean b)
     a[1] = 50;
     while (true)
     {
-        print true;
+        print t;
     }
 }

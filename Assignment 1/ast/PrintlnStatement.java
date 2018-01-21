@@ -1,7 +1,11 @@
 package ast;
 
 public class PrintlnStatement extends Statement {
-    public PrintlnStatement() {}
+    Expression e;
+
+    public PrintlnStatement(Expression e) {
+        this.e = e;
+    }
 
     public void accept(Visitor v) {
         v.visit(this);

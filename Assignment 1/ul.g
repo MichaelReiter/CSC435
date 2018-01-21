@@ -142,14 +142,14 @@ returnStatement returns [ReturnStatement r]
 
 // TODO add expression
 printStatement returns [PrintStatement p]
-    :    PRINT expression SEMICOLON
-    { p = new PrintStatement(); }
+    :    PRINT e = expression SEMICOLON
+    { p = new PrintStatement(e); }
     ;
 
 // TODO add expression
 printlnStatement returns [PrintlnStatement pln]
-    :    PRINTLN expression SEMICOLON
-    { pln = new PrintlnStatement(); }
+    :    PRINTLN e = expression SEMICOLON
+    { pln = new PrintlnStatement(e); }
     ;
 
 ifElseStatement returns [IfElseStatement ies]
@@ -283,7 +283,7 @@ type returns [Type t]
     { t = new VoidType(); }
     ;
 
-intt returns [IntegerType i]
+intt
     :    INT
     ;
 
