@@ -38,6 +38,6 @@ char bar(boolean b)
     a[1] = 50;
     while (true)
     {
-        print t;
+        print true;
     }
 }

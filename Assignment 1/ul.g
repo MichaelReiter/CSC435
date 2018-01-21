@@ -228,7 +228,7 @@ literal returns [Literal l]
     |    fl = floatLiteral { l = fl; }
     |    cl = characterLiteral { l = cl; }
     |    sl = stringLiteral { l = sl; }
-    |    booleanLiteral
+    |    bl = booleanLiteral { l = bl; }
     ;
 
 integerLiteral returns [IntegerLiteral il]
@@ -263,9 +263,11 @@ stringLiteral returns [StringLiteral sl]
     }
     ;
 
-booleanLiteral
+booleanLiteral returns [BooleanLiteral bl]
     :    TRUE
+    { bl = new BooleanLiteral(true); }
     |    FALSE
+    { bl = new BooleanLiteral(false); }    
     ;
 
 type returns [Type t]

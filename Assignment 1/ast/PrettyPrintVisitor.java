@@ -60,7 +60,7 @@ public class PrettyPrintVisitor implements Visitor {
     }
 
     public void visit(BooleanLiteral b) {
-        // System.out.print(b.value);
+        System.out.print(b.value);
     }
 
     public void visit(CharacterLiteral c) {
@@ -145,7 +145,7 @@ public class PrettyPrintVisitor implements Visitor {
     public void visit(IfElseStatement i) {
         this.printIndentation();
         System.out.print("if (");
-        // i.e.accept(this);
+        i.e.accept(this);
         System.out.println(")");
         i.b1.accept(this);
         this.printIndentation();
@@ -156,7 +156,7 @@ public class PrettyPrintVisitor implements Visitor {
     public void visit(IfStatement i) {
         this.printIndentation();
         System.out.print("if (");
-        // i.e.accept(this);
+        i.e.accept(this);
         System.out.println(")");
         i.b.accept(this);
     }
@@ -238,7 +238,7 @@ public class PrettyPrintVisitor implements Visitor {
     public void visit(WhileStatement s) {
         this.printIndentation();
         System.out.print("while (");
-        // s.e.accept(this);
+        s.e.accept(this);
         System.out.println(")");
         s.b.accept(this);
     }
