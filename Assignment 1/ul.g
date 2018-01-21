@@ -169,7 +169,7 @@ block returns [Block b]
 
 atom returns [Atom a]
     :    ide = identifierExpression { a = ide; }
-    |    literal
+    |    l = literal { a = l; }
     |    parenthesisExpression
     |    functionCall
     |    arrayReference
@@ -223,20 +223,28 @@ identifier returns [Identifier id]
     { id = new Identifier($ID.text); }
     ;
 
-literal
-    :    integerLiteral
-    |    floatLiteral
+literal returns [Literal l]
+    :    il = integerLiteral { l = il; }
+    |    fl = floatLiteral { l = fl; }
     |    characterLiteral
     |    stringLiteral
     |    booleanLiteral
     ;
 
-integerLiteral
+integerLiteral returns [IntegerLiteral il]
     :    INTEGERCONSTANT
+    {
+        int value = Integer.parseInt($INTEGERCONSTANT.text);
+        il = new IntegerLiteral(value);
+    }
     ;
 
-floatLiteral
+floatLiteral returns [FloatLiteral fl]
     :    FLOATCONSTANT
+    {
+        float value = Float.parseFloat($FLOATCONSTANT.text);
+        fl = new FloatLiteral(value);
+    }
     ;
 
 characterLiteral

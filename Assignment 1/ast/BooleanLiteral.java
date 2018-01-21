@@ -1,6 +1,6 @@
 package ast;
 
-public class BooleanLiteral extends Expression {
+public class BooleanLiteral extends Literal {
     public BooleanLiteral() {}
 
     public void accept(Visitor v) {

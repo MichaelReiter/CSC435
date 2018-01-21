@@ -30,6 +30,7 @@ char bar(boolean b)
     ;
     x;
     x = 5;
+    y = 3.14;
     a[1] = 50;
     while (true)
     {

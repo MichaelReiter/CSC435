@@ -41,7 +41,7 @@ public class PrettyPrintVisitor implements Visitor {
         this.printIndentation();
         a.id.accept(this);
         System.out.print(" = ");
-        // a.e.accept(this);
+        a.e.accept(this);
         System.out.println(";");
     }
     
@@ -89,7 +89,7 @@ public class PrettyPrintVisitor implements Visitor {
     }
 
     public void visit(FloatLiteral f) {
-        // System.out.print(f.value);
+        System.out.print(f.value);
     }
 
     public void visit(FormalParameters p) {
@@ -160,7 +160,7 @@ public class PrettyPrintVisitor implements Visitor {
     }
 
     public void visit(IntegerLiteral i) {
-        // System.out.print(i.value);
+        System.out.print(i.value);
     }
 
     public void visit(LessThanExpression e) {
