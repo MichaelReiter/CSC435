@@ -6,6 +6,7 @@ import jdk.nashorn.internal.ir.Statement;
 import type.*;
 
 public class PrettyPrintVisitor implements Visitor {
+    // I'm taking the cowards way out and using global state here
     int indentationDepth;
 
     public PrettyPrintVisitor() {
@@ -13,9 +14,11 @@ public class PrettyPrintVisitor implements Visitor {
     }
 
     public void visit(AddExpression e) {
-        // e.e1.accept(this);
-		// System.out.print(" + ");
-		// e.e2.accept(this);
+        e.e1.accept(this);
+        if (e.e2 != null) {
+            System.out.print(" + ");
+            e.e2.accept(this);
+        }
     }
 
     public void visit(ArrayAssignmentStatement s) {
@@ -84,8 +87,11 @@ public class PrettyPrintVisitor implements Visitor {
     }
 
     public void visit(EqualityExpression e) {
-        // System.out.print();
-        e.accept(this);
+        e.e1.accept(this);
+        if (e.e2 != null) {
+            System.out.print(" == ");
+            e.e2.accept(this);
+        }
     }
 
     public void visit(ExpressionList e) {
@@ -183,11 +189,19 @@ public class PrettyPrintVisitor implements Visitor {
     }
 
     public void visit(LessThanExpression e) {
-        // System.out.print();
+        e.e1.accept(this);
+        if (e.e2 != null) {
+            System.out.print(" < ");
+            e.e2.accept(this);
+        }
     }
 
     public void visit(MultiplyExpression e) {
-        // System.out.print();
+        e.e1.accept(this);
+        if (e.e2 != null) {
+            System.out.print(" * ");
+            e.e2.accept(this);
+        }
     }
 
     public void visit(ParenthesisExpression p) {

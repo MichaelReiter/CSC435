@@ -128,25 +128,21 @@ arrayAssignmentStatement returns [ArrayAssignmentStatement aas]
     { aas = new ArrayAssignmentStatement(a, e); }
     ;
 
-// TODO add expression
 whileStatement returns [WhileStatement w]
     :    WHILE OPENPARENTHESIS e = expression CLOSEPARENTHESIS b = block
     { w = new WhileStatement(e, b); }
     ;
 
-// TODO add expression
 returnStatement returns [ReturnStatement r]
     :    RETURN (e = expression)? SEMICOLON
     { r = new ReturnStatement(e); }
     ;
 
-// TODO add expression
 printStatement returns [PrintStatement p]
     :    PRINT e = expression SEMICOLON
     { p = new PrintStatement(e); }
     ;
 
-// TODO add expression
 printlnStatement returns [PrintlnStatement pln]
     :    PRINTLN e = expression SEMICOLON
     { pln = new PrintlnStatement(e); }
@@ -201,24 +197,28 @@ arrayReference returns [ArrayReference ar]
     ;
 
 multiplyExpression returns [MultiplyExpression me]
-    :    a = atom { me = a; } (STAR atom)*
+    :    e1 = atom (STAR e2 = atom)*
+    { me = new MultiplyExpression(e1, e2); }
     ;
 
 addExpression returns [AddExpression ae]
-    :    me = multiplyExpression { ae = me; } ((PLUS|MINUS) multiplyExpression)*
+    :    e1 = multiplyExpression ((PLUS|MINUS) e2 = multiplyExpression)*
+    { ae = new AddExpression(e1, e2); }
     ;
 
 lessThanExpression returns [LessThanExpression lte]
-    :    ae = addExpression { lte = ae; } (LESSTHAN addExpression)*
+    :    e1 = addExpression (LESSTHAN e2 = addExpression)*
+    { lte = new LessThanExpression(e1, e2); }
     ;
 
-equalityExpression returns [EqualityExpression ee]
-    :    lte = lessThanExpression { ee = lte; } (DOUBLEEQUALS lessThanExpression)*
+expression returns [EqualityExpression ee]
+    :    e1 = lessThanExpression (DOUBLEEQUALS e2 = lessThanExpression)*
+    { ee = new EqualityExpression(e1, e2); }
     ;
 
-expression returns [Expression e]
-    :    ee = equalityExpression { e = ee; }
-    ;
+// expression returns [Expression e]
+//     :    ee = equalityExpression { e = ee; }
+//     ;
 
 expressionList returns [ExpressionList el]
 @init
