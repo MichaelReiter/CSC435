@@ -9,6 +9,5 @@ public class Identifier extends Expression {
 
     public void accept(Visitor v) {
         v.visit(this);
-        System.out.println(this);
     }
 }

@@ -42,13 +42,25 @@ function returns [Function f]
     ;
 
 functionDeclaration returns [FunctionDeclaration fd]
-    :    tn = compoundType id = identifier OPENPARENTHESIS formalParameters CLOSEPARENTHESIS
-    { fd = new FunctionDeclaration(tn, id); }
+    :    ct = compoundType id = identifier OPENPARENTHESIS args = formalParameters CLOSEPARENTHESIS
+    {
+        Declaration d = new Declaration(ct, id);
+        fd = new FunctionDeclaration(d, args);
+    }
     ;
 
 formalParameters returns [FormalParameters args]
-    :    compoundType identifier (COMMA compoundType identifier)*
+@init
+{
+    args = new FormalParameters();
+}
+    :    (d = declaration { args.addElement(d); }) (COMMA (d2 = declaration { args.addElement(d2); }))*
     |
+    ;
+
+declaration returns [Declaration d]
+    :    ct = compoundType id = identifier
+    { d = new Declaration(ct, id); }
     ;
 
 functionBody returns [FunctionBody fb]

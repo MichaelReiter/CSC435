@@ -43,6 +43,11 @@ public class PrintVisitor implements Visitor {
         // System.out.print(c.value);
     }
 
+    public void visit(Declaration d) {
+        d.type.accept(this);
+        d.id.accept(this);
+    }
+
     // public void visit(DoStatement s) {
         // System.out.print();
     // }
@@ -60,7 +65,13 @@ public class PrintVisitor implements Visitor {
     }
 
     public void visit(FormalParameters p) {
-        // System.out.print();
+        for (int i = 0; i < p.parameters.size(); i++) {
+            Declaration d = p.elementAt(i);
+            d.accept(this);
+            if (i != p.parameters.size() - 1) {
+                System.out.print(", ");
+            }
+        }
     }
 
     public void visit(Function f) {
@@ -77,12 +88,15 @@ public class PrintVisitor implements Visitor {
     }
 
     public void visit(FunctionDeclaration f) {
-        f.tn.accept(this);
-        f.id.accept(this);
+        f.d.type.accept(this);
+        f.d.id.accept(this);
+        System.out.print("(");
+        f.args.accept(this);
+        System.out.println(")");
     }
 
     public void visit(Identifier i) {
-        System.out.println(i.name);
+        System.out.print(i.name);
     }
 
     // public void visit(IdentifierValue v) {
@@ -141,7 +155,7 @@ public class PrintVisitor implements Visitor {
 
     public void visit(Type t) {
         // TODO change to print
-        System.out.println(t);
+        System.out.print(t + " ");
     }
 
     public void visit(TypeNode t) {
