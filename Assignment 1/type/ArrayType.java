@@ -3,10 +3,16 @@ package type;
 import ast.Visitor;
 
 public class ArrayType extends Type {
-    public ArrayType() {}
+    Type t;
+    int size;
+
+    public ArrayType(Type t, int size) {
+        this.t = t;
+        this.size = size;
+    }
 
     public String toString() {
-        return "array";
+        return this.t.toString() + "[" + this.size + "]" ;
     }
 
     public boolean equals(Object o) {

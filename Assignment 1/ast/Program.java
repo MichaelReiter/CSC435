@@ -23,6 +23,5 @@ public class Program extends ASTNode {
 
     public void accept(Visitor v) {
         v.visit(this);
-        System.out.println(this);
     }
 }

@@ -20,7 +20,7 @@ public class PrintVisitor implements Visitor {
     }
 
     public void visit(ArrayType a) {
-        // System.out.print();
+        System.out.print(a + " ");
     }
 
     public void visit(AssignmentStatement a) {
@@ -77,6 +77,7 @@ public class PrintVisitor implements Visitor {
     public void visit(Function f) {
         f.fd.accept(this);
         // f.fb.accept(this);
+        System.out.println();
     }
 
     public void visit(FunctionBody f) {
@@ -154,7 +155,6 @@ public class PrintVisitor implements Visitor {
     }
 
     public void visit(Type t) {
-        // TODO change to print
         System.out.print(t + " ");
     }
 

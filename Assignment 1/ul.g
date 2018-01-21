@@ -74,7 +74,12 @@ variableDeclaration
 compoundType returns [TypeNode tn]
     :    t = type
     { tn = new TypeNode(t); }
-    |    type OPENBRACKET INTEGERCONSTANT CLOSEBRACKET
+    |    t = type OPENBRACKET INTEGERCONSTANT CLOSEBRACKET
+    {
+        int size = Integer.parseInt($INTEGERCONSTANT.text);
+        ArrayType at = new ArrayType(t, size);
+        tn = new TypeNode(at, size);
+    }
     ;
 
 statement

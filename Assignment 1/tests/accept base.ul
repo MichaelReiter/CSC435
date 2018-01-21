@@ -1,3 +1,7 @@
 void foo(int x, float abc) {
 
 }
+
+string[3] test() {
+
+}
