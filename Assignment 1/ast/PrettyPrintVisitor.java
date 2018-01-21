@@ -64,7 +64,9 @@ public class PrettyPrintVisitor implements Visitor {
     }
 
     public void visit(CharacterLiteral c) {
-        // System.out.print(c.value);
+        System.out.print("\'");
+        System.out.print(c.value);
+        System.out.print("\'");        
     }
 
     public void visit(Declaration d) {

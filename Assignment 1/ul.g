@@ -226,7 +226,7 @@ identifier returns [Identifier id]
 literal returns [Literal l]
     :    il = integerLiteral { l = il; }
     |    fl = floatLiteral { l = fl; }
-    |    characterLiteral
+    |    cl = characterLiteral { l = cl; }
     |    stringLiteral
     |    booleanLiteral
     ;
@@ -247,8 +247,12 @@ floatLiteral returns [FloatLiteral fl]
     }
     ;
 
-characterLiteral
+characterLiteral returns [CharacterLiteral cl]
     :    CHARACTERCONSTANT
+    {
+        char value = ($CHARACTERCONSTANT.text).charAt(1);
+        cl = new CharacterLiteral(value);
+    }
     ;
 
 stringLiteral
