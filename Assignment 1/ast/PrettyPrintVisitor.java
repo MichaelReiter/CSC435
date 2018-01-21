@@ -19,11 +19,18 @@ public class PrettyPrintVisitor implements Visitor {
     }
 
     public void visit(ArrayAssignmentStatement s) {
-        // System.out.print();
+        this.printIndentation();
+        s.a.accept(this);
+        System.out.print(" = ");
+        // s.e1.accept(this);
+        System.out.println(";");
     }
 
     public void visit(ArrayReference a) {
-        // System.out.print();
+        a.id.accept(this);
+        System.out.print("[");
+        // a.e.accept(this);
+        System.out.print("]");            
     }
 
     public void visit(ArrayType a) {
@@ -31,7 +38,11 @@ public class PrettyPrintVisitor implements Visitor {
     }
 
     public void visit(AssignmentStatement a) {
-        // System.out.print();
+        this.printIndentation();
+        a.id.accept(this);
+        System.out.print(" = ");
+        // a.e.accept(this);
+        System.out.println(";");
     }
     
     // public void visit(ASTNode a) {

@@ -90,9 +90,9 @@ compoundType returns [TypeNode tn]
 statement returns [ast.Statement s]
     // :    SEMICOLON
     // |    expressionStatement
-    // |    assignmentStatement
-    // |    arrayAssignmentStatement
-    :    w = whileStatement { s = w; }
+    :    as = assignmentStatement { s = as; }
+    |    aas = arrayAssignmentStatement { s = aas; }
+    |    w = whileStatement { s = w; }
     |    r = returnStatement { s = r; }
     |    p = printStatement { s = p; }
     |    pln = printlnStatement { s = pln; }
@@ -112,14 +112,17 @@ expressionStatement
     :    expression SEMICOLON
     ;
 
-assignmentStatement
-    :    identifier SINGLEEQUALS expression SEMICOLON
+assignmentStatement returns [AssignmentStatement as]
+    :    id = identifier SINGLEEQUALS e = expression SEMICOLON
+    { as = new AssignmentStatement(id, e); }
     ;
 
-arrayAssignmentStatement
-    :    identifier OPENBRACKET expression CLOSEBRACKET SINGLEEQUALS expression SEMICOLON
+arrayAssignmentStatement returns [ArrayAssignmentStatement aas]
+    :    a = arrayReference SINGLEEQUALS e = expression SEMICOLON
+    { aas = new ArrayAssignmentStatement(a, e); }
     ;
 
+// TODO add expression
 whileStatement returns [WhileStatement w]
     :    WHILE OPENPARENTHESIS e = expression CLOSEPARENTHESIS b = block
     { w = new WhileStatement(e, b); }
@@ -174,8 +177,9 @@ functionCall
     :    identifier OPENPARENTHESIS expressionList CLOSEPARENTHESIS
     ;
 
-arrayReference
-    :    identifier OPENBRACKET expression CLOSEBRACKET
+arrayReference returns [ArrayReference ar]
+    :    id = identifier OPENBRACKET e = expression CLOSEBRACKET
+    { ar = new ArrayReference(id, e); }
     ;
 
 multiplyExpression
