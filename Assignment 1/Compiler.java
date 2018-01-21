@@ -26,7 +26,7 @@ public class Compiler {
 
         try {
             Program p = parser.program();
-            Visitor v = new PrintVisitor();
+            Visitor v = new PrettyPrintVisitor();
             p.accept(v);
         }
         catch (RecognitionException e ) {

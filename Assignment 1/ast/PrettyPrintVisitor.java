@@ -1,9 +1,14 @@
 package ast;
 
+import java.lang.StringBuilder;
 import type.*;
 
 public class PrettyPrintVisitor implements Visitor {
-    public PrettyPrintVisitor() {}
+    int indentationDepth;
+
+    public PrettyPrintVisitor() {
+        this.indentationDepth = 1;
+    }
 
     public void visit(AddExpression e) {
         // e.e1.accept(this);
@@ -172,6 +177,13 @@ public class PrettyPrintVisitor implements Visitor {
     // }
 
     public void visit(VariableDeclaration v) {
+        int totalIndentation = 4 * this.indentationDepth;
+        StringBuilder sb = new StringBuilder(totalIndentation);
+        for (int i = 0; i < totalIndentation; i++){
+            sb.append(" ");
+        }
+        String spaces = sb.toString();
+        System.out.print(spaces);
         v.d.accept(this);
         System.out.println(";");
     }
