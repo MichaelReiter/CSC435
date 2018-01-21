@@ -1,10 +1,13 @@
 package ast;
 
 public class VariableDeclaration extends ASTNode {
-    public VariableDeclaration() {}
+    Declaration d;
+
+    public VariableDeclaration(Declaration d) {
+        this.d = d;
+    }
 
     public void accept(Visitor v) {
         v.visit(this);
-        System.out.println(this);
     }
 }

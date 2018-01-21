@@ -1,7 +1,8 @@
 void foo(int x, float abc) {
-
+    char a;
+    boolean y;
 }
 
 string[3] test() {
-
+    float z;
 }

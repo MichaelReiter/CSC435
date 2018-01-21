@@ -6,19 +6,19 @@ public class Program extends ASTNode {
     public Vector<Function> functionList;
 
     public Program() {
-        functionList = new Vector<Function>();
+        this.functionList = new Vector<Function>();
     }
 
     public void addElement(Function f) {
-        functionList.addElement(f);
+        this.functionList.addElement(f);
     }
 
     public Function elementAt(int index) {
-        return (Function)functionList.elementAt(index);
+        return (Function)this.functionList.elementAt(index);
     }
 
     public int size() {
-        return functionList.size();
+        return this.functionList.size();
     }
 
     public void accept(Visitor v) {

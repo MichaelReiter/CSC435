@@ -2,8 +2,8 @@ package ast;
 
 import type.*;
 
-public class PrintVisitor implements Visitor {
-    public PrintVisitor() {}
+public class PrettyPrintVisitor implements Visitor {
+    public PrettyPrintVisitor() {}
 
     public void visit(AddExpression e) {
         // e.e1.accept(this);
@@ -76,12 +76,17 @@ public class PrintVisitor implements Visitor {
 
     public void visit(Function f) {
         f.fd.accept(this);
-        // f.fb.accept(this);
+        f.fb.accept(this);
         System.out.println();
     }
 
     public void visit(FunctionBody f) {
-        // System.out.print();
+        System.out.println("{");
+        for (VariableDeclaration vd : f.variableDeclarations) {
+            vd.accept(this);
+        }
+        System.out.println();
+        System.out.println("}");
     }
 
     public void visit(FunctionCall f) {
@@ -167,7 +172,8 @@ public class PrintVisitor implements Visitor {
     // }
 
     public void visit(VariableDeclaration v) {
-        // System.out.print();
+        v.d.accept(this);
+        System.out.println(";");
     }
 
     public void visit(WhileStatement s) {

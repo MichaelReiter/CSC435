@@ -64,11 +64,16 @@ declaration returns [Declaration d]
     ;
 
 functionBody returns [FunctionBody fb]
-    :    OPENBRACE variableDeclaration* statement* CLOSEBRACE
+@init
+{
+    fb = new FunctionBody();
+}
+    :    OPENBRACE (vd = variableDeclaration { fb.addVariableDeclaration(vd); })* statement* CLOSEBRACE
     ;
 
-variableDeclaration
-    : compoundType identifier SEMICOLON
+variableDeclaration returns [VariableDeclaration vd]
+    :    d = declaration SEMICOLON
+    { vd = new VariableDeclaration(d); }
     ;
 
 compoundType returns [TypeNode tn]
@@ -173,8 +178,6 @@ equalityExpression
 
 expression
     :    equalityExpression
-    // |    arrayReference
-    // |    functionCall
     ;
 
 expressionList
@@ -254,6 +257,8 @@ booleann
 voidd
     :    VOID
     ;
+
+// Lexer below
 
 INT              :    'int';
 
