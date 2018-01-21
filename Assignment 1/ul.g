@@ -160,13 +160,7 @@ multiplyExpression
     ;
 
 addExpression
-    :    multiplyExpression addExpressionPrime
-    ;
-
-addExpressionPrime
-    :    PLUS multiplyExpression addExpressionPrime
-    |    MINUS multiplyExpression addExpressionPrime
-    |
+    :    multiplyExpression ((PLUS|MINUS) multiplyExpression)*
     ;
 
 lessThanExpression
