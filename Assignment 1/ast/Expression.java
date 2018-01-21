@@ -1,9 +1,5 @@
 package ast;
 
-public class Expression {
-    public Expression() {}
-
-    // public void accept(Visitor v) {
-    //     v.visit(this);
-    // }
+public abstract class Expression extends ASTNode {
+    public abstract void accept(Visitor v);
 }

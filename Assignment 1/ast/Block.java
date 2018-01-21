@@ -1,7 +1,11 @@
 package ast;
 
 public class Block extends ASTNode {
-    public Block() {}
+    StatementList sl;
+
+    public Block(StatementList sl) {
+        this.sl = sl;
+    }
 
     public void accept(Visitor v) {
         v.visit(this);

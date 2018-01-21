@@ -39,7 +39,13 @@ public class PrettyPrintVisitor implements Visitor {
     // }
 
     public void visit(Block b) {
-        // System.out.print();
+        this.printIndentation();
+        System.out.println("{");
+        this.indentationDepth += 1;
+        b.sl.accept(this);
+        this.indentationDepth -= 1;
+        this.printIndentation();
+        System.out.println("}");
     }
 
     public void visit(BooleanLiteral b) {
@@ -92,10 +98,8 @@ public class PrettyPrintVisitor implements Visitor {
         for (VariableDeclaration vd : f.variableDeclarations) {
             vd.accept(this);
         }
-        for (ast.Statement s : f.statements) {
-            s.accept(this);
-        }
         System.out.println();
+        f.sl.accept(this);
         System.out.println("}");
     }
 
@@ -120,11 +124,22 @@ public class PrettyPrintVisitor implements Visitor {
     // }
 
     public void visit(IfElseStatement i) {
-        // System.out.print();
+        this.printIndentation();
+        System.out.print("if (");
+        // i.e.accept(this);
+        System.out.println(")");
+        i.b1.accept(this);
+        this.printIndentation();
+        System.out.println("else");
+        i.b2.accept(this);
     }
 
     public void visit(IfStatement i) {
-        // System.out.print();
+        this.printIndentation();
+        System.out.print("if (");
+        // i.e.accept(this);
+        System.out.println(")");
+        i.b.accept(this);
     }
 
     public void visit(IntegerLiteral i) {
@@ -162,6 +177,12 @@ public class PrettyPrintVisitor implements Visitor {
     public void visit(ReturnStatement s) {
         this.printIndentation();
         System.out.println("return;");
+    }
+
+    public void visit(StatementList sl) {
+        for (ast.Statement s : sl.l) {
+            s.accept(this);
+        }
     }
 
     public void visit(StringLiteral s) {

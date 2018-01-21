@@ -1,12 +1,26 @@
-void foo(int x, float abc) {
+void foo(int x, float abc)
+{
     char a;
     boolean y;
 
-    print 3;
+    if (true)
+    {
+        print 3;
+    }
     println 3;
     return 3;
 }
 
-string[3] test() {
+string[3] test()
+{
     float z;
+
+    if (false)
+    {
+        return;
+    }
+    else
+    {
+        print 3;
+    }
 }

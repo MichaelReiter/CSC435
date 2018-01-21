@@ -68,7 +68,7 @@ functionBody returns [FunctionBody fb]
 {
     fb = new FunctionBody();
 }
-    :    OPENBRACE (vd = variableDeclaration { fb.addVariableDeclaration(vd); })* (s = statement { fb.addStatement(s); })* CLOSEBRACE
+    :    OPENBRACE (vd = variableDeclaration { fb.addVariableDeclaration(vd); })* sl = statementList { fb.sl = sl; } CLOSEBRACE
     ;
 
 variableDeclaration returns [VariableDeclaration vd]
@@ -96,8 +96,16 @@ statement returns [ast.Statement s]
     :    r = returnStatement { s = r; }
     |    p = printStatement { s = p; }
     |    pln = printlnStatement { s = pln; }
-    |    ifElseStatement
-    |    ifStatement
+    |    ies = ifElseStatement { s = ies; }
+    |    is = ifStatement { s = is; }
+    ;
+
+statementList returns [StatementList sl]
+@init
+{
+    sl = new StatementList();
+}
+    :    (s = statement { sl.addStatement(s); })*
     ;
 
 expressionStatement
@@ -132,16 +140,19 @@ printlnStatement returns [PrintlnStatement pln]
     { pln = new PrintlnStatement(); }
     ;
 
-ifElseStatement
-    :    IF OPENPARENTHESIS expression CLOSEPARENTHESIS block ELSE block
+ifElseStatement returns [IfElseStatement ies]
+    :    IF OPENPARENTHESIS e = expression CLOSEPARENTHESIS b1 = block ELSE b2 =block
+    { ies = new IfElseStatement(e, b1, b2); }
     ;
 
-ifStatement
-    :    IF OPENPARENTHESIS expression CLOSEPARENTHESIS block
+ifStatement returns [IfStatement is]
+    :    IF OPENPARENTHESIS e = expression CLOSEPARENTHESIS b = block
+    { is = new IfStatement(e, b); }
     ;
 
-block
-    :    OPENBRACE statement* CLOSEBRACE
+block returns [Block b]
+    :    OPENBRACE sl = statementList CLOSEBRACE
+    { b = new Block(sl); }
     ;
 
 atom

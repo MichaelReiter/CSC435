@@ -33,6 +33,7 @@ public interface Visitor {
     public void visit(PrintStatement s);
     public void visit(Program p);
     public void visit(ReturnStatement s);
+    public void visit(StatementList sl);
     public void visit(StringLiteral s);
     public void visit(SubtractExpression e);
     public void visit(Type t);
