@@ -6,6 +6,7 @@ public interface Visitor {
     public void visit(AddExpression e);
     public void visit(ArrayAssignmentStatement s);
     public void visit(ArrayReference a);
+    public void visit(ArrayReferenceExpression a);
     public void visit(ArrayType a);
     public void visit(AssignmentStatement a);
     public void visit(Atom a);

@@ -34,6 +34,8 @@ char bar(boolean b)
     x = 5;
     y = 3.14;
     z = 'c';
+    abc = (5);
+    test = some_array[12];
     str = "this is a string";
     a[1] = 50;
     while (true)

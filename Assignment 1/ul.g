@@ -170,9 +170,9 @@ block returns [Block b]
 atom returns [Atom a]
     :    ide = identifierExpression { a = ide; }
     |    l = literal { a = l; }
-    |    parenthesisExpression
+    |    pe = parenthesisExpression { a = pe; }
     |    functionCall
-    |    arrayReference
+    |    are = arrayReferenceExpression { a = are; }
     ;
 
 identifierExpression returns [IdentifierExpression ide]
@@ -180,12 +180,18 @@ identifierExpression returns [IdentifierExpression ide]
     { ide = new IdentifierExpression(id); }
     ;
 
-parenthesisExpression
-    :    OPENPARENTHESIS expression CLOSEPARENTHESIS
+parenthesisExpression returns [ParenthesisExpression pe]
+    :    OPENPARENTHESIS e = expression CLOSEPARENTHESIS
+    { pe = new ParenthesisExpression(e); }
     ;
 
 functionCall
     :    identifier OPENPARENTHESIS expressionList CLOSEPARENTHESIS
+    ;
+
+arrayReferenceExpression returns [ArrayReferenceExpression are]
+    :    a = arrayReference
+    { are = new ArrayReferenceExpression(a); }
     ;
 
 arrayReference returns [ArrayReference ar]

@@ -33,6 +33,10 @@ public class PrettyPrintVisitor implements Visitor {
         System.out.print("]");
     }
 
+    public void visit(ArrayReferenceExpression a) {
+        a.a.accept(this);
+    }
+
     public void visit(ArrayType a) {
         System.out.print(a + " ");
     }
@@ -174,7 +178,9 @@ public class PrettyPrintVisitor implements Visitor {
     }
 
     public void visit(ParenthesisExpression p) {
-        // System.out.print();
+        System.out.print("(");
+        p.e.accept(this);
+        System.out.print(")");
     }
 
     public void visit(PrintlnStatement s) {
