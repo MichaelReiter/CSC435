@@ -24,3 +24,11 @@ string[3] test()
         print 3;
     }
 }
+
+char bar(boolean b)
+{
+    while (true)
+    {
+        print true;
+    }
+}

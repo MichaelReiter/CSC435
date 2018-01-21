@@ -98,7 +98,9 @@ public class PrettyPrintVisitor implements Visitor {
         for (VariableDeclaration vd : f.variableDeclarations) {
             vd.accept(this);
         }
-        System.out.println();
+        if (f.variableDeclarations.size() > 0) {
+            System.out.println();
+        }
         f.sl.accept(this);
         System.out.println("}");
     }
@@ -212,7 +214,11 @@ public class PrettyPrintVisitor implements Visitor {
     }
 
     public void visit(WhileStatement s) {
-        // System.out.print();
+        this.printIndentation();
+        System.out.print("while (");
+        // s.e.accept(this);
+        System.out.println(")");
+        s.b.accept(this);
     }
 
     private void printIndentation() {

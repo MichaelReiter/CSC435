@@ -92,8 +92,8 @@ statement returns [ast.Statement s]
     // |    expressionStatement
     // |    assignmentStatement
     // |    arrayAssignmentStatement
-    // |    whileStatement
-    :    r = returnStatement { s = r; }
+    :    w = whileStatement { s = w; }
+    |    r = returnStatement { s = r; }
     |    p = printStatement { s = p; }
     |    pln = printlnStatement { s = pln; }
     |    ies = ifElseStatement { s = ies; }
@@ -120,8 +120,9 @@ arrayAssignmentStatement
     :    identifier OPENBRACKET expression CLOSEBRACKET SINGLEEQUALS expression SEMICOLON
     ;
 
-whileStatement
-    :    WHILE OPENPARENTHESIS expression CLOSEPARENTHESIS block
+whileStatement returns [WhileStatement w]
+    :    WHILE OPENPARENTHESIS e = expression CLOSEPARENTHESIS b = block
+    { w = new WhileStatement(e, b); }
     ;
 
 // TODO add expression
@@ -130,11 +131,13 @@ returnStatement returns [ReturnStatement r]
     { r = new ReturnStatement(e); }
     ;
 
+// TODO add expression
 printStatement returns [PrintStatement p]
     :    PRINT expression SEMICOLON
     { p = new PrintStatement(); }
     ;
 
+// TODO add expression
 printlnStatement returns [PrintlnStatement pln]
     :    PRINTLN expression SEMICOLON
     { pln = new PrintlnStatement(); }
