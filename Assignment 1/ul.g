@@ -167,12 +167,17 @@ block returns [Block b]
     { b = new Block(sl); }
     ;
 
-atom
-    :    identifier
+atom returns [Atom a]
+    :    ide = identifierExpression { a = ide; }
     |    literal
     |    parenthesisExpression
     |    functionCall
     |    arrayReference
+    ;
+
+identifierExpression returns [IdentifierExpression ide]
+    :    id = identifier
+    { ide = new IdentifierExpression(id); }
     ;
 
 parenthesisExpression
@@ -188,25 +193,24 @@ arrayReference returns [ArrayReference ar]
     { ar = new ArrayReference(id, e); }
     ;
 
-multiplyExpression
-    :    atom (STAR atom)*
+multiplyExpression returns [MultiplyExpression me]
+    :    a = atom { me = a; } (STAR atom)*
     ;
 
-addExpression
-    :    multiplyExpression ((PLUS|MINUS) multiplyExpression)*
+addExpression returns [AddExpression ae]
+    :    me = multiplyExpression { ae = me; } ((PLUS|MINUS) multiplyExpression)*
     ;
 
-lessThanExpression
-    :    addExpression (LESSTHAN addExpression)*
+lessThanExpression returns [LessThanExpression lte]
+    :    ae = addExpression { lte = ae; } (LESSTHAN addExpression)*
     ;
 
-equalityExpression
-    :    lessThanExpression (DOUBLEEQUALS lessThanExpression)*
+equalityExpression returns [EqualityExpression ee]
+    :    lte = lessThanExpression { ee = lte; } (DOUBLEEQUALS lessThanExpression)*
     ;
 
 expression returns [Expression e]
-    :    equalityExpression
-    // { e = new EqualityExpression(); }
+    :    ee = equalityExpression { e = ee; }
     ;
 
 expressionList

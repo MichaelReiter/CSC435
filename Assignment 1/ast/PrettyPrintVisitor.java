@@ -45,9 +45,9 @@ public class PrettyPrintVisitor implements Visitor {
         System.out.println(";");
     }
     
-    // public void visit(ASTNode a) {
-    //     // System.out.print();
-    // }
+    public void visit(Atom a) {
+        a.accept(this);
+    }
 
     public void visit(Block b) {
         this.printIndentation();
@@ -72,10 +72,6 @@ public class PrettyPrintVisitor implements Visitor {
         d.id.accept(this);
     }
 
-    // public void visit(DoStatement s) {
-        // System.out.print();
-    // }
-
     public void visit(EmptyStatement e) {
         this.printIndentation();        
         System.out.println(";");
@@ -83,11 +79,12 @@ public class PrettyPrintVisitor implements Visitor {
 
     public void visit(EqualityExpression e) {
         // System.out.print();
+        e.accept(this);
     }
 
     public void visit(ExpressionStatement e) {
         this.printIndentation();
-        // e.e.accept(this);
+        e.e.accept(this);
         System.out.println(";");
     }
 
@@ -139,9 +136,9 @@ public class PrettyPrintVisitor implements Visitor {
         System.out.print(i.name);
     }
 
-    // public void visit(IdentifierValue v) {
-    //     // System.out.print();
-    // }
+    public void visit(IdentifierExpression i) {
+        i.id.accept(this);
+    }
 
     public void visit(IfElseStatement i) {
         this.printIndentation();
@@ -180,7 +177,9 @@ public class PrettyPrintVisitor implements Visitor {
 
     public void visit(PrintlnStatement s) {
         this.printIndentation();
-        System.out.println("println;");
+        System.out.print("println");
+        // s.e.accept(this);
+        System.out.println(";");
     }
 
     public void visit(PrintStatement s) {
@@ -209,9 +208,9 @@ public class PrettyPrintVisitor implements Visitor {
         // System.out.print(s.value);
     }
 
-    public void visit(SubtractExpression e) {
-        // System.out.print();
-    }
+    // public void visit(SubtractExpression e) {
+    //     // System.out.print();
+    // }
 
     public void visit(Type t) {
         System.out.print(t + " ");
@@ -220,10 +219,6 @@ public class PrettyPrintVisitor implements Visitor {
     public void visit(TypeNode t) {
         t.t.accept(this);
     }
-
-    // public void visit(VariableAssignment s) {
-    //     // System.out.print();
-    // }
 
     public void visit(VariableDeclaration v) {
         this.printIndentation();

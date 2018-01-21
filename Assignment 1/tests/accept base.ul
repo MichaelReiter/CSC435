@@ -5,10 +5,10 @@ void foo(int x, float abc)
 
     if (true)
     {
-        print 3;
+        print abc;
     }
-    println 3;
-    return 3;
+    println abc;
+    return abc;
 }
 
 string[3] test()
@@ -21,7 +21,7 @@ string[3] test()
     }
     else
     {
-        print 3;
+        print abc;
     }
 }
 
