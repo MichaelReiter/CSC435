@@ -30,7 +30,7 @@ public class PrettyPrintVisitor implements Visitor {
         a.id.accept(this);
         System.out.print("[");
         // a.e.accept(this);
-        System.out.print("]");            
+        System.out.print("]");
     }
 
     public void visit(ArrayType a) {
@@ -66,7 +66,7 @@ public class PrettyPrintVisitor implements Visitor {
     public void visit(CharacterLiteral c) {
         System.out.print("\'");
         System.out.print(c.value);
-        System.out.print("\'");        
+        System.out.print("\'");
     }
 
     public void visit(Declaration d) {
@@ -75,7 +75,7 @@ public class PrettyPrintVisitor implements Visitor {
     }
 
     public void visit(EmptyStatement e) {
-        this.printIndentation();        
+        this.printIndentation();
         System.out.println(";");
     }
 
@@ -207,7 +207,7 @@ public class PrettyPrintVisitor implements Visitor {
     }
 
     public void visit(StringLiteral s) {
-        // System.out.print(s.value);
+        System.out.print(s.value);
     }
 
     // public void visit(SubtractExpression e) {

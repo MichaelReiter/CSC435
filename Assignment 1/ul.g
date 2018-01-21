@@ -227,7 +227,7 @@ literal returns [Literal l]
     :    il = integerLiteral { l = il; }
     |    fl = floatLiteral { l = fl; }
     |    cl = characterLiteral { l = cl; }
-    |    stringLiteral
+    |    sl = stringLiteral { l = sl; }
     |    booleanLiteral
     ;
 
@@ -255,8 +255,12 @@ characterLiteral returns [CharacterLiteral cl]
     }
     ;
 
-stringLiteral
+stringLiteral returns [StringLiteral sl]
     :    STRINGCONSTANT
+    {
+        String value = $STRINGCONSTANT.text;
+        sl = new StringLiteral(value);
+    }
     ;
 
 booleanLiteral
