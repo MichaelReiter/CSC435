@@ -250,9 +250,13 @@ public class PrettyPrintVisitor implements Visitor {
         System.out.print(s.value);
     }
 
-    // public void visit(SubtractExpression e) {
-    //     // System.out.print();
-    // }
+    public void visit(SubtractExpression e) {
+        e.e1.accept(this);
+        if (e.e2 != null) {
+            System.out.print(" - ");
+            e.e2.accept(this);
+        }
+    }
 
     public void visit(Type t) {
         System.out.print(t + " ");

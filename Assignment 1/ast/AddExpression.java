@@ -1,6 +1,6 @@
 package ast;
 
-public class AddExpression extends LessThanExpression {
+public class AddExpression extends AddOrSubtractExpression {
     Expression e1;
     Expression e2;
 

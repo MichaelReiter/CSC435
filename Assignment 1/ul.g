@@ -88,7 +88,7 @@ compoundType returns [TypeNode tn]
     ;
 
 statement returns [ast.Statement s]
-    :    es = emptyStatement { s = es; }
+    :    es = emptyStatement{ s = es; }
     |    exprs = expressionStatement { s = exprs; }
     |    as = assignmentStatement { s = as; }
     |    aas = arrayAssignmentStatement { s = aas; }
@@ -201,13 +201,28 @@ multiplyExpression returns [MultiplyExpression me]
     { me = new MultiplyExpression(e1, e2); }
     ;
 
-addExpression returns [AddExpression ae]
-    :    e1 = multiplyExpression ((PLUS|MINUS) e2 = multiplyExpression)*
-    { ae = new AddExpression(e1, e2); }
+// This is a major hack. I can't seem to find a better way at the moment.
+addOrSubtractExpression returns [AddOrSubtractExpression aose]
+    :    e1 = multiplyExpression (op = (PLUS|MINUS) e2 = multiplyExpression)*
+    {
+        if (op != null) {
+            if (op.getText().equals("+")) {
+                aose = new AddExpression(e1, e2);
+            } else if (op.getText().equals("-")) {
+                aose = new SubtractExpression(e1, e2);
+            } else {
+                System.out.println("Something went wrong");
+                aose = new AddExpression(e1, e2);
+            }
+        } else {
+            // Default to plus
+            aose = new AddExpression(e1, e2);
+        }
+    }
     ;
 
 lessThanExpression returns [LessThanExpression lte]
-    :    e1 = addExpression (LESSTHAN e2 = addExpression)*
+    :    e1 = addOrSubtractExpression (LESSTHAN e2 = addOrSubtractExpression)*
     { lte = new LessThanExpression(e1, e2); }
     ;
 
@@ -215,10 +230,6 @@ expression returns [EqualityExpression ee]
     :    e1 = lessThanExpression (DOUBLEEQUALS e2 = lessThanExpression)*
     { ee = new EqualityExpression(e1, e2); }
     ;
-
-// expression returns [Expression e]
-//     :    ee = equalityExpression { e = ee; }
-//     ;
 
 expressionList returns [ExpressionList el]
 @init

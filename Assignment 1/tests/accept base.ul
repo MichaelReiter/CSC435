@@ -42,6 +42,7 @@ char bar(boolean b)
     x = 5;
     y = 3.14;
     z = 'c';
+    println (1 - 1);
     abc = (5);
     test = some_array[12];
     str = "this is a string";

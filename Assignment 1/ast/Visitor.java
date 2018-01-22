@@ -38,7 +38,7 @@ public interface Visitor {
     public void visit(ReturnStatement s);
     public void visit(StatementList sl);
     public void visit(StringLiteral s);
-    // public void visit(SubtractExpression e);
+    public void visit(SubtractExpression e);
     public void visit(Type t);
     public void visit(TypeNode t);
     public void visit(VariableDeclaration v);
