@@ -9,7 +9,6 @@ public interface Visitor {
     public void visit(ArrayReferenceExpression a);
     public void visit(ArrayType a);
     public void visit(AssignmentStatement a);
-    public void visit(Atom a);
     public void visit(Block b);
     public void visit(BooleanLiteral b);
     public void visit(CharacterLiteral c);

@@ -51,10 +51,6 @@ public class PrettyPrintVisitor implements Visitor {
         a.e.accept(this);
         System.out.println(";");
     }
-    
-    public void visit(Atom a) {
-        a.accept(this);
-    }
 
     public void visit(Block b) {
         this.printIndentation();

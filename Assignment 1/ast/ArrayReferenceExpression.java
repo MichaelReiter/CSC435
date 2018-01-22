@@ -1,6 +1,6 @@
 package ast;
 
-public class ArrayReferenceExpression extends Atom {
+public class ArrayReferenceExpression extends Expression {
     ArrayReference a;
 
     public ArrayReferenceExpression(ArrayReference a) {

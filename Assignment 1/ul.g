@@ -163,17 +163,17 @@ block returns [Block b]
     { b = new Block(sl); }
     ;
 
-atom returns [Atom a]
-    :    ide = identifierExpression { a = ide; }
-    |    l = literal { a = l; }
-    |    pe = parenthesisExpression { a = pe; }
-    |    fc = functionCall { a = fc; }
-    |    are = arrayReferenceExpression { a = are; }
+atom returns [Expression e]
+    :    ide = identifierExpression { e = ide; }
+    |    l = literal { e = l; }
+    |    pe = parenthesisExpression { e = pe; }
+    |    fc = functionCall { e = fc; }
+    |    are = arrayReferenceExpression { e = are; }
     ;
 
-identifierExpression returns [IdentifierExpression ide]
+identifierExpression returns [Expression e]
     :    id = identifier
-    { ide = new IdentifierExpression(id); }
+    { e = new IdentifierExpression(id); }
     ;
 
 parenthesisExpression returns [ParenthesisExpression pe]
@@ -196,39 +196,44 @@ arrayReference returns [ArrayReference ar]
     { ar = new ArrayReference(id, e); }
     ;
 
-multiplyExpression returns [MultiplyExpression me]
-    :    e1 = atom (STAR e2 = atom)*
-    { me = new MultiplyExpression(e1, e2); }
+multiplyExpression returns [Expression e]
+@init {
+    Expression it = null;
+}
+@after {
+    e = it;
+}
+    :    e1 = atom { it = e1; } (STAR e2 = atom { it = new MultiplyExpression(it, e2); })*
     ;
 
-// This is a major hack. I can't seem to find a better way at the moment.
-addOrSubtractExpression returns [AddOrSubtractExpression aose]
-    :    e1 = multiplyExpression (op = (PLUS|MINUS) e2 = multiplyExpression)*
-    {
-        if (op != null) {
-            if (op.getText().equals("+")) {
-                aose = new AddExpression(e1, e2);
-            } else if (op.getText().equals("-")) {
-                aose = new SubtractExpression(e1, e2);
-            } else {
-                System.out.println("Something went wrong");
-                aose = new AddExpression(e1, e2);
-            }
-        } else {
-            // Default to plus
-            aose = new AddExpression(e1, e2);
-        }
-    }
+addExpression returns [Expression e]
+@init {
+    Expression it = null;
+}
+@after {
+    e = it;
+}
+    :    e1 = multiplyExpression { it = e1; } ((PLUS|MINUS) e2 = multiplyExpression { it = new AddExpression(it, e2); })*
     ;
 
-lessThanExpression returns [LessThanExpression lte]
-    :    e1 = addOrSubtractExpression (LESSTHAN e2 = addOrSubtractExpression)*
-    { lte = new LessThanExpression(e1, e2); }
+lessThanExpression returns [Expression e]
+@init {
+    Expression it = null;
+}
+@after {
+    e = it;
+}
+    :    e1 = addExpression { it = e1; } (LESSTHAN e2 = addExpression { it = new LessThanExpression(it, e2); })*
     ;
 
-expression returns [EqualityExpression ee]
-    :    e1 = lessThanExpression (DOUBLEEQUALS e2 = lessThanExpression)*
-    { ee = new EqualityExpression(e1, e2); }
+expression returns [Expression e]
+@init {
+    Expression it = null;
+}
+@after {
+    e = it;
+}
+    :    e1 = lessThanExpression { it = e1; } (DOUBLEEQUALS e2 = lessThanExpression { it = new EqualityExpression(it, e2); })*
     ;
 
 expressionList returns [ExpressionList el]

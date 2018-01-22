@@ -1,6 +1,6 @@
 package ast;
 
-public class FunctionCall extends Atom {
+public class FunctionCall extends Expression {
     Identifier id;
     ExpressionList el;
 

@@ -1,6 +1,6 @@
 package ast;
 
-public class IdentifierExpression extends Atom {
+public class IdentifierExpression extends Expression {
     Identifier id;
 
     public IdentifierExpression(Identifier id) {

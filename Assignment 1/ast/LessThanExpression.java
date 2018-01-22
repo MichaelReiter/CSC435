@@ -1,6 +1,6 @@
 package ast;
 
-public class LessThanExpression extends EqualityExpression {
+public class LessThanExpression extends Expression {
     Expression e1;
     Expression e2;
 

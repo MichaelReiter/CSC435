@@ -1,6 +1,6 @@
 package ast;
 
-public class ParenthesisExpression extends Atom {
+public class ParenthesisExpression extends Expression {
     Expression e;
 
     public ParenthesisExpression(Expression e) {
