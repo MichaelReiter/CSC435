@@ -206,6 +206,7 @@ multiplyExpression returns [Expression e]
     :    e1 = atom { it = e1; } (STAR e2 = atom { it = new MultiplyExpression(it, e2); })*
     ;
 
+// This is a major hack. I can't seem to find a better way at the moment.
 addExpression returns [Expression e]
 @init {
     Expression it = null;
@@ -213,7 +214,22 @@ addExpression returns [Expression e]
 @after {
     e = it;
 }
-    :    e1 = multiplyExpression { it = e1; } ((PLUS|MINUS) e2 = multiplyExpression { it = new AddExpression(it, e2); })*
+    :    e1 = multiplyExpression { it = e1; } (op = (PLUS|MINUS) e2 = multiplyExpression
+    {
+        if (op != null) {
+            if (op.getText().equals("+")) {
+                it = new AddExpression(it, e2);
+            } else if (op.getText().equals("-")) {
+                it = new SubtractExpression(it, e2);
+            } else {
+                System.out.println("Something went wrong");
+                it = new AddExpression(it, e2);                
+            }
+        } else {
+            // Default to plus
+            it = new AddExpression(it, e2);
+        }
+    })*
     ;
 
 lessThanExpression returns [Expression e]
