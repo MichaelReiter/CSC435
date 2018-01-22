@@ -16,7 +16,7 @@ public class PrettyPrintVisitor implements Visitor {
     public void visit(AddExpression e) {
         e.e1.accept(this);
         if (e.e2 != null) {
-            System.out.print(" + ");
+            System.out.print("+");
             e.e2.accept(this);
         }
     }
@@ -24,7 +24,7 @@ public class PrettyPrintVisitor implements Visitor {
     public void visit(ArrayAssignmentStatement s) {
         this.printIndentation();
         s.a.accept(this);
-        System.out.print(" = ");
+        System.out.print("=");
         s.e.accept(this);
         System.out.println(";");
     }
@@ -47,7 +47,7 @@ public class PrettyPrintVisitor implements Visitor {
     public void visit(AssignmentStatement a) {
         this.printIndentation();
         a.id.accept(this);
-        System.out.print(" = ");
+        System.out.print("=");
         a.e.accept(this);
         System.out.println(";");
     }
@@ -89,7 +89,7 @@ public class PrettyPrintVisitor implements Visitor {
     public void visit(EqualityExpression e) {
         e.e1.accept(this);
         if (e.e2 != null) {
-            System.out.print(" == ");
+            System.out.print("==");
             e.e2.accept(this);
         }
     }
@@ -152,7 +152,7 @@ public class PrettyPrintVisitor implements Visitor {
     public void visit(FunctionDeclaration f) {
         f.d.type.accept(this);
         f.d.id.accept(this);
-        System.out.print("(");
+        System.out.print(" (");
         f.args.accept(this);
         System.out.println(")");
     }
@@ -191,7 +191,7 @@ public class PrettyPrintVisitor implements Visitor {
     public void visit(LessThanExpression e) {
         e.e1.accept(this);
         if (e.e2 != null) {
-            System.out.print(" < ");
+            System.out.print("<");
             e.e2.accept(this);
         }
     }
@@ -199,7 +199,7 @@ public class PrettyPrintVisitor implements Visitor {
     public void visit(MultiplyExpression e) {
         e.e1.accept(this);
         if (e.e2 != null) {
-            System.out.print(" * ");
+            System.out.print("*");
             e.e2.accept(this);
         }
     }
@@ -253,7 +253,7 @@ public class PrettyPrintVisitor implements Visitor {
     public void visit(SubtractExpression e) {
         e.e1.accept(this);
         if (e.e2 != null) {
-            System.out.print(" - ");
+            System.out.print("-");
             e.e2.accept(this);
         }
     }
