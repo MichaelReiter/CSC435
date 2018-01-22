@@ -95,7 +95,7 @@ public class PrettyPrintVisitor implements Visitor {
             Expression expr = e.elementAt(i);
             expr.accept(this);
             if (i != e.l.size() - 1) {
-                System.out.print(", ");
+                System.out.print(",");
             }
         }
     }
