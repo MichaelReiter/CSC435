@@ -2,7 +2,6 @@ package ast;
 
 import java.lang.StringBuilder;
 
-import jdk.nashorn.internal.ir.Statement;
 import type.*;
 
 public class PrettyPrintVisitor implements Visitor {
