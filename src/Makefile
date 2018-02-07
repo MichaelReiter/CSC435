@@ -8,7 +8,7 @@ grammar: $(GSRCS)
 	java org.antlr.Tool -fo . $(GSRC) 
 
 compiler:
-	javac ast/*.java type/*.java *.java
+	javac **/*.java *.java
 
 clean:
 	rm **/*.class $(GNAME)*.java $(GNAME)__.g $(GNAME).tokens
