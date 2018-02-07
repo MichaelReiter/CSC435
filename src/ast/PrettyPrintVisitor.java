@@ -14,10 +14,10 @@ public class PrettyPrintVisitor implements Visitor {
     }
 
     public void visit(AddExpression e) {
-        e.getExpression1().accept(this);
-        if (e.getExpression2() != null) {
+        e.getLeftExpression().accept(this);
+        if (e.getRightExpression() != null) {
             System.out.print("+");
-            e.getExpression2().accept(this);
+            e.getRightExpression().accept(this);
         }
     }
 
@@ -83,10 +83,10 @@ public class PrettyPrintVisitor implements Visitor {
     }
 
     public void visit(EqualityExpression e) {
-        e.getExpression1().accept(this);
-        if (e.getExpression2() != null) {
+        e.getLeftExpression().accept(this);
+        if (e.getRightExpression() != null) {
             System.out.print("==");
-            e.getExpression2().accept(this);
+            e.getRightExpression().accept(this);
         }
     }
 
@@ -184,18 +184,18 @@ public class PrettyPrintVisitor implements Visitor {
     }
 
     public void visit(LessThanExpression e) {
-        e.getExpression1().accept(this);
-        if (e.getExpression2() != null) {
+        e.getLeftExpression().accept(this);
+        if (e.getRightExpression() != null) {
             System.out.print("<");
-            e.getExpression2().accept(this);
+            e.getRightExpression().accept(this);
         }
     }
 
     public void visit(MultiplyExpression e) {
-        e.getExpression1().accept(this);
-        if (e.getExpression2() != null) {
+        e.getLeftExpression().accept(this);
+        if (e.getRightExpression() != null) {
             System.out.print("*");
-            e.getExpression2().accept(this);
+            e.getRightExpression().accept(this);
         }
     }
 
@@ -246,10 +246,10 @@ public class PrettyPrintVisitor implements Visitor {
     }
 
     public void visit(SubtractExpression e) {
-        e.getExpression1().accept(this);
-        if (e.getExpression2() != null) {
+        e.getLeftExpression().accept(this);
+        if (e.getRightExpression() != null) {
             System.out.print("-");
-            e.getExpression2().accept(this);
+            e.getRightExpression().accept(this);
         }
     }
 

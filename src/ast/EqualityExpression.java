@@ -9,11 +9,11 @@ public class EqualityExpression extends Expression {
         this.e2 = e2;
     }
 
-    public Expression getExpression1() {
+    public Expression getLeftExpression() {
         return this.e1;
     }
 
-    public Expression getExpression2() {
+    public Expression getRightExpression() {
         return this.e2;
     }
 
