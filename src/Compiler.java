@@ -3,8 +3,10 @@
  A starting place for the unamed language compiler for CSC 435
  */
 
-import org.antlr.runtime.*;
-import java.io.*;
+import org.antlr.runtime.ANTLRInputStream;
+import org.antlr.runtime.CommonTokenStream;
+import org.antlr.runtime.RecognitionException;
+import java.io.FileInputStream;
 import ast.PrettyPrintVisitor;
 import ast.Program;
 import ast.Visitor;
