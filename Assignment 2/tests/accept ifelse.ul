@@ -1,8 +1,0 @@
-void foo(int n) {
-    if (true) {
-    
-    }
-    else {
-        x = f() + f();
-    }
-}

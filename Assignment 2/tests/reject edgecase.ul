@@ -1,9 +1,0 @@
-void foo() {
-    int x;
-}
-
-syntax error
-
-string bar() {
-    char c;
-}
