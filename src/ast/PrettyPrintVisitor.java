@@ -14,30 +14,30 @@ public class PrettyPrintVisitor implements Visitor {
     }
 
     public void visit(AddExpression e) {
-        e.e1.accept(this);
-        if (e.e2 != null) {
+        e.getExpression1().accept(this);
+        if (e.getExpression2() != null) {
             System.out.print("+");
-            e.e2.accept(this);
+            e.getExpression2().accept(this);
         }
     }
 
     public void visit(ArrayAssignmentStatement s) {
         this.printIndentation();
-        s.a.accept(this);
+        s.getArrayReference().accept(this);
         System.out.print("=");
-        s.e.accept(this);
+        s.getExpression().accept(this);
         System.out.println(";");
     }
 
     public void visit(ArrayReference a) {
-        a.id.accept(this);
+        a.getIdentifier().accept(this);
         System.out.print("[");
-        a.e.accept(this);
+        a.getExpression().accept(this);
         System.out.print("]");
     }
 
     public void visit(ArrayReferenceExpression a) {
-        a.a.accept(this);
+        a.getArrayReference().accept(this);
     }
 
     public void visit(ArrayType a) {
@@ -46,9 +46,9 @@ public class PrettyPrintVisitor implements Visitor {
 
     public void visit(AssignmentStatement a) {
         this.printIndentation();
-        a.id.accept(this);
+        a.getIdentifier().accept(this);
         System.out.print("=");
-        a.e.accept(this);
+        a.getExpression().accept(this);
         System.out.println(";");
     }
 
@@ -56,25 +56,25 @@ public class PrettyPrintVisitor implements Visitor {
         this.printIndentation();
         System.out.println("{");
         this.indentationDepth += 1;
-        b.sl.accept(this);
+        b.getStatementList().accept(this);
         this.indentationDepth -= 1;
         this.printIndentation();
         System.out.println("}");
     }
 
     public void visit(BooleanLiteral b) {
-        System.out.print(b.value);
+        System.out.print(b.getValue());
     }
 
     public void visit(CharacterLiteral c) {
         System.out.print("\'");
-        System.out.print(c.value);
+        System.out.print(c.getValue());
         System.out.print("\'");
     }
 
     public void visit(Declaration d) {
-        d.type.accept(this);
-        d.id.accept(this);
+        d.getType().accept(this);
+        d.getIdentifier().accept(this);
     }
 
     public void visit(EmptyStatement e) {
@@ -83,18 +83,18 @@ public class PrettyPrintVisitor implements Visitor {
     }
 
     public void visit(EqualityExpression e) {
-        e.e1.accept(this);
-        if (e.e2 != null) {
+        e.getExpression1().accept(this);
+        if (e.getExpression2() != null) {
             System.out.print("==");
-            e.e2.accept(this);
+            e.getExpression2().accept(this);
         }
     }
 
     public void visit(ExpressionList e) {
-        for (int i = 0; i < e.l.size(); i++) {
+        for (int i = 0; i < e.size(); i++) {
             Expression expr = e.elementAt(i);
             expr.accept(this);
-            if (i != e.l.size() - 1) {
+            if (i != e.size() - 1) {
                 System.out.print(",");
             }
         }
@@ -102,126 +102,125 @@ public class PrettyPrintVisitor implements Visitor {
 
     public void visit(ExpressionStatement e) {
         this.printIndentation();
-        e.e.accept(this);
+        e.getExpression().accept(this);
         System.out.println(";");
     }
 
     public void visit(FloatLiteral f) {
-        System.out.print(f.value);
+        System.out.print(f.getValue());
     }
 
     public void visit(FormalParameters p) {
-        for (int i = 0; i < p.parameters.size(); i++) {
+        for (int i = 0; i < p.size(); i++) {
             Declaration d = p.elementAt(i);
             d.accept(this);
-            if (i != p.parameters.size() - 1) {
+            if (i != p.size() - 1) {
                 System.out.print(", ");
             }
         }
     }
 
     public void visit(Function f) {
-        f.fd.accept(this);
-        f.fb.accept(this);
+        f.getFunctionDeclaration().accept(this);
+        f.getFunctionBody().accept(this);
         System.out.println();
     }
 
     public void visit(FunctionBody f) {
         System.out.println("{");
-        for (VariableDeclaration vd : f.variableDeclarations) {
+        for (VariableDeclaration vd : f.getVariableDeclarations()) {
             vd.accept(this);
         }
-        if (f.variableDeclarations.size() > 0) {
+        if (f.size() > 0) {
             System.out.println();
         }
-        f.sl.accept(this);
+        f.getStatementList().accept(this);
         System.out.println("}");
     }
 
     public void visit(FunctionCall f) {
-        f.id.accept(this);
+        f.getIdentifier().accept(this);
         System.out.print("(");
-        f.el.accept(this);
+        f.getExpressionList().accept(this);
         System.out.print(")");
     }
 
     public void visit(FunctionDeclaration f) {
-        f.d.type.accept(this);
-        f.d.id.accept(this);
+        f.getDeclaration().accept(this);
         System.out.print(" (");
-        f.args.accept(this);
+        f.getFormalParameters().accept(this);
         System.out.println(")");
     }
 
     public void visit(Identifier i) {
-        System.out.print(i.name);
+        System.out.print(i.getName());
     }
 
     public void visit(IdentifierExpression i) {
-        i.id.accept(this);
+        i.getIdentifier().accept(this);
     }
 
     public void visit(IfElseStatement i) {
         this.printIndentation();
         System.out.print("if (");
-        i.e.accept(this);
+        i.getExpression().accept(this);
         System.out.println(")");
-        i.b1.accept(this);
+        i.getIfBlock().accept(this);
         this.printIndentation();
         System.out.println("else");
-        i.b2.accept(this);
+        i.getElseBlock().accept(this);
     }
 
     public void visit(IfStatement i) {
         this.printIndentation();
         System.out.print("if (");
-        i.e.accept(this);
+        i.getExpression().accept(this);
         System.out.println(")");
-        i.b.accept(this);
+        i.getBlock().accept(this);
     }
 
     public void visit(IntegerLiteral i) {
-        System.out.print(i.value);
+        System.out.print(i.getValue());
     }
 
     public void visit(LessThanExpression e) {
-        e.e1.accept(this);
-        if (e.e2 != null) {
+        e.getExpression1().accept(this);
+        if (e.getExpression2() != null) {
             System.out.print("<");
-            e.e2.accept(this);
+            e.getExpression2().accept(this);
         }
     }
 
     public void visit(MultiplyExpression e) {
-        e.e1.accept(this);
-        if (e.e2 != null) {
+        e.getExpression1().accept(this);
+        if (e.getExpression2() != null) {
             System.out.print("*");
-            e.e2.accept(this);
+            e.getExpression2().accept(this);
         }
     }
 
     public void visit(ParenthesisExpression p) {
         System.out.print("(");
-        p.e.accept(this);
+        p.getExpression().accept(this);
         System.out.print(")");
     }
 
     public void visit(PrintlnStatement s) {
         this.printIndentation();
         System.out.print("println ");
-        s.e.accept(this);
+        s.getExpression().accept(this);
         System.out.println(";");
     }
 
     public void visit(PrintStatement s) {
         this.printIndentation();
         System.out.print("print ");
-        s.e.accept(this);
+        s.getExpression().accept(this);
         System.out.println(";");
     }
 
     public void visit(Program p) {
-        for (Function f : p.functionList) {
+        for (Function f : p.getFunctions()) {
             f.accept(this);
         }
     }
@@ -229,28 +228,28 @@ public class PrettyPrintVisitor implements Visitor {
     public void visit(ReturnStatement s) {
         this.printIndentation();
         System.out.print("return");
-        if (s.e != null) {
+        if (s.getExpression() != null) {
             System.out.print(" ");
-            s.e.accept(this);
+            s.getExpression().accept(this);
         }
         System.out.println(";");
     }
 
     public void visit(StatementList sl) {
-        for (ast.Statement s : sl.l) {
+        for (ast.Statement s : sl.getStatements()) {
             s.accept(this);
         }
     }
 
     public void visit(StringLiteral s) {
-        System.out.print(s.value);
+        System.out.print(s.getValue());
     }
 
     public void visit(SubtractExpression e) {
-        e.e1.accept(this);
-        if (e.e2 != null) {
+        e.getExpression1().accept(this);
+        if (e.getExpression2() != null) {
             System.out.print("-");
-            e.e2.accept(this);
+            e.getExpression2().accept(this);
         }
     }
 
@@ -259,21 +258,21 @@ public class PrettyPrintVisitor implements Visitor {
     }
 
     public void visit(TypeNode t) {
-        t.t.accept(this);
+        t.getType().accept(this);
     }
 
     public void visit(VariableDeclaration v) {
         this.printIndentation();
-        v.d.accept(this);
+        v.getDeclaration().accept(this);
         System.out.println(";");
     }
 
     public void visit(WhileStatement s) {
         this.printIndentation();
         System.out.print("while (");
-        s.e.accept(this);
+        s.getExpression().accept(this);
         System.out.println(")");
-        s.b.accept(this);
+        s.getBlock().accept(this);
     }
 
     private void printIndentation() {

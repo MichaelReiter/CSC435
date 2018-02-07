@@ -18,8 +18,16 @@ public class FunctionBody extends ASTNode {
         return this.sl;
     }
 
+    public void setStatementList(StatementList sl) {
+        this.sl = sl;
+    }
+
     public void addVariableDeclaration(VariableDeclaration vd) {
         this.variableDeclarations.addElement(vd);
+    }
+
+    public int size() {
+        return this.variableDeclarations.size();
     }
 
     public void accept(Visitor v) {

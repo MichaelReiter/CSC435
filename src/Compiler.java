@@ -5,6 +5,7 @@
 
 import org.antlr.runtime.*;
 import java.io.*;
+import ast.PrettyPrintVisitor;
 import ast.Program;
 import ast.Visitor;
 

@@ -9,7 +9,7 @@ public class Program extends ASTNode {
         this.functionList = new Vector<Function>();
     }
 
-    public Vector<Function> getFunctionList() {
+    public Vector<Function> getFunctions() {
         return this.functionList;
     }
 

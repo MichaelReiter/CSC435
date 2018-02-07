@@ -17,6 +17,7 @@ options {
     import ast.Declaration;
     import ast.EmptyStatement;
     import ast.EqualityExpression;
+    import ast.Expression;
     import ast.ExpressionList;
     import ast.ExpressionStatement;
     import ast.FloatLiteral;
@@ -31,6 +32,7 @@ options {
     import ast.IfStatement;
     import ast.IntegerLiteral;
     import ast.LessThanExpression;
+    import ast.Literal;
     import ast.MultiplyExpression;
     import ast.ParenthesisExpression;
     import ast.PrintlnStatement;
@@ -111,7 +113,7 @@ functionBody returns [FunctionBody fb]
 {
     fb = new FunctionBody();
 }
-    :    OPENBRACE (vd = variableDeclaration { fb.addVariableDeclaration(vd); })* sl = statementList { fb.sl = sl; } CLOSEBRACE
+    :    OPENBRACE (vd = variableDeclaration { fb.addVariableDeclaration(vd); })* sl = statementList { fb.setStatementList(sl); } CLOSEBRACE
     ;
 
 variableDeclaration returns [VariableDeclaration vd]

@@ -6,7 +6,7 @@ public class FormalParameters extends ASTNode {
     private Vector<Declaration> parameters;
 
     public FormalParameters() {
-        parameters = new Vector<Declaration>();
+        this.parameters = new Vector<Declaration>();
     }
 
     public Vector<Declaration> getParameters() {
@@ -14,15 +14,15 @@ public class FormalParameters extends ASTNode {
     }
 
     public void addElement(Declaration d) {
-        parameters.addElement(d);
+        this.parameters.addElement(d);
     }
 
     public Declaration elementAt(int index) {
-        return (Declaration)parameters.elementAt(index);
+        return (Declaration)this.parameters.elementAt(index);
     }
 
     public int size() {
-        return parameters.size();
+        return this.parameters.size();
     }
 
     public void accept(Visitor v) {

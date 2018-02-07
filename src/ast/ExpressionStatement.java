@@ -1,10 +1,14 @@
 package ast;
 
 public class ExpressionStatement extends Statement {
-    Expression e;
+    private Expression e;
 
     public ExpressionStatement(Expression e) {
         this.e = e;
+    }
+
+    public Expression getExpression() {
+        return this.e;
     }
 
     public void accept(Visitor v) {

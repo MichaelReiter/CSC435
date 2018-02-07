@@ -13,7 +13,7 @@ public class FunctionCall extends Expression {
         return this.id;
     }
 
-    public Expression getExpressionList() {
+    public ExpressionList getExpressionList() {
         return this.el;
     }
 
