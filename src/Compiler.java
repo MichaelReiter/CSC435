@@ -1,15 +1,10 @@
-/*
- Compiler.java
- A starting place for the unamed language compiler for CSC 435
- */
-
 import org.antlr.runtime.ANTLRInputStream;
 import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.RecognitionException;
 import java.io.FileInputStream;
-import ast.PrettyPrintVisitor;
 import ast.Program;
-import ast.Visitor;
+import semantic.TypeVisitor;
+import semantic.TypeCheckVisitor;
 
 public class Compiler {
     public static void main(String[] args) throws Exception {
@@ -29,12 +24,17 @@ public class Compiler {
 
         try {
             Program p = parser.program();
-            Visitor v = new PrettyPrintVisitor();
+            Visitor v = new TypeCheckVisitor();
             p.accept(v);
         }
-        catch (RecognitionException e ) {
+        catch (RecognitionException e) {
             // A lexical or parsing error occured.
             // ANTLR will have already printed information on the console due
+            // to code added to the grammar so there is nothing to do here.
+        }
+        catch (SemanticException e) {
+            // A type checking or semantic analyis error occured.
+            // The TypeCheckVisitor will have already printed information on the console due
             // to code added to the grammar so there is nothing to do here.
         }
         catch (Exception e) {

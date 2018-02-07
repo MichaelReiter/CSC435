@@ -1,7 +1,6 @@
 package ast;
 
 import java.lang.StringBuilder;
-
 import type.ArrayType;
 import type.Type;
 

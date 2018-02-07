@@ -1,8 +1,8 @@
 package environment;
 
 public class ListEnvironment<K, V> implements Environment<K, V> {
-    ListNode<K, V> head;
-    int scopeLevel;
+    private ListNode<K, V> head;
+    private int scopeLevel;
 
     public ListEnvironment() {
         this.head = null;
@@ -28,11 +28,12 @@ public class ListEnvironment<K, V> implements Environment<K, V> {
 
     public V lookup(K key) {
         // return value for key
+        return null;
     }
 
     public String toString() {
-        ListNode<K, V> n = head;
-        String s = "lvl: " + scopeLevel + " {";
+        ListNode<K, V> n = this.head;
+        String s = "lvl: " + this.scopeLevel + " {";
         while (n != null) {
             s += "(";
             if (n.key == null) {

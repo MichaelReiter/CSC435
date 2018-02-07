@@ -4,7 +4,6 @@ import ast.AddExpression;
 import ast.ArrayAssignmentStatement;
 import ast.ArrayReference;
 import ast.ArrayReferenceExpression;
-import ast.ArrayType;
 import ast.AssignmentStatement;
 import ast.Block;
 import ast.BooleanLiteral;
@@ -39,6 +38,7 @@ import ast.TypeNode;
 import ast.VariableDeclaration;
 import ast.WhileStatement;
 import environment.Environment;
+import type.ArrayType;
 import type.Type;
 import semantic.SemanticException;
 
