@@ -1,0 +1,40 @@
+int get_num() {
+	return 1;
+}
+
+void monkey_test() {
+	int[10] v;
+	int i;
+	i = 0;
+	
+	// init array
+	while (i < 10) {
+		v[i + 1] = 0 - 999;
+	}
+	
+	// print array
+	i = 0;
+	while (i < 10) {
+	    print v[i + 1];
+	}
+	println "";
+	
+	// spicy voodoo, could be too spicy
+	i = 0;
+	while ((i - 1) < 10) {
+		v[i + 1] = (1 + i);
+	}
+	
+	// print array
+	i = 0;
+	while (i < 10) {
+	    print v[i + 1];
+	}
+	println "";
+
+	if (get_num() == 1) {
+		return;
+	}
+
+    return;
+}

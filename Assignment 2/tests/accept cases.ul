@@ -1,0 +1,90 @@
+void main() {}
+
+int asdfa(int x, float y, char z) {}
+
+float gadfda() {}
+
+char fad3() {}
+
+string fdag424_() {}
+
+boolean _fdafd() {
+    if (false) {} else {}
+    return true;
+}
+
+int[5] foobar() {
+    x;
+}
+
+void d_3(void x) {}
+
+void test(string s, boolean b) {
+    char[4] v;
+    int x;
+    float y;
+    string z;
+    char a;
+    boolean thing;
+    void abc;
+    a;
+    'a';
+    4;
+    3.14;
+    a[x];
+    a();
+    a(x);
+    true;
+    false;
+    f(true);
+    (false);
+    "test";
+    if (x) {
+
+    }
+    if (x) {
+        
+    } else {
+
+    }
+    if (x) {
+        if (x) {
+
+        }
+    } else {
+        
+    }
+    while (false) {
+        if (x) {
+            if (x) {
+
+            }
+        } else {
+            
+        }
+    }
+    print x;
+    println x;
+    return "test";
+    x = 05;
+    s[2] = 'c';
+    test = "";
+    // fadjlkad
+    ((x));
+    ;;;;;;;;;;;
+    y = foo(13 * "stringthing");
+    return f() * f() * f() * f() * f() * f() * f() * f() * 'c';  // test
+}
+
+int foo() {
+    char[5] v;
+    bar(1.23);
+    x = 1 + 2;
+    x = 1 - 2;
+    x = 1 * 2;
+    x = 1 < 2;
+    x = 1 == 2;
+    foo    ();
+}
+
+// end of file line comment is allowed
