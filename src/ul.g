@@ -78,7 +78,7 @@ program returns [Program p]
 {
     p = new Program();
 }
-    : (f = function { p.addElement(f); })+ EOF
+    : (f = function { p.add(f); })+ EOF
     ;
 
 function returns [Function f]
@@ -99,7 +99,7 @@ formalParameters returns [FormalParameters args]
 {
     args = new FormalParameters();
 }
-    :    (d = declaration { args.addElement(d); }) (COMMA (d2 = declaration { args.addElement(d2); }))*
+    :    (d = declaration { args.add(d); }) (COMMA (d2 = declaration { args.add(d2); }))*
     |
     ;
 
@@ -302,7 +302,7 @@ expressionList returns [ExpressionList el]
 {
     el = new ExpressionList();
 }
-    :    e1 = expression { el.addElement(e1); } (COMMA e2 = expression { el.addElement(e2); })*
+    :    e1 = expression { el.add(e1); } (COMMA e2 = expression { el.add(e2); })*
     |
     ;
 

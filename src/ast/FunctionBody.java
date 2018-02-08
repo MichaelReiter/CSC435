@@ -1,16 +1,16 @@
 package ast;
 
-import java.util.Vector;
+import java.util.ArrayList;
 
 public class FunctionBody extends ASTNode {
-    private Vector<VariableDeclaration> variableDeclarations;
+    private ArrayList<VariableDeclaration> variableDeclarations;
     private StatementList sl;
 
     public FunctionBody() {
-        this.variableDeclarations = new Vector<VariableDeclaration>();
+        this.variableDeclarations = new ArrayList<VariableDeclaration>();
     }
 
-    public Vector<VariableDeclaration> getVariableDeclarations() {
+    public ArrayList<VariableDeclaration> getVariableDeclarations() {
         return this.variableDeclarations;
     }
 
@@ -23,7 +23,7 @@ public class FunctionBody extends ASTNode {
     }
 
     public void addVariableDeclaration(VariableDeclaration vd) {
-        this.variableDeclarations.addElement(vd);
+        this.variableDeclarations.add(vd);
     }
 
     public int size() {

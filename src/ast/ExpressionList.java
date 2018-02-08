@@ -1,24 +1,24 @@
 package ast;
 
-import java.util.Vector;
+import java.util.ArrayList;
 
 public class ExpressionList extends ASTNode {
-    private Vector<Expression> l;
+    private ArrayList<Expression> l;
 
     public ExpressionList() {
-        this.l = new Vector<Expression>();
+        this.l = new ArrayList<Expression>();
     }
 
-    public Vector<Expression> getExpressionList() {
+    public ArrayList<Expression> getExpressionList() {
         return this.l;
     }
 
-    public void addElement(Expression e) {
-        this.l.addElement(e);
+    public void add(Expression e) {
+        this.l.add(e);
     }
 
-    public Expression elementAt(int index) {
-        return (Expression)this.l.elementAt(index);
+    public Expression get(int index) {
+        return (Expression)this.l.get(index);
     }
 
     public int size() {

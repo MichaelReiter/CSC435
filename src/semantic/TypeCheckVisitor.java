@@ -139,7 +139,7 @@ public class TypeCheckVisitor implements Visitor {
 
     public Type visit(ExpressionList e) {
         for (int i = 0; i < e.size(); i++) {
-            Expression expr = e.elementAt(i);
+            Expression expr = e.get(i);
             expr.accept(this);
             if (i != e.size() - 1) {
                 System.out.print(",");
@@ -161,7 +161,7 @@ public class TypeCheckVisitor implements Visitor {
 
     public Type visit(FormalParameters p) {
         for (int i = 0; i < p.size(); i++) {
-            Declaration d = p.elementAt(i);
+            Declaration d = p.get(i);
             d.accept(this);
             if (i != p.size() - 1) {
                 System.out.print(", ");

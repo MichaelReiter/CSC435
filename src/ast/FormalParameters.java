@@ -1,24 +1,24 @@
 package ast;
 
-import java.util.Vector;
+import java.util.ArrayList;
 
 public class FormalParameters extends ASTNode {
-    private Vector<Declaration> parameters;
+    private ArrayList<Declaration> parameters;
 
     public FormalParameters() {
-        this.parameters = new Vector<Declaration>();
+        this.parameters = new ArrayList<Declaration>();
     }
 
-    public Vector<Declaration> getParameters() {
+    public ArrayList<Declaration> getParameters() {
         return this.parameters;
     }
 
-    public void addElement(Declaration d) {
-        this.parameters.addElement(d);
+    public void add(Declaration d) {
+        this.parameters.add(d);
     }
 
-    public Declaration elementAt(int index) {
-        return (Declaration)this.parameters.elementAt(index);
+    public Declaration get(int index) {
+        return (Declaration)this.parameters.get(index);
     }
 
     public int size() {

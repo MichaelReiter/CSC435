@@ -1,20 +1,20 @@
 package ast;
 
-import java.util.Vector;
+import java.util.ArrayList;
 
 public class StatementList {
-    private Vector<Statement> l;
+    private ArrayList<Statement> l;
 
     public StatementList() {
-        this.l = new Vector<Statement>();
+        this.l = new ArrayList<Statement>();
     }
 
-    public Vector<Statement> getStatements() {
+    public ArrayList<Statement> getStatements() {
         return this.l;
     }
 
     public void addStatement(Statement s) {
-        this.l.addElement(s);
+        this.l.add(s);
     }
 
     public void accept(Visitor v) {

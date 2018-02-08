@@ -1,24 +1,24 @@
 package ast;
 
-import java.util.Vector;
+import java.util.ArrayList;
 
 public class Program extends ASTNode {
-    private Vector<Function> functionList;
+    private ArrayList<Function> functionList;
 
     public Program() {
-        this.functionList = new Vector<Function>();
+        this.functionList = new ArrayList<Function>();
     }
 
-    public Vector<Function> getFunctions() {
+    public ArrayList<Function> getFunctions() {
         return this.functionList;
     }
 
-    public void addElement(Function f) {
-        this.functionList.addElement(f);
+    public void add(Function f) {
+        this.functionList.add(f);
     }
 
-    public Function elementAt(int index) {
-        return (Function)this.functionList.elementAt(index);
+    public Function get(int index) {
+        return (Function)this.functionList.get(index);
     }
 
     public int size() {
