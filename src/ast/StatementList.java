@@ -1,15 +1,16 @@
 package ast;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class StatementList {
-    private ArrayList<Statement> l;
+    private List<Statement> l;
 
     public StatementList() {
         this.l = new ArrayList<Statement>();
     }
 
-    public ArrayList<Statement> getStatements() {
+    public List<Statement> getStatements() {
         return this.l;
     }
 

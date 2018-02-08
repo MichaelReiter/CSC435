@@ -1,15 +1,16 @@
 package ast;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Program extends ASTNode {
-    private ArrayList<Function> functionList;
+    private List<Function> functionList;
 
     public Program() {
         this.functionList = new ArrayList<Function>();
     }
 
-    public ArrayList<Function> getFunctions() {
+    public List<Function> getFunctions() {
         return this.functionList;
     }
 

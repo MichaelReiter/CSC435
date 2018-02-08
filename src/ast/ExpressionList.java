@@ -1,15 +1,16 @@
 package ast;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ExpressionList extends ASTNode {
-    private ArrayList<Expression> l;
+    private List<Expression> l;
 
     public ExpressionList() {
         this.l = new ArrayList<Expression>();
     }
 
-    public ArrayList<Expression> getExpressionList() {
+    public List<Expression> getExpressionList() {
         return this.l;
     }
 

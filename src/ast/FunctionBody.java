@@ -1,16 +1,17 @@
 package ast;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class FunctionBody extends ASTNode {
-    private ArrayList<VariableDeclaration> variableDeclarations;
+    private List<VariableDeclaration> variableDeclarations;
     private StatementList sl;
 
     public FunctionBody() {
         this.variableDeclarations = new ArrayList<VariableDeclaration>();
     }
 
-    public ArrayList<VariableDeclaration> getVariableDeclarations() {
+    public List<VariableDeclaration> getVariableDeclarations() {
         return this.variableDeclarations;
     }
 

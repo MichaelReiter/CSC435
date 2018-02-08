@@ -1,15 +1,16 @@
 package ast;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class FormalParameters extends ASTNode {
-    private ArrayList<Declaration> parameters;
+    private List<Declaration> parameters;
 
     public FormalParameters() {
         this.parameters = new ArrayList<Declaration>();
     }
 
-    public ArrayList<Declaration> getParameters() {
+    public List<Declaration> getParameters() {
         return this.parameters;
     }
 
