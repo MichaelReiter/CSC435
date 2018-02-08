@@ -1,5 +1,7 @@
 package ast;
 
+import type.Type;
+
 public class PrintStatement extends Statement {
     private final Expression e;
 
@@ -11,7 +13,7 @@ public class PrintStatement extends Statement {
         return this.e;
     }
 
-    public void accept(Visitor v) {
-        v.visit(this);
+    public Type accept(Visitor v) {
+        return v.visit(this);
     }
 }

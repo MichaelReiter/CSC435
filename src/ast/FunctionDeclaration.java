@@ -1,5 +1,7 @@
 package ast;
 
+import type.Type;
+
 public class FunctionDeclaration extends ASTNode {
     private final Declaration d;
     private final FormalParameters args;
@@ -17,7 +19,7 @@ public class FunctionDeclaration extends ASTNode {
         return this.args;
     }
 
-    public void accept(Visitor v) {
-        v.visit(this);
+    public Type accept(Visitor v) {
+        return v.visit(this);
     }
 }

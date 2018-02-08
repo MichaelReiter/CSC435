@@ -17,7 +17,7 @@ public class StringType extends Type {
         }
     }
 
-    public void accept(Visitor v) {
-        v.visit(this);
+    public Type accept(Visitor v) {
+        return v.visit(this);
     }
 }

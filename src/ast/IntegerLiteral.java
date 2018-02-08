@@ -1,5 +1,7 @@
 package ast;
 
+import type.Type;
+
 public class IntegerLiteral extends Literal {
     private final int value;
 
@@ -11,7 +13,7 @@ public class IntegerLiteral extends Literal {
         return this.value;
     }
 
-    public void accept(Visitor v) {
-        v.visit(this);
+    public Type accept(Visitor v) {
+        return v.visit(this);
     }
 }

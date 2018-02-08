@@ -1,5 +1,7 @@
 package ast;
 
+import type.Type;
+
 public class ArrayReference extends Expression {
     private final Identifier id;
     private final Expression e;
@@ -17,7 +19,7 @@ public class ArrayReference extends Expression {
         return this.e;
     }
 
-    public void accept(Visitor v) {
-        v.visit(this);
+    public Type accept(Visitor v) {
+        return v.visit(this);
     }
 }

@@ -24,7 +24,7 @@ public class TypeNode extends ASTNode {
         return this.size;
     }
 
-    public void accept(Visitor v) {
-        v.visit(this);
+    public Type accept(Visitor v) {
+        return v.visit(this);
     }
 }

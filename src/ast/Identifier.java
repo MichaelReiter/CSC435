@@ -1,5 +1,7 @@
 package ast;
 
+import type.Type;
+
 public class Identifier extends Expression {
     private final String name;
 
@@ -11,7 +13,7 @@ public class Identifier extends Expression {
         return this.name;
     }
 
-    public void accept(Visitor v) {
-        v.visit(this);
+    public Type accept(Visitor v) {
+        return v.visit(this);
     }
 }

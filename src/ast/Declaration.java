@@ -1,5 +1,7 @@
 package ast;
 
+import type.Type;
+
 public class Declaration {
     private final TypeNode type;
     private final Identifier id;
@@ -17,7 +19,7 @@ public class Declaration {
         return this.id;
     }
 
-    public void accept(Visitor v) {
-        v.visit(this);
+    public Type accept(Visitor v) {
+        return v.visit(this);
     }
 }

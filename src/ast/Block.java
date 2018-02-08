@@ -1,5 +1,7 @@
 package ast;
 
+import type.Type;
+
 public class Block extends ASTNode {
     private final StatementList sl;
 
@@ -11,7 +13,7 @@ public class Block extends ASTNode {
         return this.sl;
     }
 
-    public void accept(Visitor v) {
-        v.visit(this);
+    public Type accept(Visitor v) {
+        return v.visit(this);
     }
 }

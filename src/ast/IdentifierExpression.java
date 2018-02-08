@@ -1,5 +1,7 @@
 package ast;
 
+import type.Type;
+
 public class IdentifierExpression extends Expression {
     private final Identifier id;
 
@@ -11,7 +13,7 @@ public class IdentifierExpression extends Expression {
         return this.id;
     }
 
-    public void accept(Visitor v) {
-        v.visit(this);
+    public Type accept(Visitor v) {
+        return v.visit(this);
     }
 }

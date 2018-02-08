@@ -1,5 +1,7 @@
 package ast;
 
+import type.Type;
+
 public class CharacterLiteral extends Literal {
     private final char value;
 
@@ -11,7 +13,7 @@ public class CharacterLiteral extends Literal {
         return this.value;
     }
 
-    public void accept(Visitor v) {
-        v.visit(this);
+    public Type accept(Visitor v) {
+        return v.visit(this);
     }
 }

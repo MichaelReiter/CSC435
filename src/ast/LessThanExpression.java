@@ -1,5 +1,7 @@
 package ast;
 
+import type.Type;
+
 public class LessThanExpression extends Expression {
     private final Expression e1;
     private final Expression e2;
@@ -17,7 +19,7 @@ public class LessThanExpression extends Expression {
         return this.e2;
     }
 
-    public void accept(Visitor v) {
-        v.visit(this);
+    public Type accept(Visitor v) {
+        return v.visit(this);
     }
 }

@@ -2,6 +2,7 @@ package ast;
 
 import java.util.ArrayList;
 import java.util.List;
+import type.Type;
 
 public class Program extends ASTNode {
     private final List<Function> functionList;
@@ -26,7 +27,7 @@ public class Program extends ASTNode {
         return this.functionList.size();
     }
 
-    public void accept(Visitor v) {
-        v.visit(this);
+    public Type accept(Visitor v) {
+        return v.visit(this);
     }
 }

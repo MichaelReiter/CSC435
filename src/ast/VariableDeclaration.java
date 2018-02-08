@@ -1,5 +1,7 @@
 package ast;
 
+import type.Type;
+
 public class VariableDeclaration extends ASTNode {
     private final Declaration d;
 
@@ -11,7 +13,7 @@ public class VariableDeclaration extends ASTNode {
         return this.d;
     }
 
-    public void accept(Visitor v) {
-        v.visit(this);
+    public Type accept(Visitor v) {
+        return v.visit(this);
     }
 }

@@ -1,5 +1,7 @@
 package ast;
 
+import type.Type;
+
 public class IfStatement extends Statement {
     private final Expression e;
     private final Block b;
@@ -17,7 +19,7 @@ public class IfStatement extends Statement {
         return this.b;
     }
 
-    public void accept(Visitor v) {
-        v.visit(this);
+    public Type accept(Visitor v) {
+        return v.visit(this);
     }
 }

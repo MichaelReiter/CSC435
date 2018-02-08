@@ -1,5 +1,7 @@
 package ast;
 
+import type.Type;
+
 public class Function extends ASTNode {
     private final FunctionDeclaration fd;
     private final FunctionBody fb;
@@ -17,7 +19,7 @@ public class Function extends ASTNode {
         return this.fb;
     }
 
-    public void accept(Visitor v) {
-        v.visit(this);
+    public Type accept(Visitor v) {
+        return v.visit(this);
     }
 }

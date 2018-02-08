@@ -1,5 +1,7 @@
 package ast;
 
+import type.Type;
+
 public class IfElseStatement extends Statement {
     private final Expression e;
     private final Block b1;
@@ -23,7 +25,7 @@ public class IfElseStatement extends Statement {
         return this.b2;
     }
 
-    public void accept(Visitor v) {
-        v.visit(this);
+    public Type accept(Visitor v) {
+        return v.visit(this);
     }
 }

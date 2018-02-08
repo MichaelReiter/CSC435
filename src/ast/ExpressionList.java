@@ -2,6 +2,7 @@ package ast;
 
 import java.util.ArrayList;
 import java.util.List;
+import type.Type;
 
 public class ExpressionList extends ASTNode {
     private final List<Expression> l;
@@ -26,7 +27,7 @@ public class ExpressionList extends ASTNode {
         return this.l.size();
     }
 
-    public void accept(Visitor v) {
-        v.visit(this);
+    public Type accept(Visitor v) {
+        return v.visit(this);
     }
 }
