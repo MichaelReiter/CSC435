@@ -28,7 +28,6 @@ public class StackHashMapEnvironment<K, V> implements Environment<K, V> {
     public void add(K key, V value) {
         AbstractMap<K, V> scope = this.stack.peek();
         scope.put(key, value);
-        System.out.println(scope);
     }
 
     public V lookup(K key) {
