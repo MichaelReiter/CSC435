@@ -40,7 +40,7 @@ import ast.VariableDeclaration;
 import ast.Visitor;
 import ast.WhileStatement;
 import environment.Environment;
-import environment.ListEnvironment;
+import environment.StackHashMapEnvironment;
 import type.ArrayType;
 import type.Type;
 
@@ -51,8 +51,8 @@ public class TypeCheckVisitor implements Visitor {
     private Type currentFunctionReturnType;
 
     public TypeCheckVisitor() {
-        this.functionEnvironment = new ListEnvironment<String, FunctionDeclaration>();
-        this.variableEnvironment = new ListEnvironment<String, Type>();
+        this.functionEnvironment = new StackHashMapEnvironment<String, FunctionDeclaration>();
+        this.variableEnvironment = new StackHashMapEnvironment<String, Type>();
     }
 
     public Type visit(AddExpression e) {
