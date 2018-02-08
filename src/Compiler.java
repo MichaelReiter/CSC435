@@ -3,7 +3,8 @@ import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.RecognitionException;
 import java.io.FileInputStream;
 import ast.Program;
-import semantic.TypeVisitor;
+import ast.Visitor;
+import semantic.SemanticException;
 import semantic.TypeCheckVisitor;
 
 public class Compiler {

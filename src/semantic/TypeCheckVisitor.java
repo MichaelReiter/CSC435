@@ -11,6 +11,7 @@ import ast.CharacterLiteral;
 import ast.Declaration;
 import ast.EmptyStatement;
 import ast.EqualityExpression;
+import ast.Expression;
 import ast.ExpressionList;
 import ast.ExpressionStatement;
 import ast.FloatLiteral;
@@ -36,19 +37,23 @@ import ast.StringLiteral;
 import ast.SubtractExpression;
 import ast.TypeNode;
 import ast.VariableDeclaration;
+import ast.Visitor;
 import ast.WhileStatement;
 import environment.Environment;
+import environment.ListEnvironment;
 import type.ArrayType;
 import type.Type;
 
-public class TypeCheckVisitor implements TypeVisitor {
+public class TypeCheckVisitor implements Visitor {
     private Environment<String, FunctionDeclaration> functionEnvironment;
     private Environment<String, Type> variableEnvironment;
-
     private String currentFunction;
     private Type currentFunctionReturnType;
 
-    public TypeCheckVisitor() {}
+    public TypeCheckVisitor() {
+        this.functionEnvironment = new ListEnvironment<String, FunctionDeclaration>();
+        this.variableEnvironment = new ListEnvironment<String, Type>();
+    }
 
     public Type visit(AddExpression e) {
         e.getLeftExpression().accept(this);
@@ -56,14 +61,15 @@ public class TypeCheckVisitor implements TypeVisitor {
             System.out.print("+");
             e.getRightExpression().accept(this);
         }
+        return null;
     }
 
     public Type visit(ArrayAssignmentStatement s) {
-        this.printIndentation();
         s.getArrayReference().accept(this);
         System.out.print("=");
         s.getExpression().accept(this);
         System.out.println(";");
+        return null;
     }
 
     public Type visit(ArrayReference a) {
@@ -71,50 +77,55 @@ public class TypeCheckVisitor implements TypeVisitor {
         System.out.print("[");
         a.getExpression().accept(this);
         System.out.print("]");
+        return null;
     }
 
     public Type visit(ArrayReferenceExpression a) {
         a.getArrayReference().accept(this);
+        return null;
     }
 
     public Type visit(ArrayType a) {
         System.out.print(a + " ");
+        return null;
     }
 
     public Type visit(AssignmentStatement a) {
-        this.printIndentation();
         a.getIdentifier().accept(this);
         System.out.print("=");
         a.getExpression().accept(this);
         System.out.println(";");
+        return null;
     }
 
     public Type visit(Block b) {
-        this.printIndentation();
         System.out.println("{");
         b.getStatementList().accept(this);
-        this.printIndentation();
         System.out.println("}");
+        return null;
     }
 
     public Type visit(BooleanLiteral b) {
         System.out.print(b.getValue());
+        return null;
     }
 
     public Type visit(CharacterLiteral c) {
         System.out.print("\'");
         System.out.print(c.getValue());
         System.out.print("\'");
+        return null;
     }
 
     public Type visit(Declaration d) {
         d.getType().accept(this);
         d.getIdentifier().accept(this);
+        return null;
     }
 
     public Type visit(EmptyStatement e) {
-        this.printIndentation();
         System.out.println(";");
+        return null;
     }
 
     public Type visit(EqualityExpression e) {
@@ -123,6 +134,7 @@ public class TypeCheckVisitor implements TypeVisitor {
             System.out.print("==");
             e.getRightExpression().accept(this);
         }
+        return null;
     }
 
     public Type visit(ExpressionList e) {
@@ -133,16 +145,18 @@ public class TypeCheckVisitor implements TypeVisitor {
                 System.out.print(",");
             }
         }
+        return null;
     }
 
     public Type visit(ExpressionStatement e) {
-        this.printIndentation();
         e.getExpression().accept(this);
         System.out.println(";");
+        return null;
     }
 
     public Type visit(FloatLiteral f) {
         System.out.print(f.getValue());
+        return null;
     }
 
     public Type visit(FormalParameters p) {
@@ -153,12 +167,14 @@ public class TypeCheckVisitor implements TypeVisitor {
                 System.out.print(", ");
             }
         }
+        return null;
     }
 
     public Type visit(Function f) {
         f.getFunctionDeclaration().accept(this);
         f.getFunctionBody().accept(this);
         System.out.println();
+        return null;
     }
 
     public Type visit(FunctionBody f) {
@@ -171,6 +187,7 @@ public class TypeCheckVisitor implements TypeVisitor {
         }
         f.getStatementList().accept(this);
         System.out.println("}");
+        return null;
     }
 
     public Type visit(FunctionCall f) {
@@ -178,6 +195,7 @@ public class TypeCheckVisitor implements TypeVisitor {
         System.out.print("(");
         f.getExpressionList().accept(this);
         System.out.print(")");
+        return null;
     }
 
     public Type visit(FunctionDeclaration f) {
@@ -185,37 +203,40 @@ public class TypeCheckVisitor implements TypeVisitor {
         System.out.print(" (");
         f.getFormalParameters().accept(this);
         System.out.println(")");
+        return null;
     }
 
     public Type visit(Identifier i) {
         System.out.print(i.getName());
+        return null;
     }
 
     public Type visit(IdentifierExpression i) {
         i.getIdentifier().accept(this);
+        return null;
     }
 
     public Type visit(IfElseStatement i) {
-        this.printIndentation();
         System.out.print("if (");
         i.getExpression().accept(this);
         System.out.println(")");
         i.getIfBlock().accept(this);
-        this.printIndentation();
         System.out.println("else");
         i.getElseBlock().accept(this);
+        return null;
     }
 
     public Type visit(IfStatement i) {
-        this.printIndentation();
         System.out.print("if (");
         i.getExpression().accept(this);
         System.out.println(")");
         i.getBlock().accept(this);
+        return null;
     }
 
     public Type visit(IntegerLiteral i) {
         System.out.print(i.getValue());
+        return null;
     }
 
     public Type visit(LessThanExpression e) {
@@ -224,6 +245,7 @@ public class TypeCheckVisitor implements TypeVisitor {
             System.out.print("<");
             e.getRightExpression().accept(this);
         }
+        return null;
     }
 
     public Type visit(MultiplyExpression e) {
@@ -232,52 +254,57 @@ public class TypeCheckVisitor implements TypeVisitor {
             System.out.print("*");
             e.getRightExpression().accept(this);
         }
+        return null;
     }
 
     public Type visit(ParenthesisExpression p) {
         System.out.print("(");
         p.getExpression().accept(this);
         System.out.print(")");
+        return null;
     }
 
     public Type visit(PrintlnStatement s) {
-        this.printIndentation();
         System.out.print("println ");
         s.getExpression().accept(this);
         System.out.println(";");
+        return null;
     }
 
     public Type visit(PrintStatement s) {
-        this.printIndentation();
         System.out.print("print ");
         s.getExpression().accept(this);
         System.out.println(";");
+        return null;
     }
 
     public Type visit(Program p) {
         for (Function f : p.getFunctions()) {
             f.accept(this);
         }
+        return null;
     }
 
     public Type visit(ReturnStatement s) {
-        this.printIndentation();
         System.out.print("return");
         if (s.getExpression() != null) {
             System.out.print(" ");
             s.getExpression().accept(this);
         }
         System.out.println(";");
+        return null;
     }
 
     public Type visit(StatementList sl) {
         for (ast.Statement s : sl.getStatements()) {
             s.accept(this);
         }
+        return null;
     }
 
     public Type visit(StringLiteral s) {
         System.out.print(s.getValue());
+        return null;
     }
 
     public Type visit(SubtractExpression e) {
@@ -286,27 +313,30 @@ public class TypeCheckVisitor implements TypeVisitor {
             System.out.print("-");
             e.getRightExpression().accept(this);
         }
+        return null;
     }
 
     public Type visit(Type t) {
         System.out.print(t + " ");
+        return null;
     }
 
     public Type visit(TypeNode t) {
         t.getType().accept(this);
+        return null;
     }
 
     public Type visit(VariableDeclaration v) {
-        this.printIndentation();
         v.getDeclaration().accept(this);
         System.out.println(";");
+        return null;
     }
 
     public Type visit(WhileStatement s) {
-        this.printIndentation();
         System.out.print("while (");
         s.getExpression().accept(this);
         System.out.println(")");
         s.getBlock().accept(this);
+        return null;
     }
 }

@@ -1,6 +1,6 @@
 package semantic;
 
-public class SemanticException extends Exception {
+public class SemanticException extends RuntimeException {
     private String message;
     private int line;
     private int offset;
