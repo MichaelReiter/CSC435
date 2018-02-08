@@ -1,8 +1,8 @@
 package ast;
 
 public class ArrayAssignmentStatement extends Statement {
-    private ArrayReference a;
-    private Expression e;
+    private final ArrayReference a;
+    private final Expression e;
 
     public ArrayAssignmentStatement(ArrayReference a, Expression e) {
         this.a = a;

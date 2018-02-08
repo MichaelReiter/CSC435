@@ -1,8 +1,8 @@
 package ast;
 
 public class Declaration {
-    private TypeNode type;
-    private Identifier id;
+    private final TypeNode type;
+    private final Identifier id;
 
     public Declaration(TypeNode type, Identifier id) {
         this.type = type;

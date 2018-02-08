@@ -1,8 +1,8 @@
 package ast;
 
 public class ArrayReference extends Expression {
-    private Identifier id;
-    private Expression e;
+    private final Identifier id;
+    private final Expression e;
 
     public ArrayReference(Identifier id, Expression e) {
         this.id = id;

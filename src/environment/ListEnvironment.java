@@ -1,8 +1,8 @@
 package environment;
 
 public class ListEnvironment<K, V> implements Environment<K, V> {
-    private ListNode<K, V> head;
-    private int scopeLevel;
+    private final ListNode<K, V> head;
+    private final int scopeLevel;
 
     public ListEnvironment() {
         this.head = null;

@@ -1,8 +1,8 @@
 package ast;
 
 public class AssignmentStatement extends Statement {
-    private Identifier id;
-    private Expression e;
+    private final Identifier id;
+    private final Expression e;
 
     public AssignmentStatement(Identifier id, Expression e) {
         this.id = id;

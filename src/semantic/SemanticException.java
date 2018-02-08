@@ -1,9 +1,9 @@
 package semantic;
 
 public class SemanticException extends RuntimeException {
-    private String message;
-    private int line;
-    private int offset;
+    private final String message;
+    private final int line;
+    private final int offset;
 
     public SemanticException(String message, int line, int offset) {
         this.message = message;

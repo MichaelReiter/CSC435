@@ -1,7 +1,7 @@
 package ast;
 
 public class FloatLiteral extends Literal {
-    private float value;
+    private final float value;
 
     public FloatLiteral(float value) {
         this.value = value;

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class StatementList {
-    private List<Statement> l;
+    private final List<Statement> l;
 
     public StatementList() {
         this.l = new ArrayList<Statement>();

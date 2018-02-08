@@ -1,7 +1,7 @@
 package ast;
 
 public class ArrayReferenceExpression extends Expression {
-    private ArrayReference a;
+    private final ArrayReference a;
 
     public ArrayReferenceExpression(ArrayReference a) {
         this.a = a;

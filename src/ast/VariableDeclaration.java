@@ -1,7 +1,7 @@
 package ast;
 
 public class VariableDeclaration extends ASTNode {
-    private Declaration d;
+    private final Declaration d;
 
     public VariableDeclaration(Declaration d) {
         this.d = d;

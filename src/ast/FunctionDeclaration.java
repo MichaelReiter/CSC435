@@ -1,8 +1,8 @@
 package ast;
 
 public class FunctionDeclaration extends ASTNode {
-    private Declaration d;
-    private FormalParameters args;
+    private final Declaration d;
+    private final FormalParameters args;
 
     public FunctionDeclaration(Declaration d, FormalParameters args) {
         this.d = d;

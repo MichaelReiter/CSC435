@@ -1,7 +1,7 @@
 package ast;
 
 public class ParenthesisExpression extends Expression {
-    private Expression e;
+    private final Expression e;
 
     public ParenthesisExpression(Expression e) {
         this.e = e;

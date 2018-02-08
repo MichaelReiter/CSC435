@@ -1,7 +1,7 @@
 package ast;
 
 public class CharacterLiteral extends Literal {
-    private char value;
+    private final char value;
 
     public CharacterLiteral(char value) {
         this.value = value;

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Program extends ASTNode {
-    private List<Function> functionList;
+    private final List<Function> functionList;
 
     public Program() {
         this.functionList = new ArrayList<Function>();

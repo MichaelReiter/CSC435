@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FormalParameters extends ASTNode {
-    private List<Declaration> parameters;
+    private final List<Declaration> parameters;
 
     public FormalParameters() {
         this.parameters = new ArrayList<Declaration>();

@@ -1,8 +1,8 @@
 package ast;
 
 public class FunctionCall extends Expression {
-    private Identifier id;
-    private ExpressionList el;
+    private final Identifier id;
+    private final ExpressionList el;
 
     public FunctionCall(Identifier id, ExpressionList el) {
         this.id = id;

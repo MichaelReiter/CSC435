@@ -313,7 +313,7 @@ public class PrettyPrintVisitor implements Visitor {
         return null;
     }
 
-    private Type printIndentation() {
+    private final Type printIndentation() {
         int totalIndentation = 4 * this.indentationDepth;
         StringBuilder sb = new StringBuilder(totalIndentation);
         for (int i = 0; i < totalIndentation; i++){

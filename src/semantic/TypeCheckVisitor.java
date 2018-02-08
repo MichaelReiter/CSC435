@@ -45,8 +45,8 @@ import type.ArrayType;
 import type.Type;
 
 public class TypeCheckVisitor implements Visitor {
-    private Environment<String, FunctionDeclaration> functionEnvironment;
-    private Environment<String, Type> variableEnvironment;
+    private final Environment<String, FunctionDeclaration> functionEnvironment;
+    private final Environment<String, Type> variableEnvironment;
     private String currentFunction;
     private Type currentFunctionReturnType;
 

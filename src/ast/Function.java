@@ -1,8 +1,8 @@
 package ast;
 
 public class Function extends ASTNode {
-    private FunctionDeclaration fd;
-    private FunctionBody fb;
+    private final FunctionDeclaration fd;
+    private final FunctionBody fb;
 
     public Function(FunctionDeclaration fd, FunctionBody fb) {
         this.fd = fd;

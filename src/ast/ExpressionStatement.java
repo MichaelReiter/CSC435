@@ -1,7 +1,7 @@
 package ast;
 
 public class ExpressionStatement extends Statement {
-    private Expression e;
+    private final Expression e;
 
     public ExpressionStatement(Expression e) {
         this.e = e;

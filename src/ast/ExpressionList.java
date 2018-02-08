@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ExpressionList extends ASTNode {
-    private List<Expression> l;
+    private final List<Expression> l;
 
     public ExpressionList() {
         this.l = new ArrayList<Expression>();

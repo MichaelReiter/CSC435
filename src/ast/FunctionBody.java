@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FunctionBody extends ASTNode {
-    private List<VariableDeclaration> variableDeclarations;
+    private final List<VariableDeclaration> variableDeclarations;
     private StatementList sl;
 
     public FunctionBody() {

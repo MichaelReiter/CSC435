@@ -1,7 +1,7 @@
 package ast;
 
 public class Identifier extends Expression {
-    private String name;
+    private final String name;
 
     public Identifier(String name) {
         this.name = name;

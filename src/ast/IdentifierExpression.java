@@ -1,7 +1,7 @@
 package ast;
 
 public class IdentifierExpression extends Expression {
-    private Identifier id;
+    private final Identifier id;
 
     public IdentifierExpression(Identifier id) {
         this.id = id;

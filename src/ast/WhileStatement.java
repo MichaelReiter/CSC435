@@ -1,8 +1,8 @@
 package ast;
 
 public class WhileStatement extends Statement {
-    private Expression e;
-    private Block b;
+    private final Expression e;
+    private final Block b;
 
     public WhileStatement(Expression e, Block b) {
         this.e = e;

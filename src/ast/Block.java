@@ -1,7 +1,7 @@
 package ast;
 
 public class Block extends ASTNode {
-    private StatementList sl;
+    private final StatementList sl;
 
     public Block(StatementList sl) {
         this.sl = sl;

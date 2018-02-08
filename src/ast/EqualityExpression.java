@@ -1,8 +1,8 @@
 package ast;
 
 public class EqualityExpression extends Expression {
-    private Expression e1;
-    private Expression e2;
+    private final Expression e1;
+    private final Expression e2;
 
     public EqualityExpression(Expression e1, Expression e2) {
         this.e1 = e1;

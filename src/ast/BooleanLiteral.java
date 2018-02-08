@@ -1,7 +1,7 @@
 package ast;
 
 public class BooleanLiteral extends Literal {
-    private boolean value;
+    private final boolean value;
 
     public BooleanLiteral(boolean value) {
         this.value = value;

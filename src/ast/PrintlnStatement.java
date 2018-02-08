@@ -1,7 +1,7 @@
 package ast;
 
 public class PrintlnStatement extends Statement {
-    private Expression e;
+    private final Expression e;
 
     public PrintlnStatement(Expression e) {
         this.e = e;

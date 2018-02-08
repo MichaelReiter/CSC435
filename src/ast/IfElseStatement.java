@@ -1,9 +1,9 @@
 package ast;
 
 public class IfElseStatement extends Statement {
-    private Expression e;
-    private Block b1;
-    private Block b2;
+    private final Expression e;
+    private final Block b1;
+    private final Block b2;
     
     public IfElseStatement(Expression e, Block b1, Block b2) {
         this.e = e;

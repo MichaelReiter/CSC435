@@ -1,7 +1,7 @@
 package ast;
 
 public class StringLiteral extends Literal {
-    private String value;
+    private final String value;
 
     public StringLiteral(String value) {
         this.value = value;

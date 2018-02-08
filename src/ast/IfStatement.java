@@ -1,8 +1,8 @@
 package ast;
 
 public class IfStatement extends Statement {
-    private Expression e;
-    private Block b;
+    private final Expression e;
+    private final Block b;
     
     public IfStatement(Expression e, Block b) {
         this.e = e;
