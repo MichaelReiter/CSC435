@@ -14,3 +14,4 @@ clean:
 	rm **/*.class $(GNAME)*.java $(GNAME)__.g $(GNAME).tokens
 	rm -rf .antlr
 	rm -rf *.class
+	rm -rf .antlr
