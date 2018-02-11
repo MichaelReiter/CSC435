@@ -36,11 +36,10 @@ public class Compiler {
                 // to code added to the grammar so there is nothing to do here.
             }
             catch (SemanticException e) {
-                // A type checking or semantic analyis error occured.
-                // The TypeCheckVisitor will have already printed information on the console due
-                // to code added to the grammar so there is nothing to do here.
+                System.out.println(e);
             }
             catch (Exception e) {
+                System.out.println("here");
                 System.out.println(e);
                 e.printStackTrace();
             }
