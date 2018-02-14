@@ -198,10 +198,13 @@ public class TypeCheckVisitor implements Visitor {
     }
 
     public Type visit(FunctionDeclaration f) {
-        Type returnType = f.getDeclaration().accept(this);
-        //
+        String functionName = f.getDeclaration().getIdentifier().getName();
+        if (functionEnvironment.inCurrentScope(functionName)) {
+            throw new SemanticException("Function " + functionName + " already exists.",
+            f.getLine(), f.getOffset());
+        }
+        functionEnvironment.add(functionName, f);
         f.getFormalParameters().accept(this);
-        //
         return null;
     }
 
