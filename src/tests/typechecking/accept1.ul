@@ -22,6 +22,7 @@ void main() {
     intarray[0] = x;
 
     x = intarray[0];
+    x = (5);
 
     if (b) {
 

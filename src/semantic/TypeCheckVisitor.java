@@ -120,9 +120,7 @@ public class TypeCheckVisitor implements Visitor {
     }
 
     public Type visit(Block b) {
-        //
         b.getStatementList().accept(this);
-        //
         return null;
     }
 
@@ -155,32 +153,23 @@ public class TypeCheckVisitor implements Visitor {
 
     public Type visit(ExpressionList e) {
         for (int i = 0; i < e.size(); i++) {
-            Expression expr = e.get(i);
-            expr.accept(this);
-            if (i != e.size() - 1) {
-                //
-            }
+            e.get(i).accept(this);
         }
         return null;
     }
 
     public Type visit(ExpressionStatement e) {
-        e.getExpression().accept(this);
-        //
-        return null;
+        return e.getExpression().accept(this);
     }
 
     public Type visit(FloatLiteral f) {
         return new FloatType();
     }
 
+    // TODO: typecheck function declaration and ivocation parameters
     public Type visit(FormalParameters p) {
         for (int i = 0; i < p.size(); i++) {
-            Declaration d = p.get(i);
-            d.accept(this);
-            if (i != p.size() - 1) {
-                //
-            }
+            p.get(i).accept(this);
         }
         return null;
     }
@@ -285,10 +274,7 @@ public class TypeCheckVisitor implements Visitor {
     }
 
     public Type visit(ParenthesisExpression p) {
-        //
-        p.getExpression().accept(this);
-        //
-        return null;
+        return p.getExpression().accept(this);
     }
 
     public Type visit(PrintlnStatement s) {
