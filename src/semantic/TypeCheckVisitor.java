@@ -86,16 +86,19 @@ public class TypeCheckVisitor implements Visitor {
     }
 
     public Type visit(ArrayReference a) {
-        a.getIdentifier().accept(this);
-        //
-        a.getExpression().accept(this);
-        //
-        return null;
+        String variableName = a.getIdentifier().getName();
+        Type expressionType = a.getExpression().accept(this);
+        if (!expressionType.equals(new IntegerType())) {
+            throw new SemanticException(
+                "Array index expression must be of type int. Found " + expressionType + ".",
+                a.getLine(),
+                a.getOffset());
+        }
+        return variableEnvironment.lookup(variableName);
     }
 
     public Type visit(ArrayReferenceExpression a) {
-        String variableName = a.getArrayReference().getIdentifier().getName();
-        return variableEnvironment.lookup(variableName);
+        return a.getArrayReference().accept(this);
     }
 
     public Type visit(ArrayType a) {

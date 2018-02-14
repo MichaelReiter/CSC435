@@ -270,7 +270,11 @@ arrayReferenceExpression returns [ArrayReferenceExpression are]
 
 arrayReference returns [ArrayReference ar]
     :    id = identifier OPENBRACKET e = expression CLOSEBRACKET
-    { ar = new ArrayReference(id, e); }
+    {
+        ar = new ArrayReference(id, e);
+        ar.setLine($OPENBRACKET.getLine());
+        ar.setOffset($OPENBRACKET.getCharPositionInLine() + 1);
+    }
     ;
 
 multiplyExpression returns [Expression e]
