@@ -276,9 +276,17 @@ public class TypeCheckVisitor implements Visitor {
     }
 
     public Type visit(PrintlnStatement s) {
-        //
-        s.getExpression().accept(this);
-        //
+        Type expressionType = s.getExpression().accept(this);
+        if (!(expressionType.equals(new IntegerType()) || 
+            expressionType.equals(new FloatType()) || 
+            expressionType.equals(new CharType()) || 
+            expressionType.equals(new StringType()) || 
+            expressionType.equals(new BooleanType()))) {
+            throw new SemanticException(
+                "Expression in println statement cannot be of type " + expressionType + ".",
+                s.getLine(),
+                s.getOffset());
+        }
         return null;
     }
 
