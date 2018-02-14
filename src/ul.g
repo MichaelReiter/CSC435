@@ -198,7 +198,7 @@ printlnStatement returns [PrintlnStatement pln]
     ;
 
 ifElseStatement returns [IfElseStatement ies]
-    :    IF OPENPARENTHESIS e = expression CLOSEPARENTHESIS b1 = block ELSE b2 =block
+    :    IF OPENPARENTHESIS e = expression CLOSEPARENTHESIS b1 = block ELSE b2 = block
     { ies = new IfElseStatement(e, b1, b2); }
     ;
 

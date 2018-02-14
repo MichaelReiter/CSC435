@@ -42,7 +42,13 @@ import ast.WhileStatement;
 import environment.Environment;
 import environment.StackHashMapEnvironment;
 import type.ArrayType;
+import type.BooleanType;
+import type.CharType;
+import type.FloatType;
+import type.IntegerType;
+import type.StringType;
 import type.Type;
+import type.VoidType;
 
 public class TypeCheckVisitor implements Visitor {
     private final Environment<String, FunctionDeclaration> functionEnvironment;
@@ -86,7 +92,6 @@ public class TypeCheckVisitor implements Visitor {
     }
 
     public Type visit(ArrayType a) {
-        //
         return null;
     }
 
@@ -106,13 +111,11 @@ public class TypeCheckVisitor implements Visitor {
     }
 
     public Type visit(BooleanLiteral b) {
-        //
-        return null;
+        return new BooleanType();
     }
 
     public Type visit(CharacterLiteral c) {
-        //
-        return null;
+        return new CharType();
     }
 
     public Type visit(Declaration d) {
@@ -122,17 +125,16 @@ public class TypeCheckVisitor implements Visitor {
     }
 
     public Type visit(EmptyStatement e) {
-        //
         return null;
     }
 
     public Type visit(EqualityExpression e) {
-        e.getLeftExpression().accept(this);
+        Type expressionType = e.getLeftExpression().accept(this);
         if (e.getRightExpression() != null) {
             //
             e.getRightExpression().accept(this);
         }
-        return null;
+        return expressionType;
     }
 
     public Type visit(ExpressionList e) {
@@ -153,8 +155,7 @@ public class TypeCheckVisitor implements Visitor {
     }
 
     public Type visit(FloatLiteral f) {
-        //
-        return null;
+        return new FloatType();
     }
 
     public Type visit(FormalParameters p) {
@@ -209,36 +210,45 @@ public class TypeCheckVisitor implements Visitor {
     }
 
     public Type visit(Identifier i) {
-        //
-        return null;
+        // this might cause bugs later when looking up functions...
+        return variableEnvironment.lookup(i.getName());
     }
 
     public Type visit(IdentifierExpression i) {
-        i.getIdentifier().accept(this);
-        return null;
+        return i.getIdentifier().accept(this);
     }
 
     public Type visit(IfElseStatement i) {
-        //
-        i.getExpression().accept(this);
-        //
+        Type expressionType = i.getExpression().accept(this);
+        if (!expressionType.equals(new BooleanType())) {
+            throw new SemanticException(
+                "Expression in if statement must be of type boolean. Found " + expressionType + ".",
+                i.getLine(),
+                i.getOffset()
+            );
+        }
         i.getIfBlock().accept(this);
-        //
-        i.getElseBlock().accept(this);
+        if (i.getElseBlock() != null) {
+            i.getElseBlock().accept(this);
+        }
         return null;
     }
 
     public Type visit(IfStatement i) {
-        //
-        i.getExpression().accept(this);
-        //
+        Type expressionType = i.getExpression().accept(this);
+        if (!expressionType.equals(new BooleanType())) {
+            throw new SemanticException(
+                "Expression in if statement must be of type boolean. Found " + expressionType + ".",
+                i.getLine(),
+                i.getOffset()
+            );
+        }
         i.getBlock().accept(this);
         return null;
     }
 
     public Type visit(IntegerLiteral i) {
-        //
-        return null;
+        return new IntegerType();
     }
 
     public Type visit(LessThanExpression e) {
@@ -307,8 +317,7 @@ public class TypeCheckVisitor implements Visitor {
     }
 
     public Type visit(StringLiteral s) {
-        //
-        return null;
+        return new StringType();
     }
 
     public Type visit(SubtractExpression e) {
@@ -331,8 +340,11 @@ public class TypeCheckVisitor implements Visitor {
     public Type visit(VariableDeclaration v) {
         String variableName = v.getDeclaration().getIdentifier().getName();
         if (variableEnvironment.inCurrentScope(variableName)) {
-            throw new SemanticException("Variable " + variableName + " already exists.",
-                v.getLine(), v.getOffset());
+            throw new SemanticException(
+                "Variable " + variableName + " already exists.",
+                v.getLine(),
+                v.getOffset()
+            );
         }
         Type variableType = v.getDeclaration().accept(this);
         variableEnvironment.add(variableName, variableType);
