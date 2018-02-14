@@ -96,10 +96,16 @@ public class TypeCheckVisitor implements Visitor {
     }
 
     public Type visit(AssignmentStatement a) {
-        a.getIdentifier().accept(this);
-        //
-        a.getExpression().accept(this);
-        //
+        Type variableType = a.getIdentifier().accept(this);
+        Type expressionType = a.getExpression().accept(this);
+        if (!variableType.equals(expressionType)) {
+            String name = a.getIdentifier().getName();
+            throw new SemanticException(
+                "Variable " + name + " must be assigned an expression of type "
+                    + variableType + ". Found " + expressionType + ".",
+                a.getLine(),
+                a.getOffset());
+        }
         return null;
     }
 
@@ -315,7 +321,7 @@ public class TypeCheckVisitor implements Visitor {
     }
 
     public Type visit(ReturnStatement s) {
-        //
+        // TODO type check function returns
         if (s.getExpression() != null) {
             //
             s.getExpression().accept(this);

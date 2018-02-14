@@ -169,7 +169,11 @@ expressionStatement returns [ExpressionStatement exprs]
 
 assignmentStatement returns [AssignmentStatement as]
     :    id = identifier SINGLEEQUALS e = expression SEMICOLON
-    { as = new AssignmentStatement(id, e); }
+    {
+        as = new AssignmentStatement(id, e);
+        as.setLine($SINGLEEQUALS.getLine());
+        as.setOffset($SINGLEEQUALS.getCharPositionInLine() + 1);
+    }
     ;
 
 arrayAssignmentStatement returns [ArrayAssignmentStatement aas]
