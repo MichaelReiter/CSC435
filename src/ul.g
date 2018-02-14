@@ -179,7 +179,11 @@ arrayAssignmentStatement returns [ArrayAssignmentStatement aas]
 
 whileStatement returns [WhileStatement w]
     :    WHILE OPENPARENTHESIS e = expression CLOSEPARENTHESIS b = block
-    { w = new WhileStatement(e, b); }
+    {
+        w = new WhileStatement(e, b);
+        w.setLine($OPENPARENTHESIS.getLine());
+        w.setOffset($OPENPARENTHESIS.getCharPositionInLine() + 1);
+    }
     ;
 
 returnStatement returns [ReturnStatement r]
@@ -189,22 +193,38 @@ returnStatement returns [ReturnStatement r]
 
 printStatement returns [PrintStatement p]
     :    PRINT e = expression SEMICOLON
-    { p = new PrintStatement(e); }
+    {
+        p = new PrintStatement(e);
+        p.setLine($PRINT.getLine());
+        p.setOffset($PRINT.getCharPositionInLine() + 6);
+    }
     ;
 
 printlnStatement returns [PrintlnStatement pln]
     :    PRINTLN e = expression SEMICOLON
-    { pln = new PrintlnStatement(e); }
+    {
+        pln = new PrintlnStatement(e);
+        pln.setLine($PRINTLN.getLine());
+        pln.setOffset($PRINTLN.getCharPositionInLine() + 6);
+    }
     ;
 
 ifElseStatement returns [IfElseStatement ies]
     :    IF OPENPARENTHESIS e = expression CLOSEPARENTHESIS b1 = block ELSE b2 = block
-    { ies = new IfElseStatement(e, b1, b2); }
+    {
+        ies = new IfElseStatement(e, b1, b2);
+        ies.setLine($OPENPARENTHESIS.getLine());
+        ies.setOffset($OPENPARENTHESIS.getCharPositionInLine() + 1);
+    }
     ;
 
 ifStatement returns [IfStatement is]
     :    IF OPENPARENTHESIS e = expression CLOSEPARENTHESIS b = block
-    { is = new IfStatement(e, b); }
+    {
+        is = new IfStatement(e, b);
+        is.setLine($OPENPARENTHESIS.getLine());
+        is.setOffset($OPENPARENTHESIS.getCharPositionInLine() + 1);
+    }
     ;
 
 block returns [Block b]
