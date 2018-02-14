@@ -172,13 +172,17 @@ assignmentStatement returns [AssignmentStatement as]
     {
         as = new AssignmentStatement(id, e);
         as.setLine($SINGLEEQUALS.getLine());
-        as.setOffset($SINGLEEQUALS.getCharPositionInLine() + 1);
+        as.setOffset($SINGLEEQUALS.getCharPositionInLine() + 2);
     }
     ;
 
 arrayAssignmentStatement returns [ArrayAssignmentStatement aas]
     :    a = arrayReference SINGLEEQUALS e = expression SEMICOLON
-    { aas = new ArrayAssignmentStatement(a, e); }
+    {
+        aas = new ArrayAssignmentStatement(a, e);
+        aas.setLine($SINGLEEQUALS.getLine());
+        aas.setOffset($SINGLEEQUALS.getCharPositionInLine() + 2);
+    }
     ;
 
 whileStatement returns [WhileStatement w]

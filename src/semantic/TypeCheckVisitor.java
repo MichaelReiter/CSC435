@@ -71,10 +71,17 @@ public class TypeCheckVisitor implements Visitor {
     }
 
     public Type visit(ArrayAssignmentStatement s) {
-        s.getArrayReference().accept(this);
-        //
-        s.getExpression().accept(this);
-        //
+        Type variableType = s.getArrayReference().getIdentifier().accept(this);
+        Type expressionType = s.getExpression().accept(this);
+        if (!variableType.equals(expressionType)) {
+            String name = s.getArrayReference().getIdentifier().getName();
+            throw new SemanticException(
+                "Variable " + name + " must be assigned an expression of type "
+                    + variableType + ". Found " + expressionType + ".",
+                s.getLine(),
+                s.getOffset());
+        }
+
         return null;
     }
 
@@ -87,12 +94,12 @@ public class TypeCheckVisitor implements Visitor {
     }
 
     public Type visit(ArrayReferenceExpression a) {
-        a.getArrayReference().accept(this);
-        return null;
+        String variableName = a.getArrayReference().getIdentifier().getName();
+        return variableEnvironment.lookup(variableName);
     }
 
     public Type visit(ArrayType a) {
-        return null;
+        return a.getType();
     }
 
     public Type visit(AssignmentStatement a) {

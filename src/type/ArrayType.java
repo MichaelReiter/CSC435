@@ -11,6 +11,10 @@ public class ArrayType extends Type {
         this.size = size;
     }
 
+    public Type getType() {
+        return this.t;
+    }
+
     public String toString() {
         return this.t.toString() + "[" + this.size + "]" ;
     }
