@@ -202,7 +202,8 @@ public class TypeCheckVisitor implements Visitor {
         String functionName = f.getDeclaration().getIdentifier().getName();
         if (functionEnvironment.inCurrentScope(functionName)) {
             throw new SemanticException("Function " + functionName + " already exists.",
-            f.getLine(), f.getOffset());
+                f.getLine(),
+                f.getOffset());
         }
         functionEnvironment.add(functionName, f);
         f.getFormalParameters().accept(this);
@@ -224,8 +225,7 @@ public class TypeCheckVisitor implements Visitor {
             throw new SemanticException(
                 "Expression in if statement must be of type boolean. Found " + expressionType + ".",
                 i.getLine(),
-                i.getOffset()
-            );
+                i.getOffset());
         }
         i.getIfBlock().accept(this);
         if (i.getElseBlock() != null) {
@@ -240,8 +240,7 @@ public class TypeCheckVisitor implements Visitor {
             throw new SemanticException(
                 "Expression in if statement must be of type boolean. Found " + expressionType + ".",
                 i.getLine(),
-                i.getOffset()
-            );
+                i.getOffset());
         }
         i.getBlock().accept(this);
         return null;
@@ -284,9 +283,17 @@ public class TypeCheckVisitor implements Visitor {
     }
 
     public Type visit(PrintStatement s) {
-        //
-        s.getExpression().accept(this);
-        //
+        Type expressionType = s.getExpression().accept(this);
+        if (!(expressionType.equals(new IntegerType()) || 
+            expressionType.equals(new FloatType()) || 
+            expressionType.equals(new CharType()) || 
+            expressionType.equals(new StringType()) || 
+            expressionType.equals(new BooleanType()))) {
+            throw new SemanticException(
+                "Expression in print statement cannot be of type " + expressionType + ".",
+                s.getLine(),
+                s.getOffset());
+        }
         return null;
     }
 
@@ -343,8 +350,7 @@ public class TypeCheckVisitor implements Visitor {
             throw new SemanticException(
                 "Variable " + variableName + " already exists.",
                 v.getLine(),
-                v.getOffset()
-            );
+                v.getOffset());
         }
         Type variableType = v.getDeclaration().accept(this);
         variableEnvironment.add(variableName, variableType);
@@ -357,8 +363,7 @@ public class TypeCheckVisitor implements Visitor {
             throw new SemanticException(
                 "Expression in while statement must be of type boolean. Found " + expressionType + ".",
                 s.getLine(),
-                s.getOffset()
-            );
+                s.getOffset());
         }
         s.getBlock().accept(this);
         return null;
