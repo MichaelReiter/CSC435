@@ -118,7 +118,11 @@ functionBody returns [FunctionBody fb]
 
 variableDeclaration returns [VariableDeclaration vd]
     :    d = declaration SEMICOLON
-    { vd = new VariableDeclaration(d); }
+    {
+        vd = new VariableDeclaration(d);
+        vd.setLine(d.getType().getType().getLine());
+        vd.setOffset(d.getType().getType().getOffset());
+    }
     ;
 
 compoundType returns [TypeNode tn]
@@ -324,6 +328,8 @@ integerLiteral returns [IntegerLiteral il]
     {
         int value = Integer.parseInt($INTEGERCONSTANT.text);
         il = new IntegerLiteral(value);
+        il.setLine($INTEGERCONSTANT.getLine());
+        il.setOffset($INTEGERCONSTANT.getCharPositionInLine());
     }
     ;
 
@@ -332,6 +338,8 @@ floatLiteral returns [FloatLiteral fl]
     {
         float value = Float.parseFloat($FLOATCONSTANT.text);
         fl = new FloatLiteral(value);
+        fl.setLine($FLOATCONSTANT.getLine());
+        fl.setOffset($FLOATCONSTANT.getCharPositionInLine());
     }
     ;
 
@@ -340,6 +348,8 @@ characterLiteral returns [CharacterLiteral cl]
     {
         char value = ($CHARACTERCONSTANT.text).charAt(1);
         cl = new CharacterLiteral(value);
+        cl.setLine($CHARACTERCONSTANT.getLine());
+        cl.setOffset($CHARACTERCONSTANT.getCharPositionInLine());
     }
     ;
 
@@ -348,53 +358,63 @@ stringLiteral returns [StringLiteral sl]
     {
         String value = $STRINGCONSTANT.text;
         sl = new StringLiteral(value);
+        sl.setLine($STRINGCONSTANT.getLine());
+        sl.setOffset($STRINGCONSTANT.getCharPositionInLine());
     }
     ;
 
 booleanLiteral returns [BooleanLiteral bl]
     :    TRUE
-    { bl = new BooleanLiteral(true); }
+    {
+        bl = new BooleanLiteral(true);
+        bl.setLine($TRUE.getLine());
+        bl.setOffset($TRUE.getCharPositionInLine());
+    }
     |    FALSE
-    { bl = new BooleanLiteral(false); }    
+    {
+        bl = new BooleanLiteral(false);
+        bl.setLine($FALSE.getLine());
+        bl.setOffset($FALSE.getCharPositionInLine());
+    }
     ;
 
 type returns [Type t]
-    :    intt
-    { t = new IntegerType(); }
-    |    floatt
-    { t = new FloatType(); }
-    |    charr
-    { t = new CharType(); }
-    |    stringg
-    { t = new StringType(); }
-    |    booleann
-    { t = new BooleanType(); }
-    |    voidd
-    { t = new VoidType(); }
-    ;
-
-intt
     :    INT
-    ;
-
-floatt
-    :    FLOAT
-    ;
-
-charr
-    :    CHAR
-    ;
-
-stringg
-    :    STRING
-    ;
-
-booleann
-    :    BOOLEAN
-    ;
-
-voidd
-    :    VOID
+    {
+        t = new IntegerType();
+        t.setLine($INT.getLine());
+        t.setOffset($INT.getCharPositionInLine());
+    }
+    |    FLOAT
+    {
+        t = new FloatType();
+        t.setLine($FLOAT.getLine());
+        t.setOffset($FLOAT.getCharPositionInLine());
+    }
+    |    CHAR
+    {
+        t = new CharType();
+        t.setLine($CHAR.getLine());
+        t.setOffset($CHAR.getCharPositionInLine());
+    }
+    |    STRING
+    {
+        t = new StringType();
+        t.setLine($STRING.getLine());
+        t.setOffset($STRING.getCharPositionInLine());
+    }
+    |    BOOLEAN
+    {
+        t = new BooleanType();
+        t.setLine($BOOLEAN.getLine());
+        t.setOffset($BOOLEAN.getCharPositionInLine());
+    }
+    |    VOID
+    {
+        t = new VoidType();
+        t.setLine($VOID.getLine());
+        t.setOffset($VOID.getCharPositionInLine());
+    }
     ;
 
 // Lexer below

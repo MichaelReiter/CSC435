@@ -58,7 +58,7 @@ public class TypeCheckVisitor implements Visitor {
     public Type visit(AddExpression e) {
         e.getLeftExpression().accept(this);
         if (e.getRightExpression() != null) {
-            System.out.print("+");
+            //
             e.getRightExpression().accept(this);
         }
         return null;
@@ -66,17 +66,17 @@ public class TypeCheckVisitor implements Visitor {
 
     public Type visit(ArrayAssignmentStatement s) {
         s.getArrayReference().accept(this);
-        System.out.print("=");
+        //
         s.getExpression().accept(this);
-        System.out.println(";");
+        //
         return null;
     }
 
     public Type visit(ArrayReference a) {
         a.getIdentifier().accept(this);
-        System.out.print("[");
+        //
         a.getExpression().accept(this);
-        System.out.print("]");
+        //
         return null;
     }
 
@@ -86,52 +86,50 @@ public class TypeCheckVisitor implements Visitor {
     }
 
     public Type visit(ArrayType a) {
-        System.out.print(a + " ");
+        //
         return null;
     }
 
     public Type visit(AssignmentStatement a) {
         a.getIdentifier().accept(this);
-        System.out.print("=");
+        //
         a.getExpression().accept(this);
-        System.out.println(";");
+        //
         return null;
     }
 
     public Type visit(Block b) {
-        System.out.println("{");
+        //
         b.getStatementList().accept(this);
-        System.out.println("}");
+        //
         return null;
     }
 
     public Type visit(BooleanLiteral b) {
-        System.out.print(b.getValue());
+        //
         return null;
     }
 
     public Type visit(CharacterLiteral c) {
-        System.out.print("\'");
-        System.out.print(c.getValue());
-        System.out.print("\'");
+        //
         return null;
     }
 
     public Type visit(Declaration d) {
-        d.getType().accept(this);
+        Type declarationType = d.getType().accept(this);
         d.getIdentifier().accept(this);
-        return null;
+        return declarationType;
     }
 
     public Type visit(EmptyStatement e) {
-        System.out.println(";");
+        //
         return null;
     }
 
     public Type visit(EqualityExpression e) {
         e.getLeftExpression().accept(this);
         if (e.getRightExpression() != null) {
-            System.out.print("==");
+            //
             e.getRightExpression().accept(this);
         }
         return null;
@@ -142,7 +140,7 @@ public class TypeCheckVisitor implements Visitor {
             Expression expr = e.get(i);
             expr.accept(this);
             if (i != e.size() - 1) {
-                System.out.print(",");
+                //
             }
         }
         return null;
@@ -150,12 +148,12 @@ public class TypeCheckVisitor implements Visitor {
 
     public Type visit(ExpressionStatement e) {
         e.getExpression().accept(this);
-        System.out.println(";");
+        //
         return null;
     }
 
     public Type visit(FloatLiteral f) {
-        System.out.print(f.getValue());
+        //
         return null;
     }
 
@@ -164,7 +162,7 @@ public class TypeCheckVisitor implements Visitor {
             Declaration d = p.get(i);
             d.accept(this);
             if (i != p.size() - 1) {
-                System.out.print(", ");
+                //
             }
         }
         return null;
@@ -173,41 +171,42 @@ public class TypeCheckVisitor implements Visitor {
     public Type visit(Function f) {
         f.getFunctionDeclaration().accept(this);
         f.getFunctionBody().accept(this);
-        System.out.println();
         return null;
     }
 
     public Type visit(FunctionBody f) {
-        System.out.println("{");
+        variableEnvironment.beginScope();
+        //
         for (VariableDeclaration vd : f.getVariableDeclarations()) {
             vd.accept(this);
         }
         if (f.size() > 0) {
-            System.out.println();
+            //
         }
         f.getStatementList().accept(this);
-        System.out.println("}");
+        //
+        variableEnvironment.endScope();
         return null;
     }
 
     public Type visit(FunctionCall f) {
         f.getIdentifier().accept(this);
-        System.out.print("(");
+        //
         f.getExpressionList().accept(this);
-        System.out.print(")");
+        //
         return null;
     }
 
     public Type visit(FunctionDeclaration f) {
-        f.getDeclaration().accept(this);
-        System.out.print(" (");
+        Type returnType = f.getDeclaration().accept(this);
+        //
         f.getFormalParameters().accept(this);
-        System.out.println(")");
+        //
         return null;
     }
 
     public Type visit(Identifier i) {
-        System.out.print(i.getName());
+        //
         return null;
     }
 
@@ -217,32 +216,32 @@ public class TypeCheckVisitor implements Visitor {
     }
 
     public Type visit(IfElseStatement i) {
-        System.out.print("if (");
+        //
         i.getExpression().accept(this);
-        System.out.println(")");
+        //
         i.getIfBlock().accept(this);
-        System.out.println("else");
+        //
         i.getElseBlock().accept(this);
         return null;
     }
 
     public Type visit(IfStatement i) {
-        System.out.print("if (");
+        //
         i.getExpression().accept(this);
-        System.out.println(")");
+        //
         i.getBlock().accept(this);
         return null;
     }
 
     public Type visit(IntegerLiteral i) {
-        System.out.print(i.getValue());
+        //
         return null;
     }
 
     public Type visit(LessThanExpression e) {
         e.getLeftExpression().accept(this);
         if (e.getRightExpression() != null) {
-            System.out.print("<");
+            //
             e.getRightExpression().accept(this);
         }
         return null;
@@ -251,47 +250,49 @@ public class TypeCheckVisitor implements Visitor {
     public Type visit(MultiplyExpression e) {
         e.getLeftExpression().accept(this);
         if (e.getRightExpression() != null) {
-            System.out.print("*");
+            //
             e.getRightExpression().accept(this);
         }
         return null;
     }
 
     public Type visit(ParenthesisExpression p) {
-        System.out.print("(");
+        //
         p.getExpression().accept(this);
-        System.out.print(")");
+        //
         return null;
     }
 
     public Type visit(PrintlnStatement s) {
-        System.out.print("println ");
+        //
         s.getExpression().accept(this);
-        System.out.println(";");
+        //
         return null;
     }
 
     public Type visit(PrintStatement s) {
-        System.out.print("print ");
+        //
         s.getExpression().accept(this);
-        System.out.println(";");
+        //
         return null;
     }
 
     public Type visit(Program p) {
+        functionEnvironment.beginScope();
         for (Function f : p.getFunctions()) {
             f.accept(this);
         }
+        functionEnvironment.endScope();
         return null;
     }
 
     public Type visit(ReturnStatement s) {
-        System.out.print("return");
+        //
         if (s.getExpression() != null) {
-            System.out.print(" ");
+            //
             s.getExpression().accept(this);
         }
-        System.out.println(";");
+        //
         return null;
     }
 
@@ -303,39 +304,42 @@ public class TypeCheckVisitor implements Visitor {
     }
 
     public Type visit(StringLiteral s) {
-        System.out.print(s.getValue());
+        //
         return null;
     }
 
     public Type visit(SubtractExpression e) {
         e.getLeftExpression().accept(this);
         if (e.getRightExpression() != null) {
-            System.out.print("-");
+            //
             e.getRightExpression().accept(this);
         }
         return null;
     }
 
     public Type visit(Type t) {
-        System.out.print(t + " ");
-        return null;
+        return t;
     }
 
     public Type visit(TypeNode t) {
-        t.getType().accept(this);
-        return null;
+        return t.getType().accept(this);
     }
 
     public Type visit(VariableDeclaration v) {
-        v.getDeclaration().accept(this);
-        System.out.println(";");
+        String variableName = v.getDeclaration().getIdentifier().getName();
+        if (variableEnvironment.inCurrentScope(variableName)) {
+            throw new SemanticException("Variable " + variableName + " already exists.",
+                v.getLine(), v.getOffset());
+        }
+        Type variableType = v.getDeclaration().accept(this);
+        variableEnvironment.add(variableName, variableType);
         return null;
     }
 
     public Type visit(WhileStatement s) {
-        System.out.print("while (");
+        //
         s.getExpression().accept(this);
-        System.out.println(")");
+        //
         s.getBlock().accept(this);
         return null;
     }
