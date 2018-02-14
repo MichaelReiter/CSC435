@@ -352,9 +352,14 @@ public class TypeCheckVisitor implements Visitor {
     }
 
     public Type visit(WhileStatement s) {
-        //
-        s.getExpression().accept(this);
-        //
+        Type expressionType = s.getExpression().accept(this);
+        if (!expressionType.equals(new BooleanType())) {
+            throw new SemanticException(
+                "Expression in while statement must be of type boolean. Found " + expressionType + ".",
+                s.getLine(),
+                s.getOffset()
+            );
+        }
         s.getBlock().accept(this);
         return null;
     }
