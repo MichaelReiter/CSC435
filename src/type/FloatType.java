@@ -10,11 +10,7 @@ public class FloatType extends Type {
     }
 
     public boolean equals(Object o) {
-        if (o instanceof FloatType) {
-            return true;
-        } else {
-            return false;
-        }
+        return o instanceof FloatType;
     }
 
     public Type accept(Visitor v) {

@@ -10,11 +10,7 @@ public class StringType extends Type {
     }
 
     public boolean equals(Object o) {
-        if (o instanceof StringType) {
-            return true;
-        } else {
-            return false;
-        }
+        return o instanceof StringType;
     }
 
     public Type accept(Visitor v) {

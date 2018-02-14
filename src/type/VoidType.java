@@ -10,11 +10,7 @@ public class VoidType extends Type {
     }
 
     public boolean equals(Object o) {
-        if (o instanceof VoidType) {
-            return true;
-        } else {
-            return false;
-        }
+        return o instanceof VoidType;
     }
 
     public Type accept(Visitor v) {

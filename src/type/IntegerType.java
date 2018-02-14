@@ -10,11 +10,7 @@ public class IntegerType extends Type {
     }
 
     public boolean equals(Object o) {
-        if (o instanceof IntegerType) {
-            return true;
-        } else {
-            return false;
-        }
+        return o instanceof IntegerType;
     }
 
     public Type accept(Visitor v) {

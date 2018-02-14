@@ -1,28 +1,9 @@
 package type;
 
+import ast.ASTNode;
 import ast.Visitor;
 
-public abstract class Type {
-    private int line;
-    private int offset;
-
+public abstract class Type extends ASTNode {
     public abstract String toString();
     public abstract boolean equals(Object o);
-    public abstract Type accept(Visitor v);
-    
-    public final int getLine() {
-        return this.line;
-    }
-
-    public final int getOffset() {
-        return this.offset;
-    }
-
-    public final void setLine(int line) {
-        this.line = line;
-    }
-
-    public final void setOffset(int offset) {
-        this.offset = offset;
-    }
 }

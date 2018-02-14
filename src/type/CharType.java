@@ -10,11 +10,7 @@ public class CharType extends Type {
     }
 
     public boolean equals(Object o) {
-        if (o instanceof CharType) {
-            return true;
-        } else {
-            return false;
-        }
+        return o instanceof CharType;
     }
 
     public Type accept(Visitor v) {

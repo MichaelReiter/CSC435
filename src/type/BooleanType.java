@@ -10,11 +10,7 @@ public class BooleanType extends Type {
     }
 
     public boolean equals(Object o) {
-        if (o instanceof BooleanType) {
-            return true;
-        } else {
-            return false;
-        }
+        return o instanceof BooleanType;
     }
 
     public Type accept(Visitor v) {

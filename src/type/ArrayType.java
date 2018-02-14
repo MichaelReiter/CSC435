@@ -16,11 +16,7 @@ public class ArrayType extends Type {
     }
 
     public boolean equals(Object o) {
-        if (o instanceof ArrayType) {
-            return true;
-        } else {
-            return false;
-        }
+        return o instanceof ArrayType;
     }
 
     public Type accept(Visitor v) {
