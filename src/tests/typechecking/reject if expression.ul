@@ -1,0 +1,9 @@
+void main() {
+    int[3] intarray;
+
+    if (intarray) {
+
+    } else {
+        
+    }
+}

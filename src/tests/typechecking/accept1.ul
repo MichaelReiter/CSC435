@@ -5,6 +5,7 @@ void main() {
     float f;
     int i;
     string s;
+    void v;
 
     int x;
     int y;
@@ -13,6 +14,31 @@ void main() {
     y = 2;
     i = x + y;
 
+    if (b) {
+
+    }
+
+    if (b) {
+
+    } else {
+
+    }
+
+    while (b) {
+
+    }
+
+    print b;
+    print c;
+    print f;
+    print i;
+    print s;
+
+    println b;
+    println c;
+    println f;
+    println i;
+    println s;
 }
 
 int foo() {
