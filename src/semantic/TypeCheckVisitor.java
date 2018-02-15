@@ -62,12 +62,23 @@ public class TypeCheckVisitor implements Visitor {
     }
 
     public Type visit(AddExpression e) {
-        e.getLeftExpression().accept(this);
+        Type leftExpressionType = e.getLeftExpression().accept(this);
         if (e.getRightExpression() != null) {
-            //
-            e.getRightExpression().accept(this);
+            Type rightExpressionType = e.getRightExpression().accept(this);
+            if (leftExpressionType.equals(rightExpressionType) && (
+                leftExpressionType.equals(new IntegerType()) ||
+                leftExpressionType.equals(new FloatType()) ||
+                leftExpressionType.equals(new CharType()) ||
+                leftExpressionType.equals(new StringType()))) {
+                return leftExpressionType;
+            } else {
+                throw new SemanticException(
+                    "Cannot add type " + leftExpressionType + " with type " + rightExpressionType + ".",
+                    e.getLine(),
+                    e.getOffset());
+            }
         }
-        return null;
+        return leftExpressionType;
     }
 
     public Type visit(ArrayAssignmentStatement s) {
@@ -151,12 +162,11 @@ public class TypeCheckVisitor implements Visitor {
     }
 
     public Type visit(EqualityExpression e) {
-        Type expressionType = e.getLeftExpression().accept(this);
+        Type leftExpressionType = e.getLeftExpression().accept(this);
         if (e.getRightExpression() != null) {
-            //
-            e.getRightExpression().accept(this);
+            Type rightExpressionType = e.getRightExpression().accept(this);
         }
-        return expressionType;
+        return leftExpressionType;
     }
 
     public Type visit(ExpressionList e) {
@@ -276,19 +286,17 @@ public class TypeCheckVisitor implements Visitor {
     }
 
     public Type visit(LessThanExpression e) {
-        e.getLeftExpression().accept(this);
+        Type leftExpressionType = e.getLeftExpression().accept(this);
         if (e.getRightExpression() != null) {
-            //
-            e.getRightExpression().accept(this);
+            Type rightExpressionType = e.getRightExpression().accept(this);
         }
         return null;
     }
 
     public Type visit(MultiplyExpression e) {
-        e.getLeftExpression().accept(this);
+        Type leftExpressionType = e.getLeftExpression().accept(this);
         if (e.getRightExpression() != null) {
-            //
-            e.getRightExpression().accept(this);
+            Type rightExpressionType = e.getRightExpression().accept(this);
         }
         return null;
     }
@@ -374,10 +382,9 @@ public class TypeCheckVisitor implements Visitor {
     }
 
     public Type visit(SubtractExpression e) {
-        e.getLeftExpression().accept(this);
+        Type leftExpressionType = e.getLeftExpression().accept(this);
         if (e.getRightExpression() != null) {
-            //
-            e.getRightExpression().accept(this);
+            Type rightExpressionType = e.getRightExpression().accept(this);
         }
         return null;
     }

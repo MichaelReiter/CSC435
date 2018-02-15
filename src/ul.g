@@ -308,15 +308,23 @@ addExpression returns [Expression e]
         if (op != null) {
             if (op.getText().equals("+")) {
                 it = new AddExpression(it, e2);
+                it.setLine(op.getLine());
+                it.setOffset(op.getCharPositionInLine() + 2);
             } else if (op.getText().equals("-")) {
                 it = new SubtractExpression(it, e2);
+                it.setLine(op.getLine());
+                it.setOffset(op.getCharPositionInLine() + 2);
             } else {
                 System.out.println("Something went wrong");
-                it = new AddExpression(it, e2);                
+                it = new AddExpression(it, e2);
+                it.setLine(op.getLine());
+                it.setOffset(op.getCharPositionInLine() + 2);
             }
         } else {
             // Default to plus
             it = new AddExpression(it, e2);
+            it.setLine(op.getLine());
+            it.setOffset(op.getCharPositionInLine() + 2);
         }
     })*
     ;
