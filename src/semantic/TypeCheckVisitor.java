@@ -120,23 +120,16 @@ public class TypeCheckVisitor implements Visitor {
     public Type visit(AssignmentStatement a) {
         a.getIdentifier().accept(this);
         String variableName = a.getIdentifier().getName();
-        if (this.variableEnvironment.inCurrentScope(variableName)) {
-            Type variableType = this.variableEnvironment.lookup(variableName);
-            Type expressionType = a.getExpression().accept(this);
-            if (!variableType.equals(expressionType)) {
-                throw new SemanticException(
-                    "Variable " + variableName + " must be assigned an expression of type "
-                        + variableType + ". Found " + expressionType + ".",
-                    a.getLine(),
-                    a.getOffset());
-            }
-            return null;
-        } else {
+        Type variableType = this.variableEnvironment.lookup(variableName);
+        Type expressionType = a.getExpression().accept(this);
+        if (!variableType.equals(expressionType)) {
             throw new SemanticException(
-                "Variable " + variableName + " is undeclared.",
+                "Variable " + variableName + " must be assigned an expression of type "
+                    + variableType + ". Found " + expressionType + ".",
                 a.getLine(),
                 a.getOffset());
         }
+        return null;
     }
 
     public Type visit(Block b) {
@@ -286,7 +279,13 @@ public class TypeCheckVisitor implements Visitor {
     public Type visit(IdentifierExpression i) {
         i.getIdentifier().accept(this);
         String variableName = i.getIdentifier().getName();
-        return this.variableEnvironment.lookup(variableName);
+        if (this.variableEnvironment.inCurrentScope(variableName)) {
+            return this.variableEnvironment.lookup(variableName);
+        } else {
+            throw new SemanticException("Variable " + variableName + " is undeclared.",
+                i.getLine(),
+                i.getOffset());
+        }
     }
 
     public Type visit(IfElseStatement i) {

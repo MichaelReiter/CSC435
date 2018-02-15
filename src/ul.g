@@ -254,7 +254,11 @@ atom returns [Expression e]
 
 identifierExpression returns [Expression e]
     :    id = identifier
-    { e = new IdentifierExpression(id); }
+    {
+        e = new IdentifierExpression(id);
+        e.setLine(id.getLine());
+        e.setOffset(id.getOffset());
+    }
     ;
 
 parenthesisExpression returns [ParenthesisExpression pe]
@@ -375,7 +379,11 @@ expressionList returns [ExpressionList el]
 
 identifier returns [Identifier id]
     :    ID
-    { id = new Identifier($ID.text); }
+    {
+        id = new Identifier($ID.text);
+        id.setLine($ID.getLine());
+        id.setOffset($ID.getCharPositionInLine());
+    }
     ;
 
 literal returns [Literal l]
