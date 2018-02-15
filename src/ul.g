@@ -346,7 +346,12 @@ expression returns [Expression e]
 @after {
     e = it;
 }
-    :    e1 = lessThanExpression { it = e1; } (DOUBLEEQUALS e2 = lessThanExpression { it = new EqualityExpression(it, e2); })*
+    :    e1 = lessThanExpression { it = e1; } (DOUBLEEQUALS e2 = lessThanExpression
+    {
+        it = new EqualityExpression(it, e2);
+        it.setLine($DOUBLEEQUALS.getLine());
+        it.setOffset($DOUBLEEQUALS.getCharPositionInLine() + 3);
+    })*
     ;
 
 expressionList returns [ExpressionList el]
