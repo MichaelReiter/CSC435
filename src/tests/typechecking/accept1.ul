@@ -24,6 +24,7 @@ void main() {
     i = x;
     i = x + y;
     b = x == y;
+    b = x < y;
     // i = x - y;
     // i = x * y;
 

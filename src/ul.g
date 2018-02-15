@@ -336,7 +336,12 @@ lessThanExpression returns [Expression e]
 @after {
     e = it;
 }
-    :    e1 = addExpression { it = e1; } (LESSTHAN e2 = addExpression { it = new LessThanExpression(it, e2); })*
+    :    e1 = addExpression { it = e1; } (LESSTHAN e2 = addExpression
+    {
+        it = new LessThanExpression(it, e2);
+        it.setLine($LESSTHAN.getLine());
+        it.setOffset($LESSTHAN.getCharPositionInLine() + 2);
+    })*
     ;
 
 expression returns [Expression e]
