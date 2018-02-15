@@ -292,7 +292,12 @@ multiplyExpression returns [Expression e]
 @after {
     e = it;
 }
-    :    e1 = atom { it = e1; } (STAR e2 = atom { it = new MultiplyExpression(it, e2); })*
+    :    e1 = atom { it = e1; } (STAR e2 = atom
+    {
+        it = new MultiplyExpression(it, e2);
+        it.setLine($STAR.getLine());
+        it.setOffset($STAR.getCharPositionInLine() + 2);
+    })*
     ;
 
 // This is a major hack. I can't seem to find a better way at the moment.

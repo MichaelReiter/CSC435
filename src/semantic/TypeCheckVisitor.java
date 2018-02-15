@@ -323,8 +323,18 @@ public class TypeCheckVisitor implements Visitor {
         Type leftExpressionType = e.getLeftExpression().accept(this);
         if (e.getRightExpression() != null) {
             Type rightExpressionType = e.getRightExpression().accept(this);
+            if (leftExpressionType.equals(rightExpressionType) && (
+                leftExpressionType.equals(new IntegerType()) ||
+                leftExpressionType.equals(new FloatType()))) {
+                return leftExpressionType;
+            } else {
+                throw new SemanticException(
+                    "Cannot multiply type " + leftExpressionType + " with type " + rightExpressionType + ".",
+                    e.getLine(),
+                    e.getOffset());
+            }
         }
-        return null;
+        return leftExpressionType;
     }
 
     public Type visit(ParenthesisExpression p) {
