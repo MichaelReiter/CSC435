@@ -1,3 +1,7 @@
+int foo() {
+    return 5;
+}
+
 void main() {
     int[3] intarray;
     float[1] floatarray;
@@ -23,6 +27,7 @@ void main() {
 
     x = intarray[0];
     x = (5);
+    x = foo();
 
     if (b) {
 
@@ -49,8 +54,4 @@ void main() {
     println f;
     println i;
     println s;
-}
-
-int foo() {
-
 }

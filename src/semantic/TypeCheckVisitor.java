@@ -196,11 +196,19 @@ public class TypeCheckVisitor implements Visitor {
     }
 
     public Type visit(FunctionCall f) {
-        f.getIdentifier().accept(this);
-        //
-        f.getExpressionList().accept(this);
-        //
-        return null;
+        String functionName = f.getIdentifier().getName();
+        if (functionEnvironment.inCurrentScope(functionName)) {
+            FunctionDeclaration functionDeclaration = functionEnvironment.lookup(functionName);
+            Type functionType = functionDeclaration.getDeclaration().accept(this);
+            f.getIdentifier().accept(this);
+            f.getExpressionList().accept(this);
+            return functionType;
+        } else {
+            throw new SemanticException("Function " + functionName + " does not exist. "
+                + "Functions must be defined before they are invoked.",
+                f.getLine(),
+                f.getOffset());
+        }
     }
 
     public Type visit(FunctionDeclaration f) {

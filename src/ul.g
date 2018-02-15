@@ -260,7 +260,11 @@ parenthesisExpression returns [ParenthesisExpression pe]
 
 functionCall returns [FunctionCall fc]
     :    id = identifier OPENPARENTHESIS el = expressionList CLOSEPARENTHESIS
-    { fc = new FunctionCall(id, el); }
+    {
+        fc = new FunctionCall(id, el);
+        fc.setLine($OPENPARENTHESIS.getLine());
+        fc.setOffset($OPENPARENTHESIS.getCharPositionInLine() + 1);
+    }
     ;
 
 arrayReferenceExpression returns [ArrayReferenceExpression are]
