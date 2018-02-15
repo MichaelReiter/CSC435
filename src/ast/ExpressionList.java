@@ -11,7 +11,7 @@ public class ExpressionList extends ASTNode {
         this.l = new ArrayList<Expression>();
     }
 
-    public List<Expression> getExpressionList() {
+    public List<Expression> getExpressions() {
         return this.l;
     }
 

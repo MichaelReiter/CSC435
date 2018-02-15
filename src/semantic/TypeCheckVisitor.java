@@ -1,5 +1,6 @@
 package semantic;
 
+import java.util.List;
 import ast.AddExpression;
 import ast.ArrayAssignmentStatement;
 import ast.ArrayReference;
@@ -105,7 +106,7 @@ public class TypeCheckVisitor implements Visitor {
                 a.getLine(),
                 a.getOffset());
         }
-        return variableEnvironment.lookup(variableName);
+        return this.variableEnvironment.lookup(variableName);
     }
 
     public Type visit(ArrayReferenceExpression a) {
@@ -183,9 +184,7 @@ public class TypeCheckVisitor implements Visitor {
     }
 
     public Type visit(ExpressionList e) {
-        for (int i = 0; i < e.size(); i++) {
-            e.get(i).accept(this);
-        }
+        // handled by FunctionCall
         return null;
     }
 
@@ -197,10 +196,18 @@ public class TypeCheckVisitor implements Visitor {
         return new FloatType();
     }
 
-    // TODO: typecheck function declaration and ivocation parameters
     public Type visit(FormalParameters p) {
-        for (int i = 0; i < p.size(); i++) {
-            p.get(i).accept(this);
+        this.variableEnvironment.beginScope();
+        for (Declaration d : p.getParameters()) {
+            String variableName = d.getIdentifier().getName();
+            if (this.variableEnvironment.inCurrentScope(variableName)) {
+                throw new SemanticException(
+                    "Variable " + variableName + " already exists.",
+                    p.getLine(),
+                    p.getOffset());
+            }
+            Type variableType = d.accept(this);
+            this.variableEnvironment.add(variableName, variableType);
         }
         return null;
     }
@@ -212,27 +219,42 @@ public class TypeCheckVisitor implements Visitor {
     }
 
     public Type visit(FunctionBody f) {
-        variableEnvironment.beginScope();
         //
         for (VariableDeclaration vd : f.getVariableDeclarations()) {
             vd.accept(this);
         }
-        if (f.size() > 0) {
-            //
-        }
         f.getStatementList().accept(this);
         //
-        variableEnvironment.endScope();
+        this.variableEnvironment.endScope();
         return null;
     }
 
     public Type visit(FunctionCall f) {
         String functionName = f.getIdentifier().getName();
-        if (functionEnvironment.inCurrentScope(functionName)) {
-            FunctionDeclaration functionDeclaration = functionEnvironment.lookup(functionName);
-            Type functionType = functionDeclaration.getDeclaration().accept(this);
+        if (this.functionEnvironment.inCurrentScope(functionName)) {
+            FunctionDeclaration functionDeclaration = this.functionEnvironment.lookup(functionName);
             f.getIdentifier().accept(this);
+            List<Declaration> formalParameters = functionDeclaration.getFormalParameters().getParameters();
+            List<Expression> arguments = f.getExpressionList().getExpressions();
+            if (formalParameters.size() != arguments.size()) {
+                throw new SemanticException("Called function " + functionName + " with " + arguments.size()
+                    + " argument(s). Expected " + formalParameters.size() + ".",
+                    f.getLine(),
+                    f.getOffset());
+            }
+            for (int i = 0; i < arguments.size(); i++) {
+                Type argumentType = arguments.get(i).accept(this);
+                Type parameterType = formalParameters.get(i).getType().getType();
+                if (!argumentType.equals(parameterType)) {
+                    throw new SemanticException(
+                        "Called function " + functionName + " with invalid arguments. Formal parameter and"
+                            + " argument types do not match.",
+                        f.getLine(),
+                        f.getOffset());
+                }
+            }
             f.getExpressionList().accept(this);
+            Type functionType = functionDeclaration.getDeclaration().accept(this);
             return functionType;
         } else {
             throw new SemanticException("Function " + functionName + " does not exist. "
@@ -247,12 +269,12 @@ public class TypeCheckVisitor implements Visitor {
         String functionName = f.getDeclaration().getIdentifier().getName();
         this.currentFunction = functionName;
         this.currentFunctionReturnType = functionType;
-        if (functionEnvironment.inCurrentScope(functionName)) {
+        if (this.functionEnvironment.inCurrentScope(functionName)) {
             throw new SemanticException("Function " + functionName + " already exists.",
                 f.getLine(),
                 f.getOffset());
         }
-        functionEnvironment.add(functionName, f);
+        this.functionEnvironment.add(functionName, f);
         f.getFormalParameters().accept(this);
         return null;
     }
@@ -372,11 +394,11 @@ public class TypeCheckVisitor implements Visitor {
     }
 
     public Type visit(Program p) {
-        functionEnvironment.beginScope();
+        this.functionEnvironment.beginScope();
         for (Function f : p.getFunctions()) {
             f.accept(this);
         }
-        functionEnvironment.endScope();
+        this.functionEnvironment.endScope();
         return null;
     }
 
@@ -446,14 +468,14 @@ public class TypeCheckVisitor implements Visitor {
 
     public Type visit(VariableDeclaration v) {
         String variableName = v.getDeclaration().getIdentifier().getName();
-        if (variableEnvironment.inCurrentScope(variableName)) {
+        if (this.variableEnvironment.inCurrentScope(variableName)) {
             throw new SemanticException(
                 "Variable " + variableName + " already exists.",
                 v.getLine(),
                 v.getOffset());
         }
         Type variableType = v.getDeclaration().accept(this);
-        variableEnvironment.add(variableName, variableType);
+        this.variableEnvironment.add(variableName, variableType);
         return null;
     }
 

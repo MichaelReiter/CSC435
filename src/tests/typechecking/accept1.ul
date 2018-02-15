@@ -2,8 +2,8 @@ int foo() {
     return 5;
 }
 
-boolean bar() {
-    return false;
+boolean bar(boolean bool) {
+    return bool;
 }
 
 void main() {
@@ -34,6 +34,8 @@ void main() {
     x = intarray[0];
     x = (5);
     x = foo();
+
+    b = bar(b);
 
     if (b) {
 
