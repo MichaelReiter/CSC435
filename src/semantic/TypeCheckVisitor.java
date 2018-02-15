@@ -71,17 +71,17 @@ public class TypeCheckVisitor implements Visitor {
     }
 
     public Type visit(ArrayAssignmentStatement s) {
-        Type variableType = s.getArrayReference().getIdentifier().accept(this);
+        s.getArrayReference().getIdentifier().accept(this);
+        String variableName = s.getArrayReference().getIdentifier().getName();
+        Type variableType = this.variableEnvironment.lookup(variableName);
         Type expressionType = s.getExpression().accept(this);
         if (!variableType.equals(expressionType)) {
-            String name = s.getArrayReference().getIdentifier().getName();
             throw new SemanticException(
-                "Variable " + name + " must be assigned an expression of type "
+                "Variable " + variableName + " must be assigned an expression of type "
                     + variableType + ". Found " + expressionType + ".",
                 s.getLine(),
                 s.getOffset());
         }
-
         return null;
     }
 
@@ -106,17 +106,25 @@ public class TypeCheckVisitor implements Visitor {
     }
 
     public Type visit(AssignmentStatement a) {
-        Type variableType = a.getIdentifier().accept(this);
-        Type expressionType = a.getExpression().accept(this);
-        if (!variableType.equals(expressionType)) {
-            String name = a.getIdentifier().getName();
+        a.getIdentifier().accept(this);
+        String variableName = a.getIdentifier().getName();
+        if (this.variableEnvironment.inCurrentScope(variableName)) {
+            Type variableType = this.variableEnvironment.lookup(variableName);
+            Type expressionType = a.getExpression().accept(this);
+            if (!variableType.equals(expressionType)) {
+                throw new SemanticException(
+                    "Variable " + variableName + " must be assigned an expression of type "
+                        + variableType + ". Found " + expressionType + ".",
+                    a.getLine(),
+                    a.getOffset());
+            }
+            return null;
+        } else {
             throw new SemanticException(
-                "Variable " + name + " must be assigned an expression of type "
-                    + variableType + ". Found " + expressionType + ".",
+                "Variable " + variableName + " is undeclared.",
                 a.getLine(),
                 a.getOffset());
         }
-        return null;
     }
 
     public Type visit(Block b) {
@@ -212,7 +220,10 @@ public class TypeCheckVisitor implements Visitor {
     }
 
     public Type visit(FunctionDeclaration f) {
+        Type functionType = f.getDeclaration().accept(this);
         String functionName = f.getDeclaration().getIdentifier().getName();
+        this.currentFunction = functionName;
+        this.currentFunctionReturnType = functionType;
         if (functionEnvironment.inCurrentScope(functionName)) {
             throw new SemanticException("Function " + functionName + " already exists.",
                 f.getLine(),
@@ -224,12 +235,13 @@ public class TypeCheckVisitor implements Visitor {
     }
 
     public Type visit(Identifier i) {
-        // this might cause bugs later when looking up functions...
-        return variableEnvironment.lookup(i.getName());
+        return null;
     }
 
     public Type visit(IdentifierExpression i) {
-        return i.getIdentifier().accept(this);
+        i.getIdentifier().accept(this);
+        String variableName = i.getIdentifier().getName();
+        return this.variableEnvironment.lookup(variableName);
     }
 
     public Type visit(IfElseStatement i) {
@@ -325,12 +337,28 @@ public class TypeCheckVisitor implements Visitor {
     }
 
     public Type visit(ReturnStatement s) {
-        // TODO type check function returns
-        if (s.getExpression() != null) {
-            //
-            s.getExpression().accept(this);
+        if (this.currentFunctionReturnType.equals(new VoidType())) {
+            if (s.getExpression() != null) {
+                throw new SemanticException(
+                    "Function " + currentFunction + " is of type void, thus must not return anything.",
+                    s.getLine(),
+                    s.getOffset());
+            }
+        } else if (s.getExpression() == null) {
+            throw new SemanticException(
+                "Function " + currentFunction + " must return type " + currentFunctionReturnType + ".",
+                s.getLine(),
+                s.getOffset());
+        } else {
+            Type expressionType = s.getExpression().accept(this);
+            if (!expressionType.equals(this.currentFunctionReturnType)) {
+                throw new SemanticException(
+                    "Function " + currentFunction + " must return type " + currentFunctionReturnType + "."
+                        + " Found " + expressionType + ".",
+                    s.getLine(),
+                    s.getOffset());
+            }
         }
-        //
         return null;
     }
 

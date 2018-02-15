@@ -2,6 +2,10 @@ int foo() {
     return 5;
 }
 
+boolean bar() {
+    return false;
+}
+
 void main() {
     int[3] intarray;
     float[1] floatarray;

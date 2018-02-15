@@ -196,7 +196,11 @@ whileStatement returns [WhileStatement w]
 
 returnStatement returns [ReturnStatement r]
     :    RETURN (e = expression)? SEMICOLON
-    { r = new ReturnStatement(e); }
+    {
+        r = new ReturnStatement(e);
+        r.setLine($RETURN.getLine());
+        r.setOffset($RETURN.getCharPositionInLine() + 1);
+    }
     ;
 
 printStatement returns [PrintStatement p]
