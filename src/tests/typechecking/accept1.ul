@@ -26,7 +26,7 @@ void main() {
     b = x == y;
     b = x < y;
     i = x * y;
-    // i = x - y;
+    i = x - y;
 
     intarray[0] = 1;
     intarray[0] = x;
