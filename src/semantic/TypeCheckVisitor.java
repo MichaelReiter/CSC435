@@ -211,6 +211,12 @@ public class TypeCheckVisitor implements Visitor {
                     p.getOffset());
             }
             Type variableType = d.accept(this);
+            if (variableType.equals(new VoidType())) {
+                throw new SemanticException(
+                    "Cannot declare formal parameters of type void.",
+                    p.getLine(),
+                    p.getOffset());
+            }
             this.variableEnvironment.add(variableName, variableType);
         }
         return null;
