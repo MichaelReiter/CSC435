@@ -1,0 +1,11 @@
+void main() {
+    int[3] intarray;
+    float[3] floatarray;
+
+    int i;
+    float f;
+
+    intarray = intarray;
+
+    intarray[0] = i;
+}

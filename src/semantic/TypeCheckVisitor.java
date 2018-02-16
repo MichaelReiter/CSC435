@@ -86,6 +86,7 @@ public class TypeCheckVisitor implements Visitor {
         s.getArrayReference().getIdentifier().accept(this);
         String variableName = s.getArrayReference().getIdentifier().getName();
         Type variableType = this.variableEnvironment.lookup(variableName);
+        variableType = ((ArrayType)variableType).getType();
         Type expressionType = s.getExpression().accept(this);
         if (!variableType.equals(expressionType)) {
             throw new SemanticException(
@@ -106,7 +107,17 @@ public class TypeCheckVisitor implements Visitor {
                 a.getLine(),
                 a.getOffset());
         }
-        return this.variableEnvironment.lookup(variableName);
+        if (this.variableEnvironment.inCurrentScope(variableName)) {
+            Type arrayPrimitiveType = this.variableEnvironment.lookup(variableName);
+            if (arrayPrimitiveType instanceof ArrayType) {
+                arrayPrimitiveType = ((ArrayType)arrayPrimitiveType).getType();
+            }
+            return arrayPrimitiveType;
+        } else {
+            throw new SemanticException("Variable " + variableName + " is undeclared.",
+                a.getLine(),
+                a.getOffset());
+        }
     }
 
     public Type visit(ArrayReferenceExpression a) {
@@ -114,7 +125,7 @@ public class TypeCheckVisitor implements Visitor {
     }
 
     public Type visit(ArrayType a) {
-        return a.getType();
+        return a;
     }
 
     public Type visit(AssignmentStatement a) {
