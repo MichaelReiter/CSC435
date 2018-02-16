@@ -6,4 +6,5 @@ public interface Environment<K, V> {
     public boolean inCurrentScope(K key);
     public void add(K key, V value);
     public V lookup(K key);
+    public int sizeOfCurrentScope();
 }

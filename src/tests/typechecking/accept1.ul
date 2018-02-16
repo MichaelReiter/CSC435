@@ -9,6 +9,7 @@ boolean bar(boolean bool) {
 void main() {
     int[3] intarray;
     float[1] floatarray;
+    boolean[123] boolarray;
     boolean b;
     char c;
     float f;
@@ -36,6 +37,7 @@ void main() {
     x = foo();
 
     b = bar(b);
+    b = bar(boolarray[23]);
 
     if (b) {
 

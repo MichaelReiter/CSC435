@@ -408,6 +408,31 @@ public class TypeCheckVisitor implements Visitor {
         for (Function f : p.getFunctions()) {
             f.accept(this);
         }
+        if (this.functionEnvironment.sizeOfCurrentScope() == 0) {
+            throw new SemanticException(
+                "Programs must contain at least one function.",
+                p.getLine(),
+                p.getOffset());
+        }
+        if (!this.functionEnvironment.inCurrentScope("main")) {
+            throw new SemanticException(
+                "Main function does not exist.",
+                p.getLine(),
+                p.getOffset());
+        }
+        FunctionDeclaration mainFunctionDeclaration = this.functionEnvironment.lookup("main");
+        if (!mainFunctionDeclaration.getDeclaration().getType().getType().equals(new VoidType())) {
+            throw new SemanticException(
+                "Main function must return type void.",
+                mainFunctionDeclaration.getLine(),
+                mainFunctionDeclaration.getOffset());
+        }
+        if (mainFunctionDeclaration.getFormalParameters().size() != 0) {
+            throw new SemanticException(
+                "Main function must have no formal parameters.",
+                mainFunctionDeclaration.getLine(),
+                mainFunctionDeclaration.getOffset());
+        }
         this.functionEnvironment.endScope();
         return null;
     }

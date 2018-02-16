@@ -34,4 +34,9 @@ public class StackHashMapEnvironment<K, V> implements Environment<K, V> {
         AbstractMap<K, V> scope = this.stack.peek();        
         return scope.get(key);
     }
+
+    public int sizeOfCurrentScope() {
+        AbstractMap<K, V> scope = this.stack.peek();        
+        return scope.size();
+    }
 }

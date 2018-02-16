@@ -78,7 +78,7 @@ program returns [Program p]
 {
     p = new Program();
 }
-    : (f = function { p.add(f); })+ EOF
+    : (f = function { p.add(f); })* EOF
     ;
 
 function returns [Function f]
@@ -91,6 +91,8 @@ functionDeclaration returns [FunctionDeclaration fd]
     {
         Declaration d = new Declaration(ct, id);
         fd = new FunctionDeclaration(d, args);
+        fd.setLine($OPENPARENTHESIS.getLine());
+        fd.setOffset($OPENPARENTHESIS.getCharPositionInLine());
     }
     ;
 
