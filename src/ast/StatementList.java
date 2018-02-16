@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import type.Type;
 
-public class StatementList {
+public class StatementList extends ASTNode {
     private final List<Statement> l;
 
     public StatementList() {

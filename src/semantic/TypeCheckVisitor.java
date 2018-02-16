@@ -510,6 +510,12 @@ public class TypeCheckVisitor implements Visitor {
                 v.getOffset());
         }
         Type variableType = v.getDeclaration().accept(this);
+        if (variableType.equals(new VoidType())) {
+            throw new SemanticException(
+                "Cannot declare a variable of type void.",
+                v.getLine(),
+                v.getOffset());
+        }
         this.variableEnvironment.add(variableName, variableType);
         return null;
     }

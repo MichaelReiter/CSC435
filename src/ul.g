@@ -101,13 +101,22 @@ formalParameters returns [FormalParameters args]
 {
     args = new FormalParameters();
 }
-    :    (d = declaration { args.add(d); }) (COMMA (d2 = declaration { args.add(d2); }))*
+    :    (d = declaration
+    {
+        args.add(d);
+        args.setLine(d.getLine());
+        args.setOffset(d.getOffset());
+    }) (COMMA (d2 = declaration { args.add(d2); }))*
     |
     ;
 
 declaration returns [Declaration d]
     :    ct = compoundType id = identifier
-    { d = new Declaration(ct, id); }
+    {
+        d = new Declaration(ct, id);
+        d.setLine(id.getLine());
+        d.setOffset(id.getOffset());
+    }
     ;
 
 functionBody returns [FunctionBody fb]

@@ -2,7 +2,7 @@ package ast;
 
 import type.Type;
 
-public class Declaration {
+public class Declaration extends ASTNode {
     private final TypeNode type;
     private final Identifier id;
 
