@@ -9,10 +9,6 @@ public class VoidType extends Type {
         return "void";
     }
 
-    public boolean equals(Object o) {
-        return o instanceof VoidType;
-    }
-
     public Type accept(Visitor v) {
         return v.visit(this);
     }

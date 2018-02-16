@@ -3,8 +3,8 @@ package type;
 import ast.Visitor;
 
 public class ArrayType extends Type {
-    private Type t;
-    private int size;
+    private final Type t;
+    private final int size;
 
     public ArrayType(Type t, int size) {
         this.t = t;
@@ -17,10 +17,6 @@ public class ArrayType extends Type {
 
     public String toString() {
         return this.t.toString() + "[" + this.size + "]" ;
-    }
-
-    public boolean equals(Object o) {
-        return o instanceof ArrayType;
     }
 
     public Type accept(Visitor v) {

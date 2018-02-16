@@ -5,5 +5,8 @@ import ast.Visitor;
 
 public abstract class Type extends ASTNode {
     public abstract String toString();
-    public abstract boolean equals(Object o);
+
+    public final boolean equals(Object o) {
+        return o.toString().equals(this.toString());
+    }
 }

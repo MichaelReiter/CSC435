@@ -9,10 +9,6 @@ public class CharType extends Type {
         return "char";
     }
 
-    public boolean equals(Object o) {
-        return o instanceof CharType;
-    }
-
     public Type accept(Visitor v) {
         return v.visit(this);
     }

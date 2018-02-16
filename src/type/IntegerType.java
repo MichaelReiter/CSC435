@@ -9,10 +9,6 @@ public class IntegerType extends Type {
         return "int";
     }
 
-    public boolean equals(Object o) {
-        return o instanceof IntegerType;
-    }
-
     public Type accept(Visitor v) {
         return v.visit(this);
     }

@@ -9,10 +9,6 @@ public class BooleanType extends Type {
         return "boolean";
     }
 
-    public boolean equals(Object o) {
-        return o instanceof BooleanType;
-    }
-
     public Type accept(Visitor v) {
         return v.visit(this);
     }

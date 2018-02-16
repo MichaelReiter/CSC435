@@ -9,10 +9,6 @@ public class StringType extends Type {
         return "string";
     }
 
-    public boolean equals(Object o) {
-        return o instanceof StringType;
-    }
-
     public Type accept(Visitor v) {
         return v.visit(this);
     }
