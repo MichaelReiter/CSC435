@@ -2,6 +2,7 @@
 
 void main() {
     string s;
+    string[3] stringarray;
     
-    s = 1;
+    s = stringarray;
 }

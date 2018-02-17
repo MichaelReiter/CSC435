@@ -4,6 +4,6 @@ void main() {
 
 }
 
-void main() {
+int main() {
 
 }

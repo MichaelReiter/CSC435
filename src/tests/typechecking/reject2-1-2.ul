@@ -1,5 +1,5 @@
 // One function must be called main
 
-void main() {
+void notmain() {
 
 }
