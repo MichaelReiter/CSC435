@@ -83,7 +83,7 @@ public class TypeCheckVisitor implements Visitor {
     }
 
     public Type visit(ArrayAssignmentStatement s) {
-        s.getArrayReference().getIdentifier().accept(this);
+        s.getArrayReference().accept(this);
         String variableName = s.getArrayReference().getIdentifier().getName();
         Type variableType = this.variableEnvironment.lookup(variableName);
         variableType = ((ArrayType)variableType).getType();
@@ -289,7 +289,7 @@ public class TypeCheckVisitor implements Visitor {
     }
 
     public Type visit(Identifier i) {
-        // Nothing to do here
+        // Nothing to do here        
         return null;
     }
 
