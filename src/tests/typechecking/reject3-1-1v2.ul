@@ -1,0 +1,9 @@
+// An expression e used as an if-statement condition must have type boolean
+
+void main() {
+    if ("not a boolean expression") {
+        
+    } else {
+        
+    }
+}

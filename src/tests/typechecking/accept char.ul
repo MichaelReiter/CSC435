@@ -1,0 +1,27 @@
+// Variables of type char must compare exactly
+
+char foo(char x, char y, char z) {
+    return x + y + z;
+}
+
+void main() {
+    char c;
+    char[2] chararray;
+
+    c = 'c';
+
+    chararray[0] = 'c';
+    chararray[0] = c;
+    chararray[0] = chararray[0];
+
+    c = chararray[0];
+    c = foo(c, c, c);
+    
+    c = c + c;
+    c = c - c;
+    c = c + c - c;
+    c < c;
+    c == c;
+    print c;
+    println c;
+}

@@ -1,0 +1,7 @@
+// An expression e used as an while-statement condition must have type boolean
+
+void main() {
+    while ("not a boolean expression") {
+
+    }
+}

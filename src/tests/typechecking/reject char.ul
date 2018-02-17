@@ -1,0 +1,7 @@
+// Variables of type char must compare exactly
+
+void main() {
+    char c;
+    
+    c = "not a char";
+}

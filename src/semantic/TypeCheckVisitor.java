@@ -163,6 +163,7 @@ public class TypeCheckVisitor implements Visitor {
     }
 
     public Type visit(EmptyStatement e) {
+        // Nothing to do here
         return null;
     }
 
@@ -188,7 +189,7 @@ public class TypeCheckVisitor implements Visitor {
     }
 
     public Type visit(ExpressionList e) {
-        // handled by FunctionCall
+        // Handled by FunctionCall
         return null;
     }
 
@@ -229,12 +230,10 @@ public class TypeCheckVisitor implements Visitor {
     }
 
     public Type visit(FunctionBody f) {
-        //
         for (VariableDeclaration vd : f.getVariableDeclarations()) {
             vd.accept(this);
         }
         f.getStatementList().accept(this);
-        //
         this.variableEnvironment.endScope();
         return null;
     }
@@ -290,6 +289,7 @@ public class TypeCheckVisitor implements Visitor {
     }
 
     public Type visit(Identifier i) {
+        // Nothing to do here
         return null;
     }
 

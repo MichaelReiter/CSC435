@@ -1,0 +1,87 @@
+// The type of an expression e used in an return-statement condition must match the containing function return type
+
+int intFunction() {
+    int i;
+
+    return i;
+}
+
+int[3] intArrayFunction() {
+    int[3] intarray;
+
+    return intarray;
+}
+
+float floatFunction() {
+    float f;
+
+    return f;
+}
+
+float[3] floatArrayFunction() {
+    float[3] floatarray;
+
+    return floatarray;
+}
+
+char charFunction() {
+    char c;
+
+    return c;
+}
+
+char[3] charArrayFunction() {
+    char[3] chararray;
+
+    return chararray;
+}
+
+string stringFunction() {
+    string s;
+
+    return s;
+}
+
+string[3] stringArrayFunction() {
+    string[3] stringarray;
+
+    return stringarray;
+}
+
+boolean booleanFunction() {
+    boolean b;
+
+    return b;
+}
+
+boolean[3] booleanArrayFunction() {
+    boolean[3] booleanarray;
+
+    return booleanarray;
+}
+
+void main() {
+    int i;
+    int[3] intarray;
+    float f;
+    float[3] floatarray;
+    char c;
+    char[3] chararray;
+    string s;
+    string[3] stringarray;
+    boolean b;
+    boolean[3] booleanarray;
+
+    i = intFunction();
+    intarray = intArrayFunction();
+    f = floatFunction();
+    floatarray = floatArrayFunction();
+    c = charFunction();
+    chararray = charArrayFunction();
+    s = stringFunction();
+    stringarray = stringArrayFunction();
+    b = booleanFunction();
+    booleanarray = booleanArrayFunction();
+
+    return;
+}

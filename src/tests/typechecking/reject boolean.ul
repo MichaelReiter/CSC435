@@ -1,0 +1,7 @@
+// Variables of type boolean must compare exactly
+
+void main() {
+    boolean b;
+    
+    b = "not a boolean";
+}

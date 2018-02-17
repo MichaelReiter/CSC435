@@ -1,0 +1,8 @@
+// The type of an expression e used in an return-statement condition must match the containing function return type
+
+void main() {
+    int[3] intarray;
+    int i;
+
+    i = intarray;
+}

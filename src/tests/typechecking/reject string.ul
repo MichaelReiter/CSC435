@@ -1,0 +1,7 @@
+// Variables of type string must compare exactly
+
+void main() {
+    string s;
+    
+    s = 1;
+}

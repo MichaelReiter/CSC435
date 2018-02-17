@@ -1,0 +1,14 @@
+// For an invocation of function f, the types of arguments in the
+// invocation must match the types of parameters in the function declaration
+
+int foo(int x, int y, int z) {
+    return x + y + z;
+}
+
+void main() {
+    int i;
+    float f;
+    f = 0;
+
+    i = foo(f, f, f);
+}

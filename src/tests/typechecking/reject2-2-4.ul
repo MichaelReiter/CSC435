@@ -1,0 +1,5 @@
+// No local variable may have a type of void
+
+void main() {
+    void v;
+}

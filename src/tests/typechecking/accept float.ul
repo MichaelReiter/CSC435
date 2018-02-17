@@ -1,0 +1,28 @@
+// Variables of type float must compare exactly
+
+float foo(float x, float y, float z) {
+    return x + y + z;
+}
+
+void main() {
+    float f;
+    float[2] floatarray;
+
+    f = 0.0;
+
+    floatarray[0] = 0.0;
+    floatarray[0] = f;
+    floatarray[0] = floatarray[0];
+
+    f = floatarray[0];
+    f = foo(f, f, f);
+    
+    f = f + f;
+    f = f - f;
+    f = f * f;
+    f = f + f - f * f;
+    f < f;
+    f == f;
+    print f;
+    println f;
+}

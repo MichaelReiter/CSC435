@@ -1,0 +1,7 @@
+// Array index expressions must be of type int
+
+void main() {
+    int[3] intarray;
+
+    intarray[intarray] = 0;
+}

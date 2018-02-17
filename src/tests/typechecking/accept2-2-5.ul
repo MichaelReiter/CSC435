@@ -1,0 +1,9 @@
+// A function parameter may hide the name of the function
+
+int foo(int foo) {
+    return foo + 1;
+}
+
+void main() {
+
+}

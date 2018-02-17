@@ -1,0 +1,5 @@
+// No parameter may have a type of void
+
+void main(void v) {
+
+}

@@ -1,0 +1,8 @@
+// For compound types (i.e., array), the underlying atomic type must match
+
+void main() {
+    int[3] intarray;
+    float[3] floatarray;
+
+    intarray = floatarray;
+}

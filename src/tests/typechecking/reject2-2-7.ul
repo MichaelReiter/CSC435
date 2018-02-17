@@ -1,0 +1,5 @@
+// Each local variable must be declared before being used
+
+void main() {
+    x;
+}

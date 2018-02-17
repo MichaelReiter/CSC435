@@ -1,0 +1,5 @@
+// No two parameters of a function may have the same name
+
+void main(int arg, float arg) {
+
+}

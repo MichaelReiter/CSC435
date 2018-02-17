@@ -1,0 +1,22 @@
+// The + operation is defined as follows:
+// int + int -> int
+// float + float -> float
+// char + char -> char
+// string + string -> string
+
+void main() {
+    int i;
+    float f;
+    char c;
+    string s;
+
+    i = 0;
+    f = 0.0;
+    c = 'c';
+    s = "test";
+
+    i = i + i;
+    f = f + f;
+    c = c + c;
+    s = s + s;
+}

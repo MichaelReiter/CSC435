@@ -1,0 +1,7 @@
+// Variables of type float must compare exactly
+
+void main() {
+    float f;
+    
+    f = "not a float";
+}

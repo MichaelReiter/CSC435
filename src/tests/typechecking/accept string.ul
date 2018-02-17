@@ -1,0 +1,27 @@
+// Variables of type string must compare exactly
+
+string foo(string x, string y, string z) {
+    return x + y + z;
+}
+
+void main() {
+    string s;
+    string[2] stringarray;
+
+    s = "test";
+
+    stringarray[0] = "test";
+    stringarray[0] = s;
+    stringarray[0] = stringarray[0];
+
+    s = stringarray[0];
+    s = foo(s, s, s);
+    
+    s = s + s;
+    s = s * s;
+    s = s + s * s;
+    s < s;
+    s == s;
+    print s;
+    println s;
+}

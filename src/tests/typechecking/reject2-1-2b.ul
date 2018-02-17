@@ -1,0 +1,5 @@
+// main must have a return type of void
+
+int main() {
+
+}

@@ -1,0 +1,9 @@
+// A local variable may not hide the name of a parameter
+
+int foo(int x) {
+    int x;
+}
+
+void main() {
+
+}

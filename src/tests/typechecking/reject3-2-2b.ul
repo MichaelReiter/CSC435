@@ -1,0 +1,14 @@
+// The - operation is defined as follows:
+// int - int -> int
+// float - float -> float
+// char - char -> char
+
+void main() {
+    int i;
+    float f;
+
+    i = 0;
+    f = 0.0;
+
+    i = i - f;
+}

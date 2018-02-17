@@ -1,0 +1,8 @@
+// For compound types (i.e., array), the length must match
+
+void main() {
+    int[2] intarray2;
+    int[3] intarray3;
+
+    intarray2 = intarray3;
+}

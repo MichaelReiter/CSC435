@@ -1,0 +1,25 @@
+// Variables of type boolean must compare exactly
+
+boolean foo(boolean x, boolean y, boolean z) {
+    return x == y < z;
+}
+
+void main() {
+    boolean b;
+    boolean[2] booleanarray;
+
+    b = true;
+    b = false;
+
+    booleanarray[0] = true;
+    booleanarray[0] = b;
+    booleanarray[0] = booleanarray[0];
+
+    b = booleanarray[0];
+    b = foo(b, b, b);
+
+    b < b;
+    b == b;
+    print b;
+    println b;
+}

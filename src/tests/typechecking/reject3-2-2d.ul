@@ -1,0 +1,15 @@
+// The < operation is defined as follows:
+// int < int -> boolean
+// float < float -> boolean
+// char < char -> boolean
+// string < string -> boolean
+
+void main() {
+    int i;
+    float f;
+
+    i = 0;
+    f = 0.0;
+
+    b = i < f;
+}

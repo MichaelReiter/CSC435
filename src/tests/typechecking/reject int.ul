@@ -1,0 +1,7 @@
+// Variables of type int must compare exactly
+
+void main() {
+    int i;
+    
+    i = "not an int";
+}

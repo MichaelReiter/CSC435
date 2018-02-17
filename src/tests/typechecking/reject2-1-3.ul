@@ -1,0 +1,9 @@
+// No two functions may have the same name
+
+void main() {
+
+}
+
+void main() {
+
+}

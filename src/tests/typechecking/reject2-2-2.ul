@@ -1,0 +1,6 @@
+// No two local variables declared in a function may have the same name
+
+void main() {
+    int x;
+    int x;
+}

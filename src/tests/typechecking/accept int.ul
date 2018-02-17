@@ -1,0 +1,32 @@
+// Variables of type int must compare exactly
+
+int foo(int x, int y, int z) {
+    return x + y + z;
+}
+
+void main() {
+    int i;
+    int[2] intarray;
+
+    i = 0;
+
+    intarray[0] = 0;
+    intarray[0] = i;
+    intarray[0] = intarray[0];
+    intarray[intarray[0]];
+
+    i = intarray[0];
+    i = intarray[i];
+    i = intarray[intarray[0]];
+    i = intarray[foo(i, i, i)];
+    i = foo(i, i, i);
+    
+    i = i + i;
+    i = i - i;
+    i = i * i;
+    i = i + i - i * i;
+    i < i;
+    i == i;
+    print i;
+    println i;
+}

@@ -1,0 +1,5 @@
+// main must take no parameters
+
+void main(int arg1) {
+
+}

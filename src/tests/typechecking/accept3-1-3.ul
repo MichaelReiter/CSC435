@@ -1,0 +1,15 @@
+// An expression e used as an print-statement condition must have type int, float, char, string or boolean
+
+void main() {
+    int i;
+    float f;
+    char c;
+    string s;
+    boolean b;
+
+    print i;
+    print f;
+    print c;
+    print s;
+    print b;
+}

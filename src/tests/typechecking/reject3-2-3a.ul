@@ -1,0 +1,13 @@
+// For an invocation of function f, the number of arguments in the
+// invocation must match the number of parameters in the function declaration
+
+int foo(int x, int y, int z) {
+    return x + y + z;
+}
+
+void main() {
+    int i;
+    i = 0;
+
+    i = foo();
+}
