@@ -12,6 +12,6 @@ public class SemanticException extends RuntimeException {
     }
 
     public String toString() {
-        return "Error on line " + line + "(" + offset + "): " + message;
+        return "Error:" + line + ":" + offset + ": " + message;
     }
 }
