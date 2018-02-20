@@ -283,12 +283,6 @@ public class TypeCheckVisitor implements Visitor {
         String functionName = f.getDeclaration().getIdentifier().getName();
         this.currentFunction = functionName;
         this.currentFunctionReturnType = functionType;
-        if (this.functionEnvironment.inCurrentScope(functionName)) {
-            throw new SemanticException("Function " + functionName + " already exists.",
-                f.getLine(),
-                f.getOffset());
-        }
-        this.functionEnvironment.add(functionName, f);
         f.getFormalParameters().accept(this);
         return null;
     }
@@ -416,6 +410,18 @@ public class TypeCheckVisitor implements Visitor {
 
     public Type visit(Program p) {
         this.functionEnvironment.beginScope();
+        // Two pass to add functions to functionEnvironment before accepting
+        // so they can be arbitrarily ordered in the program
+        for (Function f : p.getFunctions()) {
+            FunctionDeclaration functionDeclaration = f.getFunctionDeclaration();
+            String functionName = functionDeclaration.getDeclaration().getIdentifier().getName();
+            if (this.functionEnvironment.inCurrentScope(functionName)) {
+                throw new SemanticException("Function " + functionName + " already exists.",
+                    functionDeclaration.getLine(),
+                    functionDeclaration.getOffset());
+            }
+            this.functionEnvironment.add(functionName, functionDeclaration);
+        }
         for (Function f : p.getFunctions()) {
             f.accept(this);
         }
