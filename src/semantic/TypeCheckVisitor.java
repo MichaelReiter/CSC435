@@ -131,6 +131,11 @@ public class TypeCheckVisitor implements Visitor {
     public Type visit(AssignmentStatement a) {
         a.getIdentifier().accept(this);
         String variableName = a.getIdentifier().getName();
+        if (!this.variableEnvironment.inCurrentScope(variableName)) {
+            throw new SemanticException("Variable " + variableName + " is undeclared.",
+                a.getLine(),
+                a.getOffset());
+        }
         Type variableType = this.variableEnvironment.lookup(variableName);
         Type expressionType = a.getExpression().accept(this);
         if (!variableType.equals(expressionType)) {
@@ -202,7 +207,7 @@ public class TypeCheckVisitor implements Visitor {
     }
 
     public Type visit(FormalParameters p) {
-        this.variableEnvironment.beginScope();
+        this.variableEnvironment.beginScope();        
         for (Declaration d : p.getParameters()) {
             String variableName = d.getIdentifier().getName();
             if (this.variableEnvironment.inCurrentScope(variableName)) {
@@ -289,7 +294,7 @@ public class TypeCheckVisitor implements Visitor {
     }
 
     public Type visit(Identifier i) {
-        // Nothing to do here        
+        // Nothing to do here
         return null;
     }
 
