@@ -1,5 +1,5 @@
 package ir;
 
-public interface BinaryOperation {
+public abstract class BinaryOperation {
     
 }

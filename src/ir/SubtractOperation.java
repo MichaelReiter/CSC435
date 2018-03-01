@@ -1,7 +1,5 @@
 package ir;
 
-public class SubtractOperation implements BinaryOperation {
-    public SubtractOperation() {
-        
-    }
+public abstract class SubtractOperation extends BinaryOperation {
+    
 }

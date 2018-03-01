@@ -1,7 +1,11 @@
 package ir;
 
-public class NegationOperation {
+public class NegationOperation extends UnaryOperation {
     public NegationOperation() {
 
+    }
+
+    public String toString() {
+        return "";
     }
 }

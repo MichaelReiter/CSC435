@@ -1,7 +1,5 @@
 package ir;
 
-public class LessThanOperation implements BinaryOperation {
-    public LessThanOperation() {
-        
-    }
+public abstract class LessThanOperation extends BinaryOperation {
+    
 }

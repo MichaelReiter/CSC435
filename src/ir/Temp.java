@@ -26,4 +26,8 @@ public class Temp {
     public Temp getTemp(Type type, TempClass tempClass, String name) {
         return null;
     }
+
+    public String toString() {
+        return "";
+    }
 }

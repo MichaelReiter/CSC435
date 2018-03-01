@@ -15,4 +15,12 @@ public class Program {
     public List<Function> getFunctions() {
         return this.functions;
     }
+
+    public String toString() {
+        StringBuilder sb = new StringBuilder(1024);
+        sb.append("PROG ");
+        sb.append(this.name);
+        String result = sb.toString();
+        return result;
+    }
 }
