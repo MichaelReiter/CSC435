@@ -8,26 +8,21 @@ public class Temp {
     private boolean inUse;
     private TempClass tempClass;
     private String name;
-
-    public Temp() {
-        
-    }
-
+    
     public enum TempClass {
         PARAMETER,
         LOCAL,
         TEMP
     }
 
-    public Temp getTemp(Type type) {
-        return null;
-    }
-
-    public Temp getTemp(Type type, TempClass tempClass, String name) {
-        return null;
+    public Temp(Type type) {
+        this.type = type;
     }
 
     public String toString() {
-        return "";
+        StringBuilder sb = new StringBuilder();
+        sb.append("T");
+        sb.append(this.number);
+        return sb.toString();
     }
 }

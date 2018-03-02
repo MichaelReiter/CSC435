@@ -20,7 +20,6 @@ public class Function {
         sb.append("{");
         // Instructions here
         sb.append("}");
-        String result = sb.toString();
-        return result;
+        return sb.toString();
     }
 }

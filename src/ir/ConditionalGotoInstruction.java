@@ -4,8 +4,9 @@ public class ConditionalGotoInstruction extends Instruction {
     private Temp condition;
     private Label label;
 
-    public ConditionalGotoInstruction() {
-
+    public ConditionalGotoInstruction(Temp condition, Label label) {
+        this.condition = condition;
+        this.label = label;
     }
 
     public String toString() {
@@ -15,7 +16,6 @@ public class ConditionalGotoInstruction extends Instruction {
         sb.append(" GOTO ");
         sb.append(this.label);
         sb.append(";");
-        String result = sb.toString();
-        return result;
+        return sb.toString();
     }
 }

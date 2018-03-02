@@ -20,7 +20,6 @@ public class Program {
         StringBuilder sb = new StringBuilder(1024);
         sb.append("PROG ");
         sb.append(this.name);
-        String result = sb.toString();
-        return result;
+        return sb.toString();
     }
 }
