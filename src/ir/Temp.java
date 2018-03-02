@@ -3,20 +3,23 @@ package ir;
 import type.Type;
 
 public class Temp {
-    private final int number;
     private final Type type;
+    private final int number;
+    private final String name;
+    private final TempClass tempClass;
     private boolean inUse;
-    private TempClass tempClass;
-    private String name;
-    
+
     public enum TempClass {
         PARAMETER,
         LOCAL,
         TEMP
-    }
+    };
 
-    public Temp(Type type) {
+    public Temp(Type type, int number) {
         this.type = type;
+        this.number = number;
+        this.name = "";
+        this.tempClass = TempClass.TEMP;
     }
 
     public String toString() {

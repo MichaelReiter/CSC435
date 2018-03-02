@@ -1,13 +1,18 @@
 package ir;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Function {
-    private String name;
+    private final String name;
+    private final List<Instruction> instructions;
+    private final TempFactory tempFactory;
     private String signature;  // ?
-    private List<Instruction> instructions;
-    private TempFactory tempFactory;
-
-    public Function() {
-
+    
+    public Function(String name) {
+        this.name = name;
+        this.instructions = new ArrayList<Instruction>();
+        this.tempFactory = new TempFactory();
     }
 
     public String toString() {

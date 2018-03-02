@@ -1,11 +1,15 @@
 package ir;
 
-public class Program {
-    private String name;
-    private List<Function> functions;
+import java.util.ArrayList;
+import java.util.List;
 
-    public Program() {
-        
+public class Program {
+    private final String name;
+    private final List<Function> functions;
+
+    public Program(String name) {
+        this.name = name;
+        this.functions = new ArrayList<Function>();
     }
 
     public String getName() {

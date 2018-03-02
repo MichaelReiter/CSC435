@@ -1,8 +1,8 @@
 package ir;
 
 public class ConditionalGotoInstruction extends Instruction {
-    private Temp condition;
-    private Label label;
+    private final Temp condition;
+    private final Label label;
 
     public ConditionalGotoInstruction(Temp condition, Label label) {
         this.condition = condition;

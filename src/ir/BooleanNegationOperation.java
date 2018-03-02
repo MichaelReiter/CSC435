@@ -1,7 +1,7 @@
 package ir;
 
 public class BooleanNegationOperation extends UnaryOperation {
-    private Temp temp;
+    private final Temp temp;
     
     public BooleanNegationOperation(Temp temp) {
         this.temp = temp;

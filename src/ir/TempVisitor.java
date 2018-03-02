@@ -40,6 +40,7 @@ import ast.VariableDeclaration;
 import ast.Visitor;
 import ast.WhileStatement;
 import type.ArrayType;
+import type.Type;
 
 public interface TempVisitor {
     public Temp visit(AddExpression e);

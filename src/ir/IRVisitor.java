@@ -39,20 +39,25 @@ import ast.TypeNode;
 import ast.VariableDeclaration;
 import ast.Visitor;
 import ast.WhileStatement;
+import java.util.ArrayList;
+import java.util.List;
 import type.ArrayType;
+import type.Type;
 // import type.BooleanType;
 // import type.CharType;
 // import type.FloatType;
 // import type.IntegerType;
 // import type.StringType;
-// import type.Type;
 // import type.VoidType;
 
 public class IRVisitor implements TempVisitor {
-    private TempFactory temps;
+    private TempFactory tempFactory;
     private List<Instruction> instructions;
 
-    public IRVisitor() {}
+    public IRVisitor() {
+        this.tempFactory = new TempFactory();
+        this.instructions = new ArrayList<Instruction>();
+    }
 
     public Temp visit(AddExpression e) {
         e.getLeftExpression().accept(this);
@@ -62,18 +67,20 @@ public class IRVisitor implements TempVisitor {
         }
         return null;
 
-        // In class example below
-        Temp lhs = e.getLeftExpression().accept(this);
-        Temp rhs = e.getRightExpression().accept(this);
-        Temp dest = temp.getTemp(lhs.getType()); // factory function
-        // Corless is using an enum. Note to self: replace with separate classes for each operation
-        // i.e. AddOperation
-        Instruction instruction = new BinaryOperation(dest, lhs, rhs, BinaryOperation.Add);
 
-        // list of instructions for the current function
-        instructions.add(instruction);
-        temps.returnTemp(lhs);
-        temps.returnTemp(rhs);
+
+        // // In class example below
+        // Temp lhs = e.getLeftExpression().accept(this);
+        // Temp rhs = e.getRightExpression().accept(this);
+        // Temp dest = this.tempFactory.getTemp(lhs.getType()); // factory function
+        // // Corless is using an enum. Note to self: replace with separate classes for each operation
+        // // i.e. AddOperation
+        // Instruction instruction = new BinaryOperation(dest, lhs, rhs, BinaryOperation.Add);
+
+        // // list of instructions for the current function
+        // this.instructions.add(instruction);
+        // this.tempFactory.returnTemp(lhs);
+        // this.tempFactory.returnTemp(rhs);
     }
 
     public Temp visit(ArrayAssignmentStatement s) {
@@ -247,37 +254,37 @@ public class IRVisitor implements TempVisitor {
 
 
 
-        // From Corless example in class
-        Instruction i1;
-        Label l1 = new Label();
-        Label l2 = new Label();
-        Temp t = i.getExpression().accept(this);
-        // need new temp here if i is LOCAL or PARAMETER so we don't mess up state
-        if (this.temps.isParameterOrLocal(t)) {
-            Temp t2 = this.temps.getTemp(new BooleanType());
-            i1 = new AssignmentOperation(t2, t1);
-            this.instructions.add(i1);
-            t = t2;
-        }
-        i1 = new BooleanNegationOperation(t);
-        this.instructions.add(i1);
+        // // From Corless example in class
+        // Instruction i1;
+        // Label l1 = new Label();
+        // Label l2 = new Label();
+        // Temp t = i.getExpression().accept(this);
+        // // need new temp here if i is LOCAL or PARAMETER so we don't mess up state
+        // if (this.tempFactory.isParameterOrLocal(t)) {
+        //     Temp t2 = this.tempFactory.getTemp(new BooleanType());
+        //     i1 = new AssignmentOperation(t2, t1);
+        //     this.instructions.add(i1);
+        //     t = t2;
+        // }
+        // i1 = new BooleanNegationOperation(t);
+        // this.instructions.add(i1);
 
-        Instruction i2 = new IfStatement(t, l1);
-        this.instructions.add(i2);
+        // Instruction i2 = new IfStatement(t, l1);
+        // this.instructions.add(i2);
 
-        this.temps.returnTemp(t);
+        // this.tempFactory.returnTemp(t);
 
-        i.getIfBlock().accept(this);
+        // i.getIfBlock().accept(this);
 
-        Instruction i3 = new UnconditionalGotoInstruction(l2);
-        this.instructions.add(i3);
+        // Instruction i3 = new UnconditionalGotoInstruction(l2);
+        // this.instructions.add(i3);
         
-        this.instructions.add(l1);
+        // this.instructions.add(l1);
 
-        // the following is for if/else statements
-        i.getElseBlock().accept(this);
-        this.instructions.add(l2);
-        return null;
+        // // the following is for if/else statements
+        // i.getElseBlock().accept(this);
+        // this.instructions.add(l2);
+        // return null;
     }
 
     public Temp visit(IntegerLiteral i) {
@@ -342,7 +349,7 @@ public class IRVisitor implements TempVisitor {
     }
 
     public Temp visit(StatementList sl) {
-        for (ir.Statement s : sl.getStatements()) {
+        for (ast.Statement s : sl.getStatements()) {
             s.accept(this);
         }
         return null;

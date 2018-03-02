@@ -1,10 +1,10 @@
 package ir;
 
 public class AssignmentOperation {
-    private Temp t1;
-    private Temp t2;
+    private final Temp t1;
+    private final Temp t2;
 
-    public AssignmentOperation(Temp t1, temp t2) {
+    public AssignmentOperation(Temp t1, Temp t2) {
         this.t1 = t1;
         this.t2 = t2;
     }

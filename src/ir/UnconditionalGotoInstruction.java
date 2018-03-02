@@ -1,10 +1,10 @@
 package ir;
 
 public class UnconditionalGotoInstruction extends Instruction {
-    private Label label;
+    private final Label label;
 
-    public UnconditionalGotoInstruction() {
-
+    public UnconditionalGotoInstruction(Label label) {
+        this.label = label;
     }
 
     public String toString() {
@@ -12,7 +12,6 @@ public class UnconditionalGotoInstruction extends Instruction {
         sb.append("GOTO ");
         sb.append(this.label);
         sb.append(";");
-        String result = sb.toString();
-        return result;
+        return sb.toString();
     }
 }
