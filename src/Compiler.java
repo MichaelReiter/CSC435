@@ -1,10 +1,12 @@
+import ast.Program;
+import ast.Visitor;
+import ir.TempVisitor;
+import ir.IRVisitor;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import org.antlr.runtime.ANTLRInputStream;
 import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.RecognitionException;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import ast.Program;
-import ast.Visitor;
 import semantic.SemanticException;
 import semantic.TypeCheckVisitor;
 
@@ -26,6 +28,8 @@ public class Compiler {
                 Program p = parser.program();
                 Visitor v = new TypeCheckVisitor();
                 p.accept(v);
+                TempVisitor irv = new IRVisitor();
+                p.accept(irv);
             }
             catch (RecognitionException e) {
                 // A lexical or parsing error occured.

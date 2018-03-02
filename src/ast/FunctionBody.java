@@ -1,5 +1,7 @@
 package ast;
 
+import ir.Temp;
+import ir.TempVisitor;
 import java.util.ArrayList;
 import java.util.List;
 import type.Type;
@@ -33,6 +35,10 @@ public class FunctionBody extends ASTNode {
     }
 
     public Type accept(Visitor v) {
+        return v.visit(this);
+    }
+
+    public Temp accept(TempVisitor v) {
         return v.visit(this);
     }
 }

@@ -316,7 +316,7 @@ public class PrettyPrintVisitor implements Visitor {
     private final Type printIndentation() {
         int totalIndentation = 4 * this.indentationDepth;
         StringBuilder sb = new StringBuilder(totalIndentation);
-        for (int i = 0; i < totalIndentation; i++){
+        for (int i = 0; i < totalIndentation; i++) {
             sb.append(" ");
         }
         String spaces = sb.toString();

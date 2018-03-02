@@ -1,12 +1,15 @@
 package ast;
 
+import ir.Temp;
+import ir.TempVisitor;
 import type.Type;
 
 public abstract class ASTNode {
     private int line;
     private int offset;
-
+    
     public abstract Type accept(Visitor v);
+    public abstract Temp accept(TempVisitor v);
 
     public final int getLine() {
         return this.line;
