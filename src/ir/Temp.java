@@ -23,6 +23,10 @@ public class Temp {
         this.tempClass = TempClass.TEMP;
     }
 
+    public Type getType() {
+        return this.type;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
