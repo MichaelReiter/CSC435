@@ -33,34 +33,16 @@ public class Function extends Instruction {
         sb.append(this.name);
         sb.append(" (");
         for (int i = 0; i < this.parameterTypes.size(); i++) {
-            sb.append(this.typeToChar(this.parameterTypes.get(i)));
+            sb.append(this.parameterTypes.get(i).toChar());
             if (i != this.parameterTypes.size() - 1) {
                 sb.append(",");
             }
         }
         sb.append(")");
-        sb.append(this.typeToChar(this.returnType));
+        sb.append(this.returnType.toChar());
         sb.append("\n{\n");
         // Instructions here
         sb.append("}\n");
         return sb.toString();
-    }
-
-    private char typeToChar(Type type) {
-        if (type.equals(new BooleanType())) {
-            return 'Z';
-        } else if (type.equals(new CharType())) {
-            return 'C';
-        } else if (type.equals(new FloatType())) {
-            return 'F';
-        } else if (type.equals(new IntegerType())) {
-            return 'I';
-        } else if (type.equals(new StringType())) {
-            return 'S';
-        } else if (type.equals(new VoidType())) {
-            return 'V';
-        } else {
-            return 'A';
-        }
     }
 }
