@@ -1,16 +1,16 @@
 package ast;
 
 public class WhileStatement extends Statement {
-    private final Expression e;
+    private final Expression expression;
     private final Block block;
 
-    public WhileStatement(Expression e, Block block) {
-        this.e = e;
+    public WhileStatement(Expression expression, Block block) {
+        this.expression = expression;
         this.block = block;
     }
 
     public Expression getExpression() {
-        return this.e;
+        return this.expression;
     }
 
     public Block getBlock() {

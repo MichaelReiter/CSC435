@@ -1,14 +1,14 @@
 package ast;
 
 public class PrintlnStatement extends Statement {
-    private final Expression e;
+    private final Expression expression;
 
-    public PrintlnStatement(Expression e) {
-        this.e = e;
+    public PrintlnStatement(Expression expression) {
+        this.expression = expression;
     }
 
     public Expression getExpression() {
-        return this.e;
+        return this.expression;
     }
 
     public <T> T accept(Visitor<T> v) {

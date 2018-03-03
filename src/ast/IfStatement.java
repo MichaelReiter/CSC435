@@ -1,16 +1,16 @@
 package ast;
 
 public class IfStatement extends Statement {
-    private final Expression e;
+    private final Expression expression;
     private final Block block;
     
-    public IfStatement(Expression e, Block block) {
-        this.e = e;
+    public IfStatement(Expression expression, Block block) {
+        this.expression = expression;
         this.block = block;
     }
 
     public Expression getExpression() {
-        return this.e;
+        return this.expression;
     }
 
     public Block getBlock() {

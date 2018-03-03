@@ -1,16 +1,16 @@
 package ast;
 
 public class FunctionCall extends Expression {
-    private final Identifier id;
+    private final Identifier identifier;
     private final ExpressionList expressionList;
 
-    public FunctionCall(Identifier id, ExpressionList expressionList) {
-        this.id = id;
+    public FunctionCall(Identifier identifier, ExpressionList expressionList) {
+        this.identifier = identifier;
         this.expressionList = expressionList;
     }
 
     public Identifier getIdentifier() {
-        return this.id;
+        return this.identifier;
     }
 
     public ExpressionList getExpressionList() {

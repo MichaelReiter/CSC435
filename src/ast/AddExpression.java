@@ -1,8 +1,8 @@
 package ast;
 
 public class AddExpression extends OperatorExpression {
-    public AddExpression(Expression e1, Expression e2) {
-        super(e1, e2);
+    public AddExpression(Expression expression1, Expression expression2) {
+        super(expression1, expression2);
     }
 
     public <T> T accept(Visitor<T> v) {

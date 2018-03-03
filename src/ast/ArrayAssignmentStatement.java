@@ -1,20 +1,20 @@
 package ast;
 
 public class ArrayAssignmentStatement extends Statement {
-    private final ArrayReference a;
-    private final Expression e;
+    private final ArrayReference arrayReference;
+    private final Expression expression;
 
-    public ArrayAssignmentStatement(ArrayReference a, Expression e) {
-        this.a = a;
-        this.e = e;
+    public ArrayAssignmentStatement(ArrayReference arrayReference, Expression expression) {
+        this.arrayReference = arrayReference;
+        this.expression = expression;
     }
 
     public ArrayReference getArrayReference() {
-        return this.a;
+        return this.arrayReference;
     }
 
     public Expression getExpression() {
-        return this.e;
+        return this.expression;
     }
 
     public <T> T accept(Visitor<T> v) {

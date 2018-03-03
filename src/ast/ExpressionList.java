@@ -14,8 +14,8 @@ public class ExpressionList extends ASTNode {
         return this.expressions;
     }
 
-    public void add(Expression e) {
-        this.expressions.add(e);
+    public void add(Expression expression) {
+        this.expressions.add(expression);
     }
 
     public Expression get(int index) {

@@ -1,14 +1,14 @@
 package ast;
 
 public class ParenthesisExpression extends Expression {
-    private final Expression e;
+    private final Expression expression;
 
-    public ParenthesisExpression(Expression e) {
-        this.e = e;
+    public ParenthesisExpression(Expression expression) {
+        this.expression = expression;
     }
 
     public Expression getExpression() {
-        return this.e;
+        return this.expression;
     }
 
     public <T> T accept(Visitor<T> v) {

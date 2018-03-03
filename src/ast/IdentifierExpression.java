@@ -1,14 +1,14 @@
 package ast;
 
 public class IdentifierExpression extends Expression {
-    private final Identifier id;
+    private final Identifier identifier;
 
-    public IdentifierExpression(Identifier id) {
-        this.id = id;
+    public IdentifierExpression(Identifier identifier) {
+        this.identifier = identifier;
     }
 
     public Identifier getIdentifier() {
-        return this.id;
+        return this.identifier;
     }
 
     public <T> T accept(Visitor<T> v) {

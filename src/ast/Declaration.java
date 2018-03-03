@@ -2,11 +2,11 @@ package ast;
 
 public class Declaration extends ASTNode {
     private final TypeNode type;
-    private final Identifier id;
+    private final Identifier identifier;
 
-    public Declaration(TypeNode type, Identifier id) {
+    public Declaration(TypeNode type, Identifier identifier) {
         this.type = type;
-        this.id = id;
+        this.identifier = identifier;
     }
 
     public TypeNode getType() {
@@ -14,7 +14,7 @@ public class Declaration extends ASTNode {
     }
 
     public Identifier getIdentifier() {
-        return this.id;
+        return this.identifier;
     }
 
     public <T> T accept(Visitor<T> v) {
