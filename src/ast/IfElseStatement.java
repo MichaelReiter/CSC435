@@ -2,13 +2,13 @@ package ast;
 
 public class IfElseStatement extends Statement {
     private final Expression e;
-    private final Block b1;
-    private final Block b2;
+    private final Block ifBlock;
+    private final Block elseBlock;
     
-    public IfElseStatement(Expression e, Block b1, Block b2) {
+    public IfElseStatement(Expression e, Block ifBlock, Block elseBlock) {
         this.e = e;
-        this.b1 = b1;
-        this.b2 = b2;
+        this.ifBlock = ifBlock;
+        this.elseBlock = elseBlock;
     }
 
     public Expression getExpression() {
@@ -16,11 +16,11 @@ public class IfElseStatement extends Statement {
     }
 
     public Block getIfBlock() {
-        return this.b1;
+        return this.ifBlock;
     }
 
     public Block getElseBlock() {
-        return this.b2;
+        return this.elseBlock;
     }
 
     public <T> T accept(Visitor<T> v) {

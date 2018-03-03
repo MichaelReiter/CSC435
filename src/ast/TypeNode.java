@@ -3,21 +3,21 @@ package ast;
 import type.Type;
 
 public class TypeNode extends ASTNode {
-    private final Type t;
+    private final Type type;
     private final int size;
 
-    public TypeNode(Type t) {
-        this.t = t;
+    public TypeNode(Type type) {
+        this.type = type;
         this.size = 0;
     }
 
-    public TypeNode(Type t, int size) {
-        this.t = t;
+    public TypeNode(Type type, int size) {
+        this.type = type;
         this.size = size;
     }
 
     public Type getType() {
-        return this.t;
+        return this.type;
     }
 
     public <T> T accept(Visitor<T> v) {

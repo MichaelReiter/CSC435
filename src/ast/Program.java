@@ -19,7 +19,7 @@ public class Program extends ASTNode {
     }
 
     public Function get(int index) {
-        return (Function)this.functionList.get(index);
+        return this.functionList.get(index);
     }
 
     public int size() {

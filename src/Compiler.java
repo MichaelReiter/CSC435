@@ -23,12 +23,11 @@ public class Compiler {
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         ulParser parser = new ulParser(tokens);
         Program program = parser.program();
-        TypeCheckVisitor visitor = new TypeCheckVisitor();
-        program.accept(visitor);
+        TypeCheckVisitor typeCheckVisitor = new TypeCheckVisitor();
+        program.accept(typeCheckVisitor);
         IRVisitor irVisitor = new IRVisitor(filename);
         program.accept(irVisitor);
-        List<Instruction> instructions = ((IRVisitor)irVisitor).instructions;
-        for (Instruction i : instructions) {
+        for (Instruction i : irVisitor.getInstructions()) {
             System.out.println(i);
         }
     }

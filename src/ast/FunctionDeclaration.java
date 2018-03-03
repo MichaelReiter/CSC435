@@ -1,20 +1,20 @@
 package ast;
 
 public class FunctionDeclaration extends ASTNode {
-    private final Declaration d;
-    private final FormalParameters args;
+    private final Declaration declaration;
+    private final FormalParameters formalParameters;
 
-    public FunctionDeclaration(Declaration d, FormalParameters args) {
-        this.d = d;
-        this.args = args;
+    public FunctionDeclaration(Declaration declaration, FormalParameters formalParameters) {
+        this.declaration = declaration;
+        this.formalParameters = formalParameters;
     }
 
     public Declaration getDeclaration() {
-        return this.d;
+        return this.declaration;
     }
 
     public FormalParameters getFormalParameters() {
-        return this.args;
+        return this.formalParameters;
     }
 
     public <T> T accept(Visitor<T> v) {

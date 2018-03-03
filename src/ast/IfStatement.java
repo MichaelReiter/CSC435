@@ -2,11 +2,11 @@ package ast;
 
 public class IfStatement extends Statement {
     private final Expression e;
-    private final Block b;
+    private final Block block;
     
-    public IfStatement(Expression e, Block b) {
+    public IfStatement(Expression e, Block block) {
         this.e = e;
-        this.b = b;
+        this.block = block;
     }
 
     public Expression getExpression() {
@@ -14,7 +14,7 @@ public class IfStatement extends Statement {
     }
 
     public Block getBlock() {
-        return this.b;
+        return this.block;
     }
 
     public <T> T accept(Visitor<T> v) {

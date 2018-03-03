@@ -4,26 +4,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ExpressionList extends ASTNode {
-    private final List<Expression> l;
+    private final List<Expression> expressions;
 
     public ExpressionList() {
-        this.l = new ArrayList<Expression>();
+        this.expressions = new ArrayList<Expression>();
     }
 
     public List<Expression> getExpressions() {
-        return this.l;
+        return this.expressions;
     }
 
     public void add(Expression e) {
-        this.l.add(e);
+        this.expressions.add(e);
     }
 
     public Expression get(int index) {
-        return (Expression)this.l.get(index);
+        return this.expressions.get(index);
     }
 
     public int size() {
-        return this.l.size();
+        return this.expressions.size();
     }
 
     public <T> T accept(Visitor<T> v) {

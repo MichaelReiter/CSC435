@@ -47,12 +47,16 @@ import type.Type;
 public class IRVisitor implements Visitor<Temp> {
     private final String filename;
     private TempFactory tempFactory;
-    public List<Instruction> instructions;
+    private List<Instruction> instructions;
 
     public IRVisitor(String filename) {
         this.filename = filename;
         this.tempFactory = new TempFactory();
         this.instructions = new ArrayList<Instruction>();
+    }
+
+    public List<Instruction> getInstructions() {
+        return this.instructions;
     }
 
     public Temp visit(AddExpression e) {

@@ -2,11 +2,11 @@ package ast;
 
 public class FunctionCall extends Expression {
     private final Identifier id;
-    private final ExpressionList el;
+    private final ExpressionList expressionList;
 
-    public FunctionCall(Identifier id, ExpressionList el) {
+    public FunctionCall(Identifier id, ExpressionList expressionList) {
         this.id = id;
-        this.el = el;
+        this.expressionList = expressionList;
     }
 
     public Identifier getIdentifier() {
@@ -14,7 +14,7 @@ public class FunctionCall extends Expression {
     }
 
     public ExpressionList getExpressionList() {
-        return this.el;
+        return this.expressionList;
     }
 
     public <T> T accept(Visitor<T> v) {

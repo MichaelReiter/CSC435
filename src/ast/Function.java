@@ -1,20 +1,20 @@
 package ast;
 
 public class Function extends ASTNode {
-    private final FunctionDeclaration fd;
-    private final FunctionBody fb;
+    private final FunctionDeclaration functionDeclaration;
+    private final FunctionBody functionBody;
 
-    public Function(FunctionDeclaration fd, FunctionBody fb) {
-        this.fd = fd;
-        this.fb = fb;
+    public Function(FunctionDeclaration functionDeclaration, FunctionBody functionBody) {
+        this.functionDeclaration = functionDeclaration;
+        this.functionBody = functionBody;
     }
 
     public FunctionDeclaration getFunctionDeclaration() {
-        return this.fd;
+        return this.functionDeclaration;
     }
 
     public FunctionBody getFunctionBody() {
-        return this.fb;
+        return this.functionBody;
     }
 
     public <T> T accept(Visitor<T> v) {

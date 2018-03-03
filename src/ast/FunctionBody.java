@@ -5,7 +5,7 @@ import java.util.List;
 
 public class FunctionBody extends ASTNode {
     private final List<VariableDeclaration> variableDeclarations;
-    private StatementList sl;
+    private StatementList statementList;
 
     public FunctionBody() {
         this.variableDeclarations = new ArrayList<VariableDeclaration>();
@@ -16,15 +16,15 @@ public class FunctionBody extends ASTNode {
     }
 
     public StatementList getStatementList() {
-        return this.sl;
+        return this.statementList;
     }
 
-    public void setStatementList(StatementList sl) {
-        this.sl = sl;
+    public void setStatementList(StatementList statementList) {
+        this.statementList = statementList;
     }
 
-    public void addVariableDeclaration(VariableDeclaration vd) {
-        this.variableDeclarations.add(vd);
+    public void addVariableDeclaration(VariableDeclaration variableDeclaration) {
+        this.variableDeclarations.add(variableDeclaration);
     }
 
     public int size() {

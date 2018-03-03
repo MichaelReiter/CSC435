@@ -2,11 +2,11 @@ package ast;
 
 public class WhileStatement extends Statement {
     private final Expression e;
-    private final Block b;
+    private final Block block;
 
-    public WhileStatement(Expression e, Block b) {
+    public WhileStatement(Expression e, Block block) {
         this.e = e;
-        this.b = b;
+        this.block = block;
     }
 
     public Expression getExpression() {
@@ -14,7 +14,7 @@ public class WhileStatement extends Statement {
     }
 
     public Block getBlock() {
-        return this.b;
+        return this.block;
     }
 
     public <T> T accept(Visitor<T> v) {

@@ -19,7 +19,7 @@ public class FormalParameters extends ASTNode {
     }
 
     public Declaration get(int index) {
-        return (Declaration)this.parameters.get(index);
+        return this.parameters.get(index);
     }
 
     public int size() {
