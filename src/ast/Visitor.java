@@ -1,7 +1,6 @@
 package ast;
 
 import type.ArrayType;
-import type.Type;
 
 public interface Visitor<T> {
     public T visit(AddExpression e);
@@ -39,7 +38,6 @@ public interface Visitor<T> {
     public T visit(StatementList sl);
     public T visit(StringLiteral s);
     public T visit(SubtractExpression e);
-    public T visit(Type t);
     public T visit(TypeNode t);
     public T visit(VariableDeclaration v);
     public T visit(WhileStatement s);

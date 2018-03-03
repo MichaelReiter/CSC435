@@ -8,8 +8,4 @@ public class CharType extends Type {
     public String toString() {
         return "char";
     }
-
-    public <T> T accept(Visitor<T> v) {
-        return v.visit(this);
-    }
 }

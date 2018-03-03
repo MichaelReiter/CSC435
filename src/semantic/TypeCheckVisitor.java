@@ -510,12 +510,8 @@ public class TypeCheckVisitor implements Visitor<Type> {
         return leftExpressionType;
     }
 
-    public Type visit(Type t) {
-        return t;
-    }
-
     public Type visit(TypeNode t) {
-        return t.getType().accept(this);
+        return t.getType();
     }
 
     public Type visit(VariableDeclaration v) {

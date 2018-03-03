@@ -1,4 +1,4 @@
-int foo (int x, float y, string z, char c, boolean a) {
+boolean foo (int x, float y, string z, char c, boolean a) {
 	string zz;
 	float  yy;
 	char   cc;
@@ -24,6 +24,8 @@ int foo (int x, float y, string z, char c, boolean a) {
 	println x;
 
 	return aa;
+}
 
-	return;
+void main() {
+
 }

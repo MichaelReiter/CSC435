@@ -1,6 +1,10 @@
 void main () {
-	int x; 
+	int x;
 	int y;
+	int a;
+	int b;
+	int c;
+	int d;
 
 	x = 12;
 	y = 22;

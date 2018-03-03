@@ -1,4 +1,4 @@
-void main (int x, float y) {
+void main (int a, float y) {
 	string s;
 	int x;
 

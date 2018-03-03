@@ -1,5 +1,3 @@
 package ir;
 
-public abstract class UnaryOperation {
-    
-}
+public abstract class UnaryOperation {}

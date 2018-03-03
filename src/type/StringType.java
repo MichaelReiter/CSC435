@@ -8,8 +8,4 @@ public class StringType extends Type {
     public String toString() {
         return "string";
     }
-
-    public <T> T accept(Visitor<T> v) {
-        return v.visit(this);
-    }
 }

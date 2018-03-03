@@ -1,5 +1,3 @@
 package ir;
 
-public abstract class Instruction {
-    
-}
+public abstract class Instruction {}

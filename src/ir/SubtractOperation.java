@@ -1,5 +1,3 @@
 package ir;
 
-public abstract class SubtractOperation extends BinaryOperation {
-    
-}
+public abstract class SubtractOperation extends BinaryOperation {}

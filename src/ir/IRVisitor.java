@@ -379,13 +379,8 @@ public class IRVisitor implements Visitor<Temp> {
         return null;
     }
 
-    public Temp visit(Type t) {
-        //
-        return null;
-    }
-
     public Temp visit(TypeNode t) {
-        t.getType().accept(this);
+        //
         return null;
     }
 

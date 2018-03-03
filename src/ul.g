@@ -131,18 +131,18 @@ variableDeclaration returns [VariableDeclaration vd]
     :    d = declaration SEMICOLON
     {
         vd = new VariableDeclaration(d);
-        vd.setLine(d.getType().getType().getLine());
-        vd.setOffset(d.getType().getType().getOffset());
+        vd.setLine(d.getType().getLine());
+        vd.setOffset(d.getType().getOffset());
     }
     ;
 
 compoundType returns [TypeNode tn]
     :    t = type
-    { tn = new TypeNode(t); }
+    { tn = t; }
     |    t = type OPENBRACKET INTEGERCONSTANT CLOSEBRACKET
     {
         int size = Integer.parseInt($INTEGERCONSTANT.text);
-        ArrayType at = new ArrayType(t, size);
+        ArrayType at = new ArrayType(t.getType(), size);
         tn = new TypeNode(at, size);
     }
     ;
@@ -460,40 +460,46 @@ booleanLiteral returns [BooleanLiteral bl]
     }
     ;
 
-type returns [Type t]
+type returns [TypeNode t]
     :    INT
     {
-        t = new IntegerType();
+        Type type = new IntegerType();
+        t = new TypeNode(type);
         t.setLine($INT.getLine());
         t.setOffset($INT.getCharPositionInLine());
     }
     |    FLOAT
     {
-        t = new FloatType();
+        Type type = new FloatType();
+        t = new TypeNode(type);
         t.setLine($FLOAT.getLine());
         t.setOffset($FLOAT.getCharPositionInLine());
     }
     |    CHAR
     {
-        t = new CharType();
+        Type type = new CharType();
+        t = new TypeNode(type);
         t.setLine($CHAR.getLine());
         t.setOffset($CHAR.getCharPositionInLine());
     }
     |    STRING
     {
-        t = new StringType();
+        Type type = new StringType();
+        t = new TypeNode(type);
         t.setLine($STRING.getLine());
         t.setOffset($STRING.getCharPositionInLine());
     }
     |    BOOLEAN
     {
-        t = new BooleanType();
+        Type type = new BooleanType();
+        t = new TypeNode(type);
         t.setLine($BOOLEAN.getLine());
         t.setOffset($BOOLEAN.getCharPositionInLine());
     }
     |    VOID
     {
-        t = new VoidType();
+        Type type = new VoidType();
+        t = new TypeNode(type);
         t.setLine($VOID.getLine());
         t.setOffset($VOID.getCharPositionInLine());
     }

@@ -286,13 +286,8 @@ public class PrettyPrintVisitor implements Visitor<Void> {
         return null;
     }
 
-    public Void visit(Type t) {
-        System.out.print(t + " ");
-        return null;
-    }
-
     public Void visit(TypeNode t) {
-        t.getType().accept(this);
+        System.out.print(t.getType() + " ");
         return null;
     }
 

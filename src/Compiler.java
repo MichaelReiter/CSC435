@@ -1,7 +1,6 @@
 import ast.Program;
 import ir.Instruction;
 import ir.IRVisitor;
-import ir.TempVisitor;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -28,7 +27,7 @@ public class Compiler {
         IRVisitor irVisitor = new IRVisitor(filename);
         program.accept(irVisitor);
         for (Instruction i : irVisitor.getInstructions()) {
-            System.out.println(i);
+            // System.out.println(i);
         }
     }
 
