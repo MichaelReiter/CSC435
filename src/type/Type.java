@@ -1,8 +1,5 @@
 package type;
 
-import ast.ASTNode;
-import ast.Visitor;
-
 public abstract class Type {
     public abstract String toString();
 

@@ -1,7 +1,5 @@
 package type;
 
-import ast.Visitor;
-
 public class FloatType extends Type {
     public FloatType() {}
 

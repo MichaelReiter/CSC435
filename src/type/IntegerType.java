@@ -1,7 +1,5 @@
 package type;
 
-import ast.Visitor;
-
 public class IntegerType extends Type {
     public IntegerType() {}
 
