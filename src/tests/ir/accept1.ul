@@ -1,0 +1,7 @@
+void main() {
+
+}
+
+int foo(int x, int y, float z) {
+    return x;
+}

@@ -3,7 +3,7 @@ package ir;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Program {
+public class Program extends Instruction {
     private final String name;
     private final List<Function> functions;
 

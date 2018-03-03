@@ -51,10 +51,12 @@ import type.Type;
 // import type.VoidType;
 
 public class IRVisitor implements TempVisitor {
+    private final String filename;
     private TempFactory tempFactory;
-    private List<Instruction> instructions;
+    public List<Instruction> instructions;
 
-    public IRVisitor() {
+    public IRVisitor(String filename) {
+        this.filename = filename;
         this.tempFactory = new TempFactory();
         this.instructions = new ArrayList<Instruction>();
     }
@@ -189,10 +191,9 @@ public class IRVisitor implements TempVisitor {
         return null;
     }
 
-    public Temp visit(Function f) {
+    public Temp visit(ast.Function f) {
         f.getFunctionDeclaration().accept(this);
         f.getFunctionBody().accept(this);
-        //
         return null;
     }
 
@@ -221,7 +222,14 @@ public class IRVisitor implements TempVisitor {
         f.getDeclaration().accept(this);
         //
         f.getFormalParameters().accept(this);
-        //
+        String name = f.getDeclaration().getIdentifier().getName();
+        Type returnType = f.getDeclaration().getType().getType();
+        List<Type> parameterTypes = new ArrayList<Type>();
+        for (Declaration d : f.getFormalParameters().getParameters()) {
+            parameterTypes.add(d.getType().getType());
+        }
+        Instruction i = new ir.Function(name, returnType, parameterTypes);
+        this.instructions.add(i);
         return null;
     }
 
@@ -331,7 +339,11 @@ public class IRVisitor implements TempVisitor {
         return null;
     }
 
-    public Temp visit(Program p) {
+    public Temp visit(ast.Program p) {
+        int dotIndex = this.filename.lastIndexOf('.');
+        String name = this.filename.substring(0, dotIndex);
+        Instruction i = new ir.Program(name);
+        this.instructions.add(i);
         for (Function f : p.getFunctions()) {
             f.accept(this);
         }
