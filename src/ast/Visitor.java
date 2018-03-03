@@ -1,13 +1,10 @@
 package ast;
 
-import type.ArrayType;
-
 public interface Visitor<T> {
     public T visit(AddExpression e);
     public T visit(ArrayAssignmentStatement s);
     public T visit(ArrayReference a);
     public T visit(ArrayReferenceExpression a);
-    public T visit(ArrayType a);
     public T visit(AssignmentStatement a);
     public T visit(Block b);
     public T visit(BooleanLiteral b);

@@ -124,10 +124,6 @@ public class TypeCheckVisitor implements Visitor<Type> {
         return a.getArrayReference().accept(this);
     }
 
-    public Type visit(ArrayType a) {
-        return a;
-    }
-
     public Type visit(AssignmentStatement a) {
         a.getIdentifier().accept(this);
         String variableName = a.getIdentifier().getName();

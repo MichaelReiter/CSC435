@@ -1,25 +1,19 @@
 package type;
 
-import ast.Visitor;
-
 public class ArrayType extends Type {
-    private final Type t;
+    private final Type type;
     private final int size;
 
-    public ArrayType(Type t, int size) {
-        this.t = t;
+    public ArrayType(Type type, int size) {
+        this.type = type;
         this.size = size;
     }
 
     public Type getType() {
-        return this.t;
+        return this.type;
     }
 
     public String toString() {
-        return this.t.toString() + "[" + this.size + "]" ;
-    }
-
-    public <T> T accept(Visitor<T> v) {
-        return v.visit(this);
+        return this.type.toString() + "[" + this.size + "]" ;
     }
 }

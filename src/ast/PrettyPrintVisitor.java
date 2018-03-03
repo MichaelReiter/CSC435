@@ -42,11 +42,6 @@ public class PrettyPrintVisitor implements Visitor<Void> {
         return null;
     }
 
-    public Void visit(ArrayType a) {
-        System.out.print(a + " ");
-        return null;
-    }
-
     public Void visit(AssignmentStatement a) {
         this.printIndentation();
         a.getIdentifier().accept(this);
