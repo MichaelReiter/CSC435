@@ -1,9 +1,12 @@
 import ast.Program;
 import ast.Visitor;
-import ir.TempVisitor;
+import ir.Instruction;
 import ir.IRVisitor;
+import ir.TempVisitor;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.List;
 import org.antlr.runtime.ANTLRInputStream;
 import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.RecognitionException;
@@ -11,41 +14,48 @@ import semantic.SemanticException;
 import semantic.TypeCheckVisitor;
 
 public class Compiler {
-    public static void main(String[] args) throws Exception {
-        ANTLRInputStream input;
+    public Compiler() {}
+
+    public void compile(String filename) throws FileNotFoundException,
+                                                IOException,
+                                                RecognitionException {
+        ANTLRInputStream input = new ANTLRInputStream(new FileInputStream(filename));
+        ulLexer lexer = new ulLexer(input);
+        CommonTokenStream tokens = new CommonTokenStream(lexer);
+        ulParser parser = new ulParser(tokens);
+        Program program = parser.program();
+        Visitor visitor = new TypeCheckVisitor();
+        program.accept(visitor);
+        TempVisitor tempVisitor = new IRVisitor(filename);
+        program.accept(tempVisitor);
+        List<Instruction> instructions = ((IRVisitor)tempVisitor).instructions;
+        for (Instruction i : instructions) {
+            System.out.println(i);
+        }
+    }
+
+    public static void main(String[] args) {
+        if (args.length == 0) {
+            System.out.println("Usage: Compiler <filename>");
+            return;
+        }
         try {
-            if (args.length == 0) {
-                System.out.println("Usage: Compiler filename.ul");
-                return;
-            } else {
-                input = new ANTLRInputStream(new FileInputStream(args[0]));
-            }
-            // The name of the grammar here is "ul" so ANTLR generates ulLexer and ulParser
-            ulLexer lexer = new ulLexer(input);
-            CommonTokenStream tokens = new CommonTokenStream(lexer);
-            ulParser parser = new ulParser(tokens);
-            try {
-                Program p = parser.program();
-                Visitor v = new TypeCheckVisitor();
-                p.accept(v);
-                TempVisitor irv = new IRVisitor();
-                p.accept(irv);
-            }
-            catch (RecognitionException e) {
-                // A lexical or parsing error occured.
-                // ANTLR will have already printed information on the console due
-                // to code added to the grammar so there is nothing to do here.
-            }
-            catch (SemanticException e) {
-                System.out.println(e);
-            }
-            catch (Exception e) {
-                System.out.println(e);
-                e.printStackTrace();
-            }
+            Compiler compiler = new Compiler();
+            compiler.compile(args[0]);
+        }
+        catch (RecognitionException e) {
+            // A lexical or parsing error occured.
+            // ANTLR will have already printed information on the console due
+            // to code added to the grammar so there is nothing to do here.
+        }
+        catch (SemanticException e) {
+            System.out.println(e);
         }
         catch (FileNotFoundException e) {
             System.out.println("Error: Could not compile "  + args[0] + ". File not found.");
+        }
+        catch (IOException e) {
+            System.out.println(e);
         }
     }
 }
