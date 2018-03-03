@@ -41,7 +41,6 @@ import ast.Visitor;
 import ast.WhileStatement;
 import java.util.ArrayList;
 import java.util.List;
-import type.ArrayType;
 import type.Type;
 
 public class IRVisitor implements Visitor<Temp> {
@@ -101,11 +100,6 @@ public class IRVisitor implements Visitor<Temp> {
 
     public Temp visit(ArrayReferenceExpression a) {
         a.getArrayReference().accept(this);
-        return null;
-    }
-
-    public Temp visit(ArrayType a) {
-        //
         return null;
     }
 

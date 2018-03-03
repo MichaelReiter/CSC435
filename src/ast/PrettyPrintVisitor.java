@@ -1,8 +1,6 @@
 package ast;
 
 import java.lang.StringBuilder;
-import type.ArrayType;
-import type.Type;
 
 public class PrettyPrintVisitor implements Visitor<Void> {
     private int indentationDepth;
@@ -302,7 +300,7 @@ public class PrettyPrintVisitor implements Visitor<Void> {
         return null;
     }
 
-    private final Type printIndentation() {
+    private final void printIndentation() {
         int totalIndentation = 4 * this.indentationDepth;
         StringBuilder sb = new StringBuilder(totalIndentation);
         for (int i = 0; i < totalIndentation; i++) {
@@ -310,6 +308,5 @@ public class PrettyPrintVisitor implements Visitor<Void> {
         }
         String spaces = sb.toString();
         System.out.print(spaces);
-        return null;
     }
 }

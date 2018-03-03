@@ -25,7 +25,7 @@ public class Compiler {
         IRVisitor irVisitor = new IRVisitor(filename);
         program.accept(irVisitor);
         for (Instruction i : irVisitor.getInstructions()) {
-            // System.out.println(i);
+            System.out.println(i);
         }
     }
 
