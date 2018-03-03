@@ -1,0 +1,19 @@
+package ast;
+
+public abstract class OperatorExpression extends Expression {
+    private final Expression e1;
+    private final Expression e2;
+
+    public OperatorExpression(Expression e1, Expression e2) {
+        this.e1 = e1;
+        this.e2 = e2;
+    }
+
+    public Expression getLeftExpression() {
+        return this.e1;
+    }
+
+    public Expression getRightExpression() {
+        return this.e2;
+    }
+}
