@@ -5,6 +5,7 @@ public class IntegerMultiplyOperation extends MultiplyOperation {
         
     }
 
+    @Override
     public String toString() {
         return "I*";
     }

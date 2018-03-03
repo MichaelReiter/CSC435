@@ -9,6 +9,7 @@ public class Label extends Instruction {
         this.number = number;
     }
 
+    @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("L");

@@ -5,6 +5,7 @@ public class StringLessThanOperation extends LessThanOperation {
         
     }
 
+    @Override
     public String toString() {
         return "S<";
     }

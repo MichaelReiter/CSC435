@@ -5,6 +5,7 @@ public class EqualityOperation extends BinaryOperation {
         
     }
 
+    @Override
     public String toString() {
         return "";
     }

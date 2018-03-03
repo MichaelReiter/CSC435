@@ -7,6 +7,7 @@ public class BooleanNegationOperation extends UnaryOperation {
         this.temp = temp;
     }
 
+    @Override
     public String toString() {
         return "Z!";
     }

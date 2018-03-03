@@ -5,6 +5,7 @@ public class CharacterLessThanOperation extends LessThanOperation {
         
     }
 
+    @Override
     public String toString() {
         return "C<";
     }

@@ -5,6 +5,7 @@ public class IntegerEqualityOperation extends EqualityOperation {
         
     }
 
+    @Override
     public String toString() {
         return "I==";
     }

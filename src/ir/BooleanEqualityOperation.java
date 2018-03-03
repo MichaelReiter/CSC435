@@ -5,6 +5,7 @@ public class BooleanEqualityOperation extends EqualityOperation {
         
     }
 
+    @Override
     public String toString() {
         return "Z==";
     }

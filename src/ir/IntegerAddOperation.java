@@ -5,6 +5,7 @@ public class IntegerAddOperation extends BinaryOperation {
 
     }
 
+    @Override
     public String toString() {
         return "I+";
     }

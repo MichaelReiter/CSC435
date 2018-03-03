@@ -13,6 +13,7 @@ public class ArrayType extends Type {
         return this.type;
     }
 
+    @Override
     public String toString() {
         return this.type.toString() + "[" + this.size + "]" ;
     }

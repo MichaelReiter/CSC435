@@ -21,6 +21,7 @@ public class Program extends Instruction {
         return this.functions;
     }
 
+    @Override
     public String toString() {
         StringBuilder sb = new StringBuilder(1024);
         sb.append("PROG ");

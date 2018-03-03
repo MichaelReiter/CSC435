@@ -11,6 +11,7 @@ public class ConditionalGotoInstruction extends Instruction {
         this.label = label;
     }
 
+    @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("IF ");

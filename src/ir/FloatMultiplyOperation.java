@@ -5,6 +5,7 @@ public class FloatMultiplyOperation extends MultiplyOperation {
         
     }
 
+    @Override
     public String toString() {
         return "F*";
     }

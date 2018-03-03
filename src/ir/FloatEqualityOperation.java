@@ -5,6 +5,7 @@ public class FloatEqualityOperation extends EqualityOperation {
         
     }
 
+    @Override
     public String toString() {
         return "F==";
     }

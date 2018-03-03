@@ -5,6 +5,7 @@ public class CharacterAddOperation extends BinaryOperation {
 
     }
 
+    @Override
     public String toString() {
         return "C+";
     }

@@ -26,6 +26,7 @@ public class Function extends Instruction {
         this.tempFactory = new TempFactory();
     }
 
+    @Override
     public String toString() {
         StringBuilder sb = new StringBuilder(1024);
         sb.append("FUNC ");

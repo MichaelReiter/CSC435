@@ -9,6 +9,7 @@ public class ReturnInstruction extends Instruction {
         this.temp = temp;
     }
 
+    @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("RETURN ");

@@ -11,6 +11,7 @@ public class SemanticException extends RuntimeException {
         this.offset = offset;
     }
 
+    @Override
     public String toString() {
         return "Error:" + line + ":" + offset + ": " + message;
     }

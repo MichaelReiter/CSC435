@@ -5,6 +5,7 @@ public class BooleanLessThanOperation extends LessThanOperation {
         
     }
 
+    @Override
     public String toString() {
         return "Z<";
     }

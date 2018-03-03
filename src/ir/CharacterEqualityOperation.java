@@ -5,6 +5,7 @@ public class CharacterEqualityOperation extends EqualityOperation {
         
     }
 
+    @Override
     public String toString() {
         return "C==";
     }

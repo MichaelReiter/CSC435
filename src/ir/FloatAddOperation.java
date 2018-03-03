@@ -5,6 +5,7 @@ public class FloatAddOperation extends BinaryOperation {
 
     }
 
+    @Override
     public String toString() {
         return "F+";
     }
