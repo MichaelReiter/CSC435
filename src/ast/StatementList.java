@@ -1,10 +1,7 @@
 package ast;
 
-import ir.Temp;
-import ir.TempVisitor;
 import java.util.ArrayList;
 import java.util.List;
-import type.Type;
 
 public class StatementList extends ASTNode {
     private final List<Statement> l;
@@ -21,11 +18,7 @@ public class StatementList extends ASTNode {
         this.l.add(s);
     }
 
-    public Type accept(Visitor v) {
-        return v.visit(this);
-    }
-
-    public Temp accept(TempVisitor v) {
+    public <T> T accept(Visitor<T> v) {
         return v.visit(this);
     }
 }

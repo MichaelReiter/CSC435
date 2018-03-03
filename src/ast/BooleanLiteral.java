@@ -1,9 +1,5 @@
 package ast;
 
-import ir.Temp;
-import ir.TempVisitor;
-import type.Type;
-
 public class BooleanLiteral extends Literal {
     private final boolean value;
 
@@ -15,11 +11,7 @@ public class BooleanLiteral extends Literal {
         return this.value;
     }
 
-    public Type accept(Visitor v) {
-        return v.visit(this);
-    }
-
-    public Temp accept(TempVisitor v) {
+    public <T> T accept(Visitor<T> v) {
         return v.visit(this);
     }
 }

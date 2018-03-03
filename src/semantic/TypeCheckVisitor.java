@@ -51,7 +51,7 @@ import type.StringType;
 import type.Type;
 import type.VoidType;
 
-public class TypeCheckVisitor implements Visitor {
+public class TypeCheckVisitor implements Visitor<Type> {
     private final Environment<String, FunctionDeclaration> functionEnvironment;
     private final Environment<String, Type> variableEnvironment;
     private String currentFunction;

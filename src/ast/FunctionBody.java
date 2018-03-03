@@ -1,10 +1,7 @@
 package ast;
 
-import ir.Temp;
-import ir.TempVisitor;
 import java.util.ArrayList;
 import java.util.List;
-import type.Type;
 
 public class FunctionBody extends ASTNode {
     private final List<VariableDeclaration> variableDeclarations;
@@ -34,11 +31,7 @@ public class FunctionBody extends ASTNode {
         return this.variableDeclarations.size();
     }
 
-    public Type accept(Visitor v) {
-        return v.visit(this);
-    }
-
-    public Temp accept(TempVisitor v) {
+    public <T> T accept(Visitor<T> v) {
         return v.visit(this);
     }
 }

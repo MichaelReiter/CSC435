@@ -1,9 +1,5 @@
 package ast;
 
-import ir.Temp;
-import ir.TempVisitor;
-import type.Type;
-
 public class EqualityExpression extends Expression {
     private final Expression e1;
     private final Expression e2;
@@ -21,11 +17,7 @@ public class EqualityExpression extends Expression {
         return this.e2;
     }
 
-    public Type accept(Visitor v) {
-        return v.visit(this);
-    }
-
-    public Temp accept(TempVisitor v) {
+    public <T> T accept(Visitor<T> v) {
         return v.visit(this);
     }
 }

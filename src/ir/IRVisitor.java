@@ -43,14 +43,8 @@ import java.util.ArrayList;
 import java.util.List;
 import type.ArrayType;
 import type.Type;
-// import type.BooleanType;
-// import type.CharType;
-// import type.FloatType;
-// import type.IntegerType;
-// import type.StringType;
-// import type.VoidType;
 
-public class IRVisitor implements TempVisitor {
+public class IRVisitor implements Visitor<Temp> {
     private final String filename;
     private TempFactory tempFactory;
     public List<Instruction> instructions;

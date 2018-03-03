@@ -1,9 +1,5 @@
 package ast;
 
-import ir.Temp;
-import ir.TempVisitor;
-import type.Type;
-
 public class IfElseStatement extends Statement {
     private final Expression e;
     private final Block b1;
@@ -27,11 +23,7 @@ public class IfElseStatement extends Statement {
         return this.b2;
     }
 
-    public Type accept(Visitor v) {
-        return v.visit(this);
-    }
-
-    public Temp accept(TempVisitor v) {
+    public <T> T accept(Visitor<T> v) {
         return v.visit(this);
     }
 }

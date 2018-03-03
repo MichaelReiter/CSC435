@@ -1,9 +1,5 @@
 package ast;
 
-import ir.Temp;
-import ir.TempVisitor;
-import type.Type;
-
 public class IdentifierExpression extends Expression {
     private final Identifier id;
 
@@ -15,11 +11,7 @@ public class IdentifierExpression extends Expression {
         return this.id;
     }
 
-    public Type accept(Visitor v) {
-        return v.visit(this);
-    }
-
-    public Temp accept(TempVisitor v) {
+    public <T> T accept(Visitor<T> v) {
         return v.visit(this);
     }
 }

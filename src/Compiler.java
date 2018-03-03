@@ -1,5 +1,4 @@
 import ast.Program;
-import ast.Visitor;
 import ir.Instruction;
 import ir.IRVisitor;
 import ir.TempVisitor;
@@ -24,11 +23,11 @@ public class Compiler {
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         ulParser parser = new ulParser(tokens);
         Program program = parser.program();
-        Visitor visitor = new TypeCheckVisitor();
+        TypeCheckVisitor visitor = new TypeCheckVisitor();
         program.accept(visitor);
-        TempVisitor tempVisitor = new IRVisitor(filename);
-        program.accept(tempVisitor);
-        List<Instruction> instructions = ((IRVisitor)tempVisitor).instructions;
+        IRVisitor irVisitor = new IRVisitor(filename);
+        program.accept(irVisitor);
+        List<Instruction> instructions = ((IRVisitor)irVisitor).instructions;
         for (Instruction i : instructions) {
             System.out.println(i);
         }

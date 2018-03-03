@@ -1,10 +1,7 @@
 package ast;
 
-import ir.Temp;
-import ir.TempVisitor;
 import java.util.ArrayList;
 import java.util.List;
-import type.Type;
 
 public class ExpressionList extends ASTNode {
     private final List<Expression> l;
@@ -29,11 +26,7 @@ public class ExpressionList extends ASTNode {
         return this.l.size();
     }
 
-    public Type accept(Visitor v) {
-        return v.visit(this);
-    }
-
-    public Temp accept(TempVisitor v) {
+    public <T> T accept(Visitor<T> v) {
         return v.visit(this);
     }
 }
