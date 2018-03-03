@@ -1,5 +1,7 @@
 package ir;
 
+import java.lang.StringBuilder;
+
 public class ConditionalGotoInstruction extends Instruction {
     private final Temp condition;
     private final Label label;

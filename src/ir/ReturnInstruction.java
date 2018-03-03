@@ -1,5 +1,7 @@
 package ir;
 
+import java.lang.StringBuilder;
+
 public class ReturnInstruction extends Instruction {
     private final Temp temp;
 

@@ -1,5 +1,7 @@
 package ir;
 
+import java.lang.StringBuilder;
+
 public class AssignmentOperation {
     private final Temp t1;
     private final Temp t2;

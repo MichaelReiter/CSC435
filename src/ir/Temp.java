@@ -1,5 +1,6 @@
 package ir;
 
+import java.lang.StringBuilder;
 import type.Type;
 
 public class Temp {

@@ -1,5 +1,7 @@
 package ir;
 
+import java.lang.StringBuilder;
+
 public class Label extends Instruction {
     private final int number;
 

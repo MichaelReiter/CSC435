@@ -1,5 +1,7 @@
 package ir;
 
+import java.lang.StringBuilder;
+
 public class UnconditionalGotoInstruction extends Instruction {
     private final Label label;
 
