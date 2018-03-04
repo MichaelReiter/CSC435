@@ -3,13 +3,7 @@ package ir;
 import java.lang.StringBuilder;
 import java.util.ArrayList;
 import java.util.List;
-import type.BooleanType;
-import type.CharType;
-import type.FloatType;
-import type.IntegerType;
-import type.StringType;
 import type.Type;
-import type.VoidType;
 
 public class Function extends Instruction {
     private final String name;

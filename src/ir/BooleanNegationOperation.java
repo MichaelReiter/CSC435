@@ -1,14 +1,9 @@
 package ir;
 
-public class BooleanNegationOperation extends UnaryOperation {
-    private final Temp temp;
-    
-    public BooleanNegationOperation(Temp temp) {
-        this.temp = temp;
-    }
+import type.BooleanType;
 
-    @Override
-    public String toString() {
-        return "Z!";
+public class BooleanNegationOperation extends UnaryOperation {
+    public BooleanNegationOperation(Temp temp) {
+        super(temp, new BooleanType(), "!");
     }
 }

@@ -1,5 +1,8 @@
 package ir;
 
+import java.lang.StringBuilder;
+import type.Type;
+
 public class PrintInstruction extends Instruction {
     private final Type type;
     private final Temp temp;

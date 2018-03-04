@@ -1,6 +1,7 @@
 package ir;
 
 import java.lang.StringBuilder;
+import type.Type;
 
 public abstract class BinaryOperation extends Instruction {
     private final Temp temp1;

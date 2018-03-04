@@ -1,10 +1,13 @@
 package ir;
 
-public class PrintInstruction extends Instruction {
+import java.lang.StringBuilder;
+import type.Type;
+
+public class PrintlnInstruction extends Instruction {
     private final Type type;
     private final Temp temp;
 
-    public PrintInstruction(Type type, Temp temp) {
+    public PrintlnInstruction(Type type, Temp temp) {
         this.type = type;
         this.temp = temp;
     }
