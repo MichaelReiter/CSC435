@@ -11,7 +11,7 @@ public abstract class Type {
         } else if (this.equals(new IntegerType())) {
             return 'I';
         } else if (this.equals(new StringType())) {
-            return 'S';
+            return 'U';
         } else if (this.equals(new VoidType())) {
             return 'V';
         } else {

@@ -7,6 +7,6 @@ public class StringEqualityOperation extends EqualityOperation {
 
     @Override
     public String toString() {
-        return "S==";
+        return "U==";
     }
 }

@@ -7,6 +7,6 @@ public class StringAddOperation extends BinaryOperation {
 
     @Override
     public String toString() {
-        return "S+";
+        return "U+";
     }
 }
