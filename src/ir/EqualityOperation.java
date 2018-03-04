@@ -1,12 +1,7 @@
 package ir;
 
-public class EqualityOperation extends BinaryOperation {
-    public EqualityOperation() {
-        
-    }
-
-    @Override
-    public String toString() {
-        return "";
+public abstract class EqualityOperation extends BinaryOperation {
+    public EqualityOperation(Type type, Temp temp1, Temp temp2) {
+        super(temp1, temp2, type, "==");
     }
 }
