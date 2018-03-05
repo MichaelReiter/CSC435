@@ -325,9 +325,10 @@ public class IRVisitor implements Visitor<Temp> {
     }
 
     public Temp visit(PrintlnStatement s) {
-        //
-        s.getExpression().accept(this);
-        //
+        Temp temp = s.getExpression().accept(this);
+        // Type type = temp.getType();
+        // Instruction printlnInstruction = new PrintlnInstruction(type, temp);
+        // this.instructions.add(printlnInstruction);
         return null;
     }
 
@@ -351,12 +352,14 @@ public class IRVisitor implements Visitor<Temp> {
     }
 
     public Temp visit(ReturnStatement s) {
-        //
         if (s.getExpression() != null) {
-            //
-            s.getExpression().accept(this);
+            Temp temp = s.getExpression().accept(this);
+            Instruction returnInstruction = new ReturnInstruction(temp);
+            this.instructions.add(returnInstruction);
+        } else {
+            Instruction returnInstruction = new ReturnInstruction();
+            this.instructions.add(returnInstruction);
         }
-        //
         return null;
     }
 

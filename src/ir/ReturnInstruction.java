@@ -16,8 +16,9 @@ public class ReturnInstruction extends Instruction {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("RETURN ");
+        sb.append("RETURN");
         if (this.temp != null) {
+            sb.append(" ");
             sb.append(this.temp);
         }
         sb.append(";");
