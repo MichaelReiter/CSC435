@@ -3,7 +3,7 @@ package ir;
 import java.lang.StringBuilder;
 import type.Type;
 
-public class Temp {
+public class Temp extends Operand {
     private final Type type;
     private final int number;
     private final String name;

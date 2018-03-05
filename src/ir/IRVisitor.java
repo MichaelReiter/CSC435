@@ -341,7 +341,7 @@ public class IRVisitor implements Visitor<Temp> {
     public Temp visit(ast.Program p) {
         int slashIndex = this.filename.lastIndexOf('/');        
         int dotIndex = this.filename.lastIndexOf('.');
-        String name = this.filename.substring(slashIndex, dotIndex);
+        String name = this.filename.substring(slashIndex + 1, dotIndex);
         Instruction i = new ir.Program(name);
         this.instructions.add(i);
         for (Function f : p.getFunctions()) {

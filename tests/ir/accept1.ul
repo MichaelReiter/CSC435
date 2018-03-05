@@ -3,5 +3,6 @@ void main() {
 }
 
 int foo(int x, int y, float z) {
+    int a;
     return x;
 }
