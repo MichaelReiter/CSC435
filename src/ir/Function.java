@@ -11,7 +11,7 @@ public class Function extends Instruction {
     private final List<Type> parameterTypes;
     private final List<Instruction> instructions;
     private final TempFactory tempFactory;
-    
+
     public Function(String name, Type returnType, List<Type> parameterTypes) {
         this.name = name;
         this.returnType = returnType;
@@ -26,11 +26,8 @@ public class Function extends Instruction {
         sb.append("FUNC ");
         sb.append(this.name);
         sb.append(" (");
-        for (int i = 0; i < this.parameterTypes.size(); i++) {
-            sb.append(this.parameterTypes.get(i).toChar());
-            if (i != this.parameterTypes.size() - 1) {
-                sb.append(",");
-            }
+        for (Type t : this.parameterTypes) {
+            sb.append(t.toChar());
         }
         sb.append(")");
         sb.append(this.returnType.toChar());

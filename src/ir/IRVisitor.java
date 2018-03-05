@@ -45,11 +45,13 @@ import type.Type;
 
 public class IRVisitor implements Visitor<Temp> {
     private final String filename;
+    private int tempCount;
     private TempFactory tempFactory;
     private List<Instruction> instructions;
 
     public IRVisitor(String filename) {
         this.filename = filename;
+        this.tempCount = 0;
         this.tempFactory = new TempFactory();
         this.instructions = new ArrayList<Instruction>();
     }
@@ -212,7 +214,6 @@ public class IRVisitor implements Visitor<Temp> {
 
     public Temp visit(FunctionDeclaration f) {
         f.getDeclaration().accept(this);
-        //
         f.getFormalParameters().accept(this);
         String name = f.getDeclaration().getIdentifier().getName();
         Type returnType = f.getDeclaration().getType().getType();
@@ -220,8 +221,14 @@ public class IRVisitor implements Visitor<Temp> {
         for (Declaration d : f.getFormalParameters().getParameters()) {
             parameterTypes.add(d.getType().getType());
         }
-        Instruction i = new ir.Function(name, returnType, parameterTypes);
-        this.instructions.add(i);
+        Instruction functionDeclaration = new ir.Function(name, returnType, parameterTypes);
+        this.instructions.add(functionDeclaration);
+        this.tempCount = 0;
+        for (Type t : parameterTypes) {
+            Instruction tempDeclaration = new TempDeclarationInstruction(t, tempCount);
+            this.instructions.add(tempDeclaration);
+            this.tempCount++;
+        }
         return null;
     }
 
@@ -381,7 +388,10 @@ public class IRVisitor implements Visitor<Temp> {
 
     public Temp visit(VariableDeclaration v) {
         v.getDeclaration().accept(this);
-        //
+        Type type = v.getDeclaration().getType().getType();
+        Instruction tempDeclaration = new TempDeclarationInstruction(type, tempCount);
+        this.instructions.add(tempDeclaration);
+        this.tempCount++;
         return null;
     }
 
