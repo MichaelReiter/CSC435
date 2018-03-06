@@ -9,6 +9,10 @@ public class Label extends Instruction {
         this.number = number;
     }
 
+    public int getNumber() {
+        return this.number;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

@@ -16,8 +16,8 @@ public class ConditionalGotoInstruction extends Instruction {
         StringBuilder sb = new StringBuilder();
         sb.append("IF ");
         sb.append(this.condition);
-        sb.append(" GOTO ");
-        sb.append(this.label);
+        sb.append(" GOTO L");
+        sb.append(this.label.getNumber());
         sb.append(";");
         return sb.toString();
     }

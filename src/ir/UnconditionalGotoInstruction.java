@@ -12,8 +12,8 @@ public class UnconditionalGotoInstruction extends Instruction {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("GOTO ");
-        sb.append(this.label);
+        sb.append("GOTO L");
+        sb.append(this.label.getNumber());
         sb.append(";");
         return sb.toString();
     }
