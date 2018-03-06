@@ -25,6 +25,7 @@ public class Program extends Instruction {
         sb.append("\n");
         for (Function f : this.functions) {
             sb.append(f);
+            sb.append("\n");
         }
         return sb.toString();
     }

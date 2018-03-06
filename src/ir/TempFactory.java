@@ -33,7 +33,9 @@ public class TempFactory {
             sb.append(t.getType().toChar());
             sb.append(";\n");
         }
-        sb.append("\n");
+        if (this.temps.size() > 0) {
+            sb.append("\n");
+        }
         return sb.toString();
     }
 }

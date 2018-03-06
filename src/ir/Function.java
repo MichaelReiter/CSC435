@@ -47,7 +47,7 @@ public class Function extends Instruction {
             sb.append(i);
             sb.append("\n");
         }
-        sb.append("}\n\n");
+        sb.append("}\n");
         return sb.toString();
     }
 }
