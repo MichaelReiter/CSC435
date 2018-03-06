@@ -1,5 +1,4 @@
 import ast.Program;
-import ir.Instruction;
 import ir.IRVisitor;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -19,14 +18,16 @@ public class Compiler {
         ulLexer lexer = new ulLexer(input);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         ulParser parser = new ulParser(tokens);
-        Program program = parser.program();
+        ast.Program program = parser.program();
         TypeCheckVisitor typeCheckVisitor = new TypeCheckVisitor();
         program.accept(typeCheckVisitor);
-        IRVisitor irVisitor = new IRVisitor(filename);
+        int slashIndex = filename.lastIndexOf('/');
+        int dotIndex = filename.lastIndexOf('.');
+        String programName = filename.substring(slashIndex + 1, dotIndex);
+        IRVisitor irVisitor = new IRVisitor(programName);
         program.accept(irVisitor);
-        for (Instruction i : irVisitor.getInstructions()) {
-            System.out.println(i);
-        }
+        ir.Program irProgram = irVisitor.getProgram();
+        System.out.println(irProgram);
     }
 
     public static void main(String[] args) {

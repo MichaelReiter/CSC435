@@ -13,12 +13,8 @@ public class Program extends Instruction {
         this.functions = new ArrayList<Function>();
     }
 
-    public String getName() {
-        return this.name;
-    }
-
-    public List<Function> getFunctions() {
-        return this.functions;
+    public void addFunction(Function function) {
+        this.functions.add(function);
     }
 
     @Override
@@ -26,6 +22,10 @@ public class Program extends Instruction {
         StringBuilder sb = new StringBuilder(1024);
         sb.append("PROG ");
         sb.append(this.name);
+        sb.append("\n");
+        for (Function f : this.functions) {
+            sb.append(f);
+        }
         return sb.toString();
     }
 }
