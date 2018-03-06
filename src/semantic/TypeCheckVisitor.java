@@ -203,7 +203,7 @@ public class TypeCheckVisitor implements Visitor<Type> {
     }
 
     public Type visit(FormalParameters p) {
-        this.variableEnvironment.beginScope();        
+        this.variableEnvironment.beginScope();
         for (Declaration d : p.getParameters()) {
             String variableName = d.getIdentifier().getName();
             if (this.variableEnvironment.inCurrentScope(variableName)) {
