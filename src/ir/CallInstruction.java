@@ -18,11 +18,9 @@ public class CallInstruction extends Instruction {
         sb.append("CALL ");
         sb.append(this.functionName);
         sb.append("(");
-        for (int i = 0; i < this.functionArguments.size(); i++) {
-            sb.append(this.functionArguments.get(i).getType().toChar());
-            if (i != this.functionArguments.size() - 1) {
-                sb.append(",");
-            }
+        for (Temp t : this.functionArguments) {
+            sb.append(t.getType().toChar());
+            sb.append(" ");
         }
         sb.append(");");
         return sb.toString();
