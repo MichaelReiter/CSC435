@@ -1,8 +1,12 @@
 void main() {
+    int i;
 
+    i = 5;
+    i = foo(1, 2, 3.14);
+    println i;
 }
 
 int foo(int x, int y, float z) {
-    int a;
+    boolean b;
     return x;
 }

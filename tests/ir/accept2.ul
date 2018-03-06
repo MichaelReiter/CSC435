@@ -1,0 +1,17 @@
+void main() {
+    foo(1, 2, 3);
+}
+
+void foo(int a, int b, int c) {
+    int x;
+    int y;
+    int z;
+
+    x = a + b;
+    y = b + c;
+    z = a + c;
+
+    print x;
+    print y;
+    print z;
+}
