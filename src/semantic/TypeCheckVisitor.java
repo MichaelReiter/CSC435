@@ -1,6 +1,5 @@
 package semantic;
 
-import java.util.List;
 import ast.AddExpression;
 import ast.ArrayAssignmentStatement;
 import ast.ArrayReference;
@@ -42,6 +41,7 @@ import ast.Visitor;
 import ast.WhileStatement;
 import environment.Environment;
 import environment.StackHashMapEnvironment;
+import java.util.List;
 import type.ArrayType;
 import type.BooleanType;
 import type.CharType;
