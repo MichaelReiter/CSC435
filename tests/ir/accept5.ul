@@ -4,5 +4,7 @@ void main() {
     x = 5;
     if (x == 5) {
         println "Yes";
+    } else {
+        println "No";
     }
 }

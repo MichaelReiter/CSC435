@@ -16,10 +16,10 @@ public abstract class UnaryOperation extends Operand {
 
     public final String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(this.operand);
-        sb.append(" ");
         sb.append(this.type.toChar());
         sb.append(this.operator);
+        sb.append(" ");
+        sb.append(this.operand);
         return sb.toString();
     }
 }

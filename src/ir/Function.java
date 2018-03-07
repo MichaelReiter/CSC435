@@ -43,7 +43,9 @@ public class Function extends Instruction {
         sb.append(tempFactory);
         // Instructions
         for (Instruction i : this.instructions) {
-            sb.append("    ");
+            if (i.getClass() != Label.class) {
+                sb.append("    ");
+            }
             sb.append(i);
             sb.append("\n");
         }
