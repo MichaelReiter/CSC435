@@ -1,0 +1,10 @@
+void main() {
+    foo(1, 2.0, 'c');
+}
+
+void foo(int i, float f, char c) {
+    string s;
+    boolean b;
+
+    i = i + i;
+}

@@ -39,49 +39,47 @@ import ast.TypeNode;
 import ast.VariableDeclaration;
 import ast.Visitor;
 import ast.WhileStatement;
+import environment.Environment;
+import environment.StackHashMapEnvironment;
+import ir.Temp.TempClass;
 import java.util.ArrayList;
 import java.util.List;
+import type.BooleanType;
+import type.IntegerType;
 import type.Type;
 
 public class IRVisitor implements Visitor<Temp> {
-    private final String filename;
-    private int tempCount;
+    private final Environment<String, Type> functionEnvironment;
+    private final Environment<String, Temp> variableEnvironment;
     private TempFactory tempFactory;
     private List<Instruction> instructions;
+    private LabelFactory labelFactory;
+    private ir.Function currentFunction;
+    private ir.Program program;
 
-    public IRVisitor(String filename) {
-        this.filename = filename;
-        this.tempCount = 0;
-        this.tempFactory = new TempFactory();
-        this.instructions = new ArrayList<Instruction>();
+    public IRVisitor(String programName) {
+        this.functionEnvironment = new StackHashMapEnvironment<String, Type>();
+        this.variableEnvironment = new StackHashMapEnvironment<String, Temp>();
+        this.labelFactory = new LabelFactory();
+        this.program = new ir.Program(programName);
     }
 
-    public List<Instruction> getInstructions() {
-        return this.instructions;
+    public ir.Program getProgram() {
+        return this.program;
     }
 
     public Temp visit(AddExpression e) {
-        e.getLeftExpression().accept(this);
+        Temp left = e.getLeftExpression().accept(this);
         if (e.getRightExpression() != null) {
-            //
-            e.getRightExpression().accept(this);
+            Temp right = e.getRightExpression().accept(this);
+            Temp result = this.tempFactory.getTemp(left.getType(), TempClass.TEMP);
+            Type type = left.getType();
+            Operand sum = new AddOperation(type, left, right);
+            Instruction add = new AssignmentInstruction(result, sum);
+            this.instructions.add(add);
+            return result;
         }
-        return null;
-
-
-
-        // // In class example below
-        // Temp lhs = e.getLeftExpression().accept(this);
-        // Temp rhs = e.getRightExpression().accept(this);
-        // Temp dest = this.tempFactory.getTemp(lhs.getType()); // factory function
-        // // Corless is using an enum. Note to self: replace with separate classes for each operation
-        // // i.e. AddOperation
-        // Instruction instruction = new BinaryOperation(dest, lhs, rhs, BinaryOperation.Add);
-
-        // // list of instructions for the current function
-        // this.instructions.add(instruction);
-        // this.tempFactory.returnTemp(lhs);
-        // this.tempFactory.returnTemp(rhs);
+        return left;
     }
 
     public Temp visit(ArrayAssignmentStatement s) {
@@ -107,16 +105,16 @@ public class IRVisitor implements Visitor<Temp> {
 
     public Temp visit(AssignmentStatement a) {
         a.getIdentifier().accept(this);
-        //
-        a.getExpression().accept(this);
-        //
+        String name = a.getIdentifier().getName();
+        Temp operand1 = this.variableEnvironment.lookup(name);
+        Temp operand2 = a.getExpression().accept(this);
+        Instruction assignmentInstruction = new AssignmentInstruction(operand1, operand2);
+        this.instructions.add(assignmentInstruction);
         return null;
     }
 
     public Temp visit(Block b) {
-        //
         b.getStatementList().accept(this);
-        //
         return null;
     }
 
@@ -139,26 +137,21 @@ public class IRVisitor implements Visitor<Temp> {
     }
 
     public Temp visit(EmptyStatement e) {
-        //
         return null;
     }
 
     public Temp visit(EqualityExpression e) {
-        e.getLeftExpression().accept(this);
+        Temp left = e.getLeftExpression().accept(this);
         if (e.getRightExpression() != null) {
             //
             e.getRightExpression().accept(this);
         }
-        return null;
+        return left;
     }
 
     public Temp visit(ExpressionList e) {
-        for (int i = 0; i < e.size(); i++) {
-            Expression expr = e.get(i);
+        for (Expression expr : e.getExpressions()) {
             expr.accept(this);
-            if (i != e.size() - 1) {
-                //
-            }
         }
         return null;
     }
@@ -175,12 +168,13 @@ public class IRVisitor implements Visitor<Temp> {
     }
 
     public Temp visit(FormalParameters p) {
-        for (int i = 0; i < p.size(); i++) {
-            Declaration d = p.get(i);
+        this.variableEnvironment.beginScope();
+        for (Declaration d : p.getParameters()) {
             d.accept(this);
-            if (i != p.size() - 1) {
-                //
-            }
+            Type type = d.getType().getType();
+            Temp temp = this.tempFactory.getTemp(type, TempClass.PARAMETER);
+            String name = d.getIdentifier().getName();
+            this.variableEnvironment.add(name, temp);
         }
         return null;
     }
@@ -200,19 +194,28 @@ public class IRVisitor implements Visitor<Temp> {
             //
         }
         f.getStatementList().accept(this);
-        //
+        Instruction returnInstruction = new ReturnInstruction();
+        this.instructions.add(returnInstruction);
+        this.currentFunction.setTempFactory(this.tempFactory);
+        this.currentFunction.setInstructions(this.instructions);
+        this.program.addFunction(this.currentFunction);
+        this.variableEnvironment.endScope();
         return null;
     }
 
     public Temp visit(FunctionCall f) {
         f.getIdentifier().accept(this);
-        //
         f.getExpressionList().accept(this);
-        //
+        String functionName = f.getIdentifier().getName();
+        List<Temp> functionArguments = new ArrayList<Temp>();
+        Instruction callInstruction = new CallInstruction(functionName, functionArguments);
+        this.instructions.add(callInstruction);
         return null;
     }
 
     public Temp visit(FunctionDeclaration f) {
+        this.tempFactory = new TempFactory();
+        this.instructions = new ArrayList<Instruction>();
         f.getDeclaration().accept(this);
         f.getFormalParameters().accept(this);
         String name = f.getDeclaration().getIdentifier().getName();
@@ -221,14 +224,10 @@ public class IRVisitor implements Visitor<Temp> {
         for (Declaration d : f.getFormalParameters().getParameters()) {
             parameterTypes.add(d.getType().getType());
         }
-        Instruction functionDeclaration = new ir.Function(name, returnType, parameterTypes);
-        this.instructions.add(functionDeclaration);
-        this.tempCount = 0;
-        for (Type t : parameterTypes) {
-            Instruction tempDeclaration = new TempDeclarationInstruction(t, tempCount);
-            this.instructions.add(tempDeclaration);
-            this.tempCount++;
-        }
+        // for (Type t : parameterTypes) {
+        //     this.tempFactory.getTemp(t, TempClass.PARAMETER);
+        // }
+        this.currentFunction = new ir.Function(name, returnType, parameterTypes);
         return null;
     }
 
@@ -239,89 +238,120 @@ public class IRVisitor implements Visitor<Temp> {
 
     public Temp visit(IdentifierExpression i) {
         i.getIdentifier().accept(this);
+        String name = i.getIdentifier().getName();
+        if (this.variableEnvironment.inCurrentScope(name)) {
+            return this.variableEnvironment.lookup(name);
+        }
         return null;
     }
 
     public Temp visit(IfElseStatement i) {
-        //
-        i.getExpression().accept(this);
-        //
-        i.getIfBlock().accept(this);
-        //
-        i.getElseBlock().accept(this);
+        // //
+        // i.getExpression().accept(this);
+        // //
+        // i.getIfBlock().accept(this);
+        // //
+        // i.getElseBlock().accept(this);
+        // return null;
+
+        // From Corless example in class
+        // Instruction i1;
+        // Label label1 = this.labelFactory.getLabel();
+        // Label label2 = this.labelFactory.getLabel();
+        // Temp temp1 = i.getExpression().accept(this);
+        // // need new temp here if i1 is LOCAL or PARAMETER so we don't mess up state
+        // if (temp1.isParameterOrLocal()) {
+        //     Temp temp2 = this.tempFactory.getTemp(new BooleanType(), TempClass.TEMP);
+        //     i1 = new AssignmentInstruction(temp2, temp1);
+        //     this.instructions.add(i1);
+        //     temp1 = temp2;
+        // }
+        // i1 = new BooleanNegationOperation(temp1);
+        // this.instructions.add(i1);
+
+        // Instruction conditionalGotoInstruction = new ConditionalGotoInstruction(temp1, label1);
+        // this.instructions.add(conditionalGotoInstruction);
+
+        // // this.tempFactory.returnTemp(temp1);
+
+        // i.getIfBlock().accept(this);
+
+        // Instruction unconditionalGotoInstruction = new UnconditionalGotoInstruction(label2);
+        // this.instructions.add(unconditionalGotoInstruction);
+
+        // this.instructions.add(label1);
+
+        // i.getElseBlock().accept(this);
+        // this.instructions.add(label2);
         return null;
     }
 
     public Temp visit(IfStatement i) {
-        //
-        i.getExpression().accept(this);
-        //
-        i.getBlock().accept(this);
-        return null;
+        // //
+        // i.getExpression().accept(this);
+        // //
+        // i.getBlock().accept(this);
+        // return null;
 
-
-
-        // // From Corless example in class
+        // From Corless example in class
         // Instruction i1;
-        // Label l1 = new Label();
-        // Label l2 = new Label();
-        // Temp t = i.getExpression().accept(this);
-        // // need new temp here if i is LOCAL or PARAMETER so we don't mess up state
-        // if (this.tempFactory.isParameterOrLocal(t)) {
-        //     Temp t2 = this.tempFactory.getTemp(new BooleanType());
-        //     i1 = new AssignmentOperation(t2, t1);
+        // Label label1 = this.labelFactory.getLabel();
+        // Label label2 = this.labelFactory.getLabel();
+        // Temp temp1 = i.getExpression().accept(this);
+        // // need new temp here if i1 is LOCAL or PARAMETER so we don't mess up state
+        // if (temp1.isParameterOrLocal()) {
+        //     Temp temp2 = this.tempFactory.getTemp(new BooleanType(), TempClass.TEMP);
+        //     i1 = new AssignmentInstruction(temp2, temp1);
         //     this.instructions.add(i1);
-        //     t = t2;
+        //     temp1 = temp2;
         // }
-        // i1 = new BooleanNegationOperation(t);
+        // i1 = new BooleanNegationOperation(temp1);
         // this.instructions.add(i1);
 
-        // Instruction i2 = new IfStatement(t, l1);
-        // this.instructions.add(i2);
+        // Instruction conditionalGotoInstruction = new ConditionalGotoInstruction(temp1, label1);
+        // this.instructions.add(conditionalGotoInstruction);
 
-        // this.tempFactory.returnTemp(t);
+        // // this.tempFactory.returnTemp(temp1);
 
-        // i.getIfBlock().accept(this);
+        // i.getBlock().accept(this);
 
-        // Instruction i3 = new UnconditionalGotoInstruction(l2);
-        // this.instructions.add(i3);
-        
-        // this.instructions.add(l1);
+        // Instruction unconditionalGotoInstruction = new UnconditionalGotoInstruction(label2);
+        // this.instructions.add(unconditionalGotoInstruction);
 
-        // // the following is for if/else statements
-        // i.getElseBlock().accept(this);
-        // this.instructions.add(l2);
-        // return null;
+        // this.instructions.add(label1);
+
+        // this.instructions.add(label2);
+        return null;
     }
 
     public Temp visit(IntegerLiteral i) {
-        //
-        return null;
+        Temp temp = this.tempFactory.getTemp(new IntegerType(), TempClass.TEMP);
+        IntegerConstant constant = new IntegerConstant(i.getValue());
+        Instruction literal = new AssignmentInstruction(temp, constant);
+        this.instructions.add(literal);
+        return temp;
     }
 
     public Temp visit(LessThanExpression e) {
-        e.getLeftExpression().accept(this);
+        Temp left = e.getLeftExpression().accept(this);
         if (e.getRightExpression() != null) {
             //
             e.getRightExpression().accept(this);
         }
-        return null;
+        return left;
     }
 
     public Temp visit(MultiplyExpression e) {
-        e.getLeftExpression().accept(this);
+        Temp left = e.getLeftExpression().accept(this);
         if (e.getRightExpression() != null) {
             //
             e.getRightExpression().accept(this);
         }
-        return null;
+        return left;
     }
 
     public Temp visit(ParenthesisExpression p) {
-        //
-        p.getExpression().accept(this);
-        //
-        return null;
+        return p.getExpression().accept(this);
     }
 
     public Temp visit(PrintlnStatement s) {
@@ -333,33 +363,39 @@ public class IRVisitor implements Visitor<Temp> {
     }
 
     public Temp visit(PrintStatement s) {
-        //
-        s.getExpression().accept(this);
-        //
+        Temp temp = s.getExpression().accept(this);
+        // Type type = temp.getType();
+        // Instruction printInstruction = new PrintInstruction(type, temp);
+        // this.instructions.add(printInstruction);
         return null;
     }
 
     public Temp visit(ast.Program p) {
-        int slashIndex = this.filename.lastIndexOf('/');        
-        int dotIndex = this.filename.lastIndexOf('.');
-        String name = this.filename.substring(slashIndex + 1, dotIndex);
-        Instruction i = new ir.Program(name);
-        this.instructions.add(i);
-        for (Function f : p.getFunctions()) {
+        this.functionEnvironment.beginScope();
+        for (ast.Function f : p.getFunctions()) {
+            String functionName =
+                f.getFunctionDeclaration().getDeclaration().getIdentifier().getName();
+            Type functionType =
+                f.getFunctionDeclaration().getDeclaration().getType().getType();
+            if (this.functionEnvironment.inCurrentScope(functionName)) {
+                System.out.println("whoops");
+            }
+            this.functionEnvironment.add(functionName, functionType);
+        }
+        for (ast.Function f : p.getFunctions()) {
             f.accept(this);
         }
+        this.functionEnvironment.endScope();
         return null;
     }
 
     public Temp visit(ReturnStatement s) {
+        Temp temp = null;
         if (s.getExpression() != null) {
-            Temp temp = s.getExpression().accept(this);
-            Instruction returnInstruction = new ReturnInstruction(temp);
-            this.instructions.add(returnInstruction);
-        } else {
-            Instruction returnInstruction = new ReturnInstruction();
-            this.instructions.add(returnInstruction);
+            temp = s.getExpression().accept(this);
         }
+        Instruction returnInstruction = new ReturnInstruction(temp);
+        this.instructions.add(returnInstruction);
         return null;
     }
 
@@ -392,9 +428,9 @@ public class IRVisitor implements Visitor<Temp> {
     public Temp visit(VariableDeclaration v) {
         v.getDeclaration().accept(this);
         Type type = v.getDeclaration().getType().getType();
-        Instruction tempDeclaration = new TempDeclarationInstruction(type, tempCount);
-        this.instructions.add(tempDeclaration);
-        this.tempCount++;
+        Temp temp = this.tempFactory.getTemp(type, TempClass.LOCAL);
+        String name = v.getDeclaration().getIdentifier().getName();
+        this.variableEnvironment.add(name, temp);
         return null;
     }
 

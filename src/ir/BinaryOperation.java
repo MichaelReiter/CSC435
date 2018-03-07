@@ -3,7 +3,7 @@ package ir;
 import java.lang.StringBuilder;
 import type.Type;
 
-public abstract class BinaryOperation extends Instruction {
+public abstract class BinaryOperation extends Operand {
     private final Temp temp1;
     private final Temp temp2;
     private final Type type;
@@ -24,7 +24,6 @@ public abstract class BinaryOperation extends Instruction {
         sb.append(this.operator);
         sb.append(" ");
         sb.append(this.temp2);
-        sb.append(";");
         return sb.toString();
     }
 }
