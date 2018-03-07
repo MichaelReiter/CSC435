@@ -297,40 +297,25 @@ public class IRVisitor implements Visitor<Temp> {
     }
 
     public Temp visit(IfStatement i) {
-        // //
-        // i.getExpression().accept(this);
-        // //
-        // i.getBlock().accept(this);
-        // return null;
-
-        // From Corless example in class
-        // Instruction i1;
-        // Label label1 = this.labelFactory.getLabel();
-        // Label label2 = this.labelFactory.getLabel();
-        // Temp temp1 = i.getExpression().accept(this);
-        // // need new temp here if i1 is LOCAL or PARAMETER so we don't mess up state
-        // if (temp1.isParameterOrLocal()) {
-        //     Temp temp2 = this.tempFactory.getTemp(new BooleanType(), TempClass.TEMP);
-        //     i1 = new AssignmentInstruction(temp2, temp1);
-        //     this.instructions.add(i1);
-        //     temp1 = temp2;
-        // }
-        // i1 = new BooleanNegationOperation(temp1);
-        // this.instructions.add(i1);
-
-        // Instruction conditionalGotoInstruction = new ConditionalGotoInstruction(temp1, label1);
-        // this.instructions.add(conditionalGotoInstruction);
-
-        // // this.tempFactory.returnTemp(temp1);
-
-        // i.getBlock().accept(this);
-
-        // Instruction unconditionalGotoInstruction = new UnconditionalGotoInstruction(label2);
-        // this.instructions.add(unconditionalGotoInstruction);
-
-        // this.instructions.add(label1);
-
-        // this.instructions.add(label2);
+        Label label = this.labelFactory.getLabel();
+        Temp expressionTemp = i.getExpression().accept(this);
+        // Need new temp here if expressionTemp is a local variable
+        // or function parameter so we don't mess up state
+        if (expressionTemp.isParameterOrLocal()) {
+            Temp temp = this.tempFactory.getTemp(new BooleanType(), TempClass.TEMP);
+            Instruction assignment = new AssignmentInstruction(temp, expressionTemp);
+            this.instructions.add(assignment);
+            expressionTemp = temp;
+        }
+        Temp negatedExpression = this.tempFactory.getTemp(new BooleanType(), TempClass.TEMP);
+        Operand negationOperation = new BooleanNegationOperation(expressionTemp);
+        Instruction assignment = new AssignmentInstruction(negatedExpression, negationOperation);
+        this.instructions.add(assignment);
+        Instruction conditionalGotoInstruction =
+            new ConditionalGotoInstruction(expressionTemp, label);
+        this.instructions.add(conditionalGotoInstruction);
+        i.getBlock().accept(this);
+        this.instructions.add(label);
         return null;
     }
 

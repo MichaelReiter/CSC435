@@ -4,26 +4,26 @@ import java.lang.StringBuilder;
 import type.Type;
 
 public abstract class BinaryOperation extends Operand {
-    private final Temp temp1;
-    private final Temp temp2;
     private final Type type;
+    private final Temp leftOperand;
+    private final Temp rightOperand;
     private final String operator;
 
-    public BinaryOperation(Temp temp1, Temp temp2, Type type, String operator) {
-        this.temp1 = temp1;
-        this.temp2 = temp2;
+    public BinaryOperation(Type type, Temp leftOperand, Temp rightOperand, String operator) {
         this.type = type;
+        this.leftOperand = leftOperand;
+        this.rightOperand = rightOperand;
         this.operator = operator;
     }
 
     public final String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(this.temp1);
+        sb.append(this.leftOperand);
         sb.append(" ");
         sb.append(this.type.toChar());
         sb.append(this.operator);
         sb.append(" ");
-        sb.append(this.temp2);
+        sb.append(this.rightOperand);
         return sb.toString();
     }
 }
