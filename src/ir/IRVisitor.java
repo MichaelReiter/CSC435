@@ -44,8 +44,12 @@ import environment.StackHashMapEnvironment;
 import ir.Temp.TempClass;
 import java.util.ArrayList;
 import java.util.List;
+import type.ArrayType;
 import type.BooleanType;
+import type.CharType;
+import type.FloatType;
 import type.IntegerType;
+import type.StringType;
 import type.Type;
 
 public class IRVisitor implements Visitor<Temp> {
@@ -119,15 +123,19 @@ public class IRVisitor implements Visitor<Temp> {
     }
 
     public Temp visit(BooleanLiteral b) {
-        //
-        return null;
+        Temp temp = this.tempFactory.getTemp(new BooleanType(), TempClass.TEMP);
+        Constant constant = new BooleanConstant(b.getValue());
+        Instruction literal = new AssignmentInstruction(temp, constant);
+        this.instructions.add(literal);
+        return temp;
     }
 
     public Temp visit(CharacterLiteral c) {
-        //
-        //
-        //
-        return null;
+        Temp temp = this.tempFactory.getTemp(new CharType(), TempClass.TEMP);
+        Constant constant = new CharacterConstant(c.getValue());
+        Instruction literal = new AssignmentInstruction(temp, constant);
+        this.instructions.add(literal);
+        return temp;
     }
 
     public Temp visit(Declaration d) {
@@ -163,8 +171,11 @@ public class IRVisitor implements Visitor<Temp> {
     }
 
     public Temp visit(FloatLiteral f) {
-        //
-        return null;
+        Temp temp = this.tempFactory.getTemp(new FloatType(), TempClass.TEMP);
+        Constant constant = new FloatConstant(f.getValue());
+        Instruction literal = new AssignmentInstruction(temp, constant);
+        this.instructions.add(literal);
+        return temp;
     }
 
     public Temp visit(FormalParameters p) {
@@ -326,7 +337,7 @@ public class IRVisitor implements Visitor<Temp> {
 
     public Temp visit(IntegerLiteral i) {
         Temp temp = this.tempFactory.getTemp(new IntegerType(), TempClass.TEMP);
-        IntegerConstant constant = new IntegerConstant(i.getValue());
+        Constant constant = new IntegerConstant(i.getValue());
         Instruction literal = new AssignmentInstruction(temp, constant);
         this.instructions.add(literal);
         return temp;
@@ -356,17 +367,17 @@ public class IRVisitor implements Visitor<Temp> {
 
     public Temp visit(PrintlnStatement s) {
         Temp temp = s.getExpression().accept(this);
-        // Type type = temp.getType();
-        // Instruction printlnInstruction = new PrintlnInstruction(type, temp);
-        // this.instructions.add(printlnInstruction);
+        Type type = temp.getType();
+        Instruction printlnInstruction = new PrintlnInstruction(type, temp);
+        this.instructions.add(printlnInstruction);
         return null;
     }
 
     public Temp visit(PrintStatement s) {
         Temp temp = s.getExpression().accept(this);
-        // Type type = temp.getType();
-        // Instruction printInstruction = new PrintInstruction(type, temp);
-        // this.instructions.add(printInstruction);
+        Type type = temp.getType();
+        Instruction printInstruction = new PrintInstruction(type, temp);
+        this.instructions.add(printInstruction);
         return null;
     }
 
@@ -407,8 +418,11 @@ public class IRVisitor implements Visitor<Temp> {
     }
 
     public Temp visit(StringLiteral s) {
-        //
-        return null;
+        Temp temp = this.tempFactory.getTemp(new StringType(), TempClass.TEMP);
+        Constant constant = new StringConstant(s.getValue());
+        Instruction literal = new AssignmentInstruction(temp, constant);
+        this.instructions.add(literal);
+        return temp;
     }
 
     public Temp visit(SubtractExpression e) {

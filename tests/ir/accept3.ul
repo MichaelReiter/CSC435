@@ -4,7 +4,9 @@ void main() {
 
 void foo(int i, float f, char c) {
     string s;
+    float f2;
     boolean b;
 
     i = i + i;
+    b = true;
 }
