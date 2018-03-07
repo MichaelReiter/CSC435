@@ -76,11 +76,11 @@ public class IRVisitor implements Visitor<Temp> {
         Temp left = e.getLeftExpression().accept(this);
         if (e.getRightExpression() != null) {
             Temp right = e.getRightExpression().accept(this);
-            Temp result = this.tempFactory.getTemp(left.getType(), TempClass.TEMP);
             Type type = left.getType();
+            Temp result = this.tempFactory.getTemp(type, TempClass.TEMP);
             Operand sum = new AddOperation(type, left, right);
-            Instruction add = new AssignmentInstruction(result, sum);
-            this.instructions.add(add);
+            Instruction assignment = new AssignmentInstruction(result, sum);
+            this.instructions.add(assignment);
             return result;
         }
         return left;
@@ -112,8 +112,8 @@ public class IRVisitor implements Visitor<Temp> {
         String name = a.getIdentifier().getName();
         Temp operand1 = this.variableEnvironment.lookup(name);
         Temp operand2 = a.getExpression().accept(this);
-        Instruction assignmentInstruction = new AssignmentInstruction(operand1, operand2);
-        this.instructions.add(assignmentInstruction);
+        Instruction assignment = new AssignmentInstruction(operand1, operand2);
+        this.instructions.add(assignment);
         return null;
     }
 
@@ -125,16 +125,16 @@ public class IRVisitor implements Visitor<Temp> {
     public Temp visit(BooleanLiteral b) {
         Temp temp = this.tempFactory.getTemp(new BooleanType(), TempClass.TEMP);
         Constant constant = new BooleanConstant(b.getValue());
-        Instruction literal = new AssignmentInstruction(temp, constant);
-        this.instructions.add(literal);
+        Instruction assignment = new AssignmentInstruction(temp, constant);
+        this.instructions.add(assignment);
         return temp;
     }
 
     public Temp visit(CharacterLiteral c) {
         Temp temp = this.tempFactory.getTemp(new CharType(), TempClass.TEMP);
         Constant constant = new CharacterConstant(c.getValue());
-        Instruction literal = new AssignmentInstruction(temp, constant);
-        this.instructions.add(literal);
+        Instruction assignment = new AssignmentInstruction(temp, constant);
+        this.instructions.add(assignment);
         return temp;
     }
 
@@ -151,8 +151,13 @@ public class IRVisitor implements Visitor<Temp> {
     public Temp visit(EqualityExpression e) {
         Temp left = e.getLeftExpression().accept(this);
         if (e.getRightExpression() != null) {
-            //
-            e.getRightExpression().accept(this);
+            Temp right = e.getRightExpression().accept(this);
+            Type type = left.getType();
+            Temp result = this.tempFactory.getTemp(new BooleanType(), TempClass.TEMP);
+            Operand equality = new EqualityOperation(type, left, right);
+            Instruction assignment = new AssignmentInstruction(result, equality);
+            this.instructions.add(assignment);
+            return result;
         }
         return left;
     }
@@ -173,8 +178,8 @@ public class IRVisitor implements Visitor<Temp> {
     public Temp visit(FloatLiteral f) {
         Temp temp = this.tempFactory.getTemp(new FloatType(), TempClass.TEMP);
         Constant constant = new FloatConstant(f.getValue());
-        Instruction literal = new AssignmentInstruction(temp, constant);
-        this.instructions.add(literal);
+        Instruction assignment = new AssignmentInstruction(temp, constant);
+        this.instructions.add(assignment);
         return temp;
     }
 
@@ -197,14 +202,12 @@ public class IRVisitor implements Visitor<Temp> {
     }
 
     public Temp visit(FunctionBody f) {
-        //
         for (VariableDeclaration vd : f.getVariableDeclarations()) {
             vd.accept(this);
         }
-        if (f.size() > 0) {
-            //
-        }
         f.getStatementList().accept(this);
+        // Always insert an empty return instruction
+        // at the end of a function body even if it's redundant
         Instruction returnInstruction = new ReturnInstruction();
         this.instructions.add(returnInstruction);
         this.currentFunction.setTempFactory(this.tempFactory);
@@ -219,8 +222,8 @@ public class IRVisitor implements Visitor<Temp> {
         f.getExpressionList().accept(this);
         String functionName = f.getIdentifier().getName();
         List<Temp> functionArguments = new ArrayList<Temp>();
-        Instruction callInstruction = new CallInstruction(functionName, functionArguments);
-        this.instructions.add(callInstruction);
+        Instruction call = new CallInstruction(functionName, functionArguments);
+        this.instructions.add(call);
         return null;
     }
 
@@ -235,15 +238,11 @@ public class IRVisitor implements Visitor<Temp> {
         for (Declaration d : f.getFormalParameters().getParameters()) {
             parameterTypes.add(d.getType().getType());
         }
-        // for (Type t : parameterTypes) {
-        //     this.tempFactory.getTemp(t, TempClass.PARAMETER);
-        // }
         this.currentFunction = new ir.Function(name, returnType, parameterTypes);
         return null;
     }
 
     public Temp visit(Identifier i) {
-        //
         return null;
     }
 
@@ -338,16 +337,21 @@ public class IRVisitor implements Visitor<Temp> {
     public Temp visit(IntegerLiteral i) {
         Temp temp = this.tempFactory.getTemp(new IntegerType(), TempClass.TEMP);
         Constant constant = new IntegerConstant(i.getValue());
-        Instruction literal = new AssignmentInstruction(temp, constant);
-        this.instructions.add(literal);
+        Instruction assignment = new AssignmentInstruction(temp, constant);
+        this.instructions.add(assignment);
         return temp;
     }
 
     public Temp visit(LessThanExpression e) {
         Temp left = e.getLeftExpression().accept(this);
         if (e.getRightExpression() != null) {
-            //
-            e.getRightExpression().accept(this);
+            Temp right = e.getRightExpression().accept(this);
+            Type type = left.getType();
+            Temp result = this.tempFactory.getTemp(new BooleanType(), TempClass.TEMP);
+            Operand lessThan = new LessThanOperation(type, left, right);
+            Instruction assignment = new AssignmentInstruction(result, lessThan);
+            this.instructions.add(assignment);
+            return result;
         }
         return left;
     }
@@ -355,8 +359,13 @@ public class IRVisitor implements Visitor<Temp> {
     public Temp visit(MultiplyExpression e) {
         Temp left = e.getLeftExpression().accept(this);
         if (e.getRightExpression() != null) {
-            //
-            e.getRightExpression().accept(this);
+            Temp right = e.getRightExpression().accept(this);
+            Type type = left.getType();
+            Temp result = this.tempFactory.getTemp(type, TempClass.TEMP);
+            Operand multiply = new MultiplyOperation(type, left, right);
+            Instruction assignment = new AssignmentInstruction(result, multiply);
+            this.instructions.add(assignment);
+            return result;
         }
         return left;
     }
@@ -368,16 +377,16 @@ public class IRVisitor implements Visitor<Temp> {
     public Temp visit(PrintlnStatement s) {
         Temp temp = s.getExpression().accept(this);
         Type type = temp.getType();
-        Instruction printlnInstruction = new PrintlnInstruction(type, temp);
-        this.instructions.add(printlnInstruction);
+        Instruction println = new PrintlnInstruction(type, temp);
+        this.instructions.add(println);
         return null;
     }
 
     public Temp visit(PrintStatement s) {
         Temp temp = s.getExpression().accept(this);
         Type type = temp.getType();
-        Instruction printInstruction = new PrintInstruction(type, temp);
-        this.instructions.add(printInstruction);
+        Instruction print = new PrintInstruction(type, temp);
+        this.instructions.add(print);
         return null;
     }
 
@@ -420,18 +429,23 @@ public class IRVisitor implements Visitor<Temp> {
     public Temp visit(StringLiteral s) {
         Temp temp = this.tempFactory.getTemp(new StringType(), TempClass.TEMP);
         Constant constant = new StringConstant(s.getValue());
-        Instruction literal = new AssignmentInstruction(temp, constant);
-        this.instructions.add(literal);
+        Instruction assignment = new AssignmentInstruction(temp, constant);
+        this.instructions.add(assignment);
         return temp;
     }
 
     public Temp visit(SubtractExpression e) {
-        e.getLeftExpression().accept(this);
+        Temp left = e.getLeftExpression().accept(this);
         if (e.getRightExpression() != null) {
-            //
-            e.getRightExpression().accept(this);
+            Temp right = e.getRightExpression().accept(this);
+            Type type = left.getType();
+            Temp result = this.tempFactory.getTemp(type, TempClass.TEMP);
+            Operand subtract = new SubtractOperation(type, left, right);
+            Instruction assignment = new AssignmentInstruction(result, subtract);
+            this.instructions.add(assignment);
+            return result;
         }
-        return null;
+        return left;
     }
 
     public Temp visit(TypeNode t) {

@@ -1,0 +1,11 @@
+void main() {
+    int i;
+    int j;
+    boolean b;
+
+    j = i + i;
+    j = i - i;
+    j = i * i;
+    b = i < i;
+    b = i == i;
+}
