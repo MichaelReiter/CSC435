@@ -2,14 +2,14 @@ package ir;
 
 import ir.Temp.TempClass;
 import java.lang.StringBuilder;
-import type.IntegerType;
+import type.ArrayType;
 
 public class ArrayReference extends Temp {
     private final Temp identifier;
     private final Temp index;
 
     public ArrayReference(Temp identifier, Temp index) {
-        super((new IntegerType()), 0, TempClass.TEMP);
+        super(((ArrayType)identifier.getType()).getType(), 0, TempClass.TEMP);
         this.identifier = identifier;
         this.index = index;
     }

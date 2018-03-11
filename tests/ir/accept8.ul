@@ -1,5 +1,9 @@
 void main() {
-    string[3] s;
+    foo(1);
+}
 
-    println s[0];
+void foo(int x) {
+    int[3] int_array;
+
+    println int_array[x];
 }
