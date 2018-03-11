@@ -1,0 +1,5 @@
+void main() {
+    string[3] s;
+
+    println s[0];
+}

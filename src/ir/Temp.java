@@ -7,7 +7,6 @@ public class Temp extends Operand {
     private final Type type;
     private final int number;
     private final TempClass tempClass;
-    private boolean inUse;
 
     public enum TempClass {
         PARAMETER,

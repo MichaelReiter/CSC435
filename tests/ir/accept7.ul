@@ -1,0 +1,14 @@
+void main() {
+    string[3] array_of_strings;
+    int i;
+
+    array_of_strings[0] = "Hello";
+    array_of_strings[1] = " ";
+    array_of_strings[2] = "World";
+
+    i = 0;
+    while (i < 3) {
+        // print array_of_strings[i];
+        i = i + 1;
+    }
+}

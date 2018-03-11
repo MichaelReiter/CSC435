@@ -89,24 +89,22 @@ public class IRVisitor implements Visitor<Temp> {
     }
 
     public Temp visit(ArrayAssignmentStatement s) {
-        s.getArrayReference().accept(this);
-        //
-        s.getExpression().accept(this);
-        //
+        Temp arrayReference = s.getArrayReference().accept(this);
+        Temp expression = s.getExpression().accept(this);
+        Instruction assignment = new AssignmentInstruction(arrayReference, expression);
+        this.instructions.add(assignment);
         return null;
     }
 
-    public Temp visit(ArrayReference a) {
+    public Temp visit(ast.ArrayReference a) {
         a.getIdentifier().accept(this);
-        //
-        a.getExpression().accept(this);
-        //
-        return null;
+        Temp identifier = this.variableEnvironment.lookup(a.getIdentifier().getName());
+        Temp index = a.getExpression().accept(this);
+        return new ir.ArrayReference(identifier, index);
     }
 
     public Temp visit(ArrayReferenceExpression a) {
-        a.getArrayReference().accept(this);
-        return null;
+        return a.getArrayReference().accept(this);
     }
 
     public Temp visit(AssignmentStatement a) {
