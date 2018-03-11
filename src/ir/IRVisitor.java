@@ -176,7 +176,6 @@ public class IRVisitor implements Visitor<Temp> {
 
     public Temp visit(ExpressionStatement e) {
         e.getExpression().accept(this);
-        //
         return null;
     }
 
@@ -443,6 +442,11 @@ public class IRVisitor implements Visitor<Temp> {
         Temp temp = this.tempFactory.getTemp(type, TempClass.LOCAL);
         String name = v.getDeclaration().getIdentifier().getName();
         this.variableEnvironment.add(name, temp);
+        if (type instanceof ArrayType) {
+            Operand arrayInitialization = new ArrayInitialization((ArrayType)type);
+            Instruction assignment = new AssignmentInstruction(temp, arrayInitialization);
+            this.instructions.add(assignment);
+        }
         return null;
     }
 

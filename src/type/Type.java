@@ -1,22 +1,24 @@
 package type;
 
 public abstract class Type {
-    public char toChar() {
-        if (this.equals(new BooleanType())) {
-            return 'Z';
+    public String toChar() {
+        if (this instanceof ArrayType) {
+            return "A" + ((ArrayType)this).getType().toChar();
+        } else if (this.equals(new BooleanType())) {
+            return "Z";
         } else if (this.equals(new CharType())) {
-            return 'C';
+            return "C";
         } else if (this.equals(new FloatType())) {
-            return 'F';
+            return "F";
         } else if (this.equals(new IntegerType())) {
-            return 'I';
+            return "I";
         } else if (this.equals(new StringType())) {
-            return 'U';
+            return "U";
         } else if (this.equals(new VoidType())) {
-            return 'V';
+            return "V";
         } else {
             assert false : "Should never get here";
-            return 'A';
+            return "B";
         }
     }
 
