@@ -3,11 +3,11 @@ package ir;
 import java.lang.StringBuilder;
 import java.util.List;
 
-public class CallInstruction extends Instruction {
+public class FunctionCallOperation extends Operand {
     private final String functionName;
     private final List<Temp> functionArguments;
 
-    public CallInstruction(String functionName, List<Temp> functionArguments) {
+    public FunctionCallOperation(String functionName, List<Temp> functionArguments) {
         this.functionName = functionName;
         this.functionArguments = functionArguments;
     }
@@ -22,7 +22,7 @@ public class CallInstruction extends Instruction {
             sb.append(t.getType().toChar());
             sb.append(" ");
         }
-        sb.append(");");
+        sb.append(")");
         return sb.toString();
     }
 }

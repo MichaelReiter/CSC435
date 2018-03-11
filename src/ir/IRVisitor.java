@@ -51,6 +51,7 @@ import type.FloatType;
 import type.IntegerType;
 import type.StringType;
 import type.Type;
+import type.VoidType;
 
 public class IRVisitor implements Visitor<Temp> {
     private final Environment<String, Type> functionEnvironment;
@@ -222,9 +223,20 @@ public class IRVisitor implements Visitor<Temp> {
         f.getExpressionList().accept(this);
         String functionName = f.getIdentifier().getName();
         List<Temp> functionArguments = new ArrayList<Temp>();
-        Instruction call = new CallInstruction(functionName, functionArguments);
-        this.instructions.add(call);
-        return null;
+        Type functionReturnType = this.functionEnvironment.lookup(functionName);
+        Instruction functionCallInstruction =
+            new FunctionCallInstruction(functionName, functionArguments);
+        if (functionReturnType.equals(new VoidType())) {
+            this.instructions.add(functionCallInstruction);
+            return null;
+        } else {
+            Temp temp = this.tempFactory.getTemp(functionReturnType, TempClass.TEMP);
+            Operand functionCallOperation =
+                new FunctionCallOperation(functionName, functionArguments);
+            Instruction assign = new AssignmentInstruction(temp, functionCallOperation);
+            this.instructions.add(assign);
+            return temp;
+        }
     }
 
     public Temp visit(FunctionDeclaration f) {

@@ -7,4 +7,10 @@ void main() {
     } else {
         println "No";
     }
+
+    foo();
+}
+
+void foo() {
+
 }
