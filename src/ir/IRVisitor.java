@@ -58,6 +58,7 @@ public class IRVisitor implements Visitor<Temp> {
     private final Environment<String, Temp> variableEnvironment;
     private TempFactory tempFactory;
     private List<Instruction> instructions;
+    private List<Temp> expressionList;
     private LabelFactory labelFactory;
     private ir.Function currentFunction;
     private ir.Program program;
@@ -164,9 +165,12 @@ public class IRVisitor implements Visitor<Temp> {
     }
 
     public Temp visit(ExpressionList e) {
+        List<Temp> temps = new ArrayList<Temp>();
         for (Expression expr : e.getExpressions()) {
-            expr.accept(this);
+            Temp temp = expr.accept(this);
+            temps.add(temp);
         }
+        this.expressionList = temps;
         return null;
     }
 
@@ -222,17 +226,16 @@ public class IRVisitor implements Visitor<Temp> {
         f.getIdentifier().accept(this);
         f.getExpressionList().accept(this);
         String functionName = f.getIdentifier().getName();
-        List<Temp> functionArguments = new ArrayList<Temp>();
         Type functionReturnType = this.functionEnvironment.lookup(functionName);
         Instruction functionCallInstruction =
-            new FunctionCallInstruction(functionName, functionArguments);
+            new FunctionCallInstruction(functionName, this.expressionList);
         if (functionReturnType.equals(new VoidType())) {
             this.instructions.add(functionCallInstruction);
             return null;
         } else {
             Temp temp = this.tempFactory.getTemp(functionReturnType, TempClass.TEMP);
             Operand functionCallOperation =
-                new FunctionCallOperation(functionName, functionArguments);
+                new FunctionCallOperation(functionName, this.expressionList);
             Instruction assign = new AssignmentInstruction(temp, functionCallOperation);
             this.instructions.add(assign);
             return temp;
