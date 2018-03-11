@@ -434,7 +434,6 @@ public class IRVisitor implements Visitor<Temp> {
     }
 
     public Temp visit(TypeNode t) {
-        //
         return null;
     }
 
@@ -448,10 +447,29 @@ public class IRVisitor implements Visitor<Temp> {
     }
 
     public Temp visit(WhileStatement s) {
-        //
-        s.getExpression().accept(this);
-        //
+        Label loopLabel = this.labelFactory.getLabel();
+        Label breakLabel = this.labelFactory.getLabel();
+        this.instructions.add(loopLabel);
+        Temp expressionTemp = s.getExpression().accept(this);
+        // Need new temp here if expressionTemp is a local variable
+        // or function parameter so we don't mess up state
+        if (expressionTemp.isParameterOrLocal()) {
+            Temp temp = this.tempFactory.getTemp(new BooleanType(), TempClass.TEMP);
+            Instruction assignment = new AssignmentInstruction(temp, expressionTemp);
+            this.instructions.add(assignment);
+            expressionTemp = temp;
+        }
+        Temp negatedExpression = this.tempFactory.getTemp(new BooleanType(), TempClass.TEMP);
+        Operand negationOperation = new BooleanNegationOperation(expressionTemp);
+        Instruction assignment = new AssignmentInstruction(negatedExpression, negationOperation);
+        this.instructions.add(assignment);
+        Instruction conditionalGoto =
+            new ConditionalGotoInstruction(negatedExpression, breakLabel);
+        this.instructions.add(conditionalGoto);
         s.getBlock().accept(this);
+        Instruction unconditionalGoto = new UnconditionalGotoInstruction(loopLabel);
+        this.instructions.add(unconditionalGoto);
+        this.instructions.add(breakLabel);
         return null;
     }
 }
