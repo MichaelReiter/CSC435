@@ -44,7 +44,7 @@ public class Function extends Instruction {
         // Instructions
         for (Instruction i : this.instructions) {
             if (i.getClass() != Label.class) {
-                sb.append("    ");
+                sb.append("\t");
             }
             sb.append(i);
             sb.append("\n");
