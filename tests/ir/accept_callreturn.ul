@@ -1,0 +1,24 @@
+void main () {
+    int x;
+
+    foo(1,2);
+
+    x = bar  (6.8, "hello");
+}
+
+void foo (int a, int b) {
+    println a+b;
+}
+
+int bar (float a, string b) {
+    int retVal;
+
+    if (a < 3.4) {
+        retVal = 8;
+    }
+    else {
+        retVal = 11;
+    }
+    println b;
+    return retVal;
+}
