@@ -190,8 +190,8 @@ public class IRVisitor implements Visitor<Temp> {
         for (Declaration d : p.getParameters()) {
             d.accept(this);
             Type type = d.getType().getType();
-            Temp temp = this.tempFactory.getTemp(type, TempClass.PARAMETER);
             String name = d.getIdentifier().getName();
+            Temp temp = this.tempFactory.getTemp(type, TempClass.PARAMETER, name);
             this.variableEnvironment.add(name, temp);
         }
         return null;
@@ -437,8 +437,8 @@ public class IRVisitor implements Visitor<Temp> {
     public Temp visit(VariableDeclaration v) {
         v.getDeclaration().accept(this);
         Type type = v.getDeclaration().getType().getType();
-        Temp temp = this.tempFactory.getTemp(type, TempClass.LOCAL);
         String name = v.getDeclaration().getIdentifier().getName();
+        Temp temp = this.tempFactory.getTemp(type, TempClass.LOCAL, name);
         this.variableEnvironment.add(name, temp);
         if (type instanceof ArrayType) {
             Operand arrayInitialization = new ArrayInitialization((ArrayType)type);
