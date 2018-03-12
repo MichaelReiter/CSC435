@@ -8,7 +8,7 @@ void main() {
 
     i = 0;
     while (i < 3) {
-        // print array_of_strings[i];
+        print array_of_strings[i];
         i = i + 1;
     }
 }
