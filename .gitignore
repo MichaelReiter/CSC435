@@ -29,3 +29,6 @@ ul.tokens
 ulLexer.java
 ulParser.java
 ul__.g
+
+*.ir
+*.j
