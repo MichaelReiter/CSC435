@@ -1,0 +1,22 @@
+void main() {
+	int i;
+	char[7] name;
+	int n;
+
+	n = 7;	
+
+	name[0] = 'M';
+	name[1] = 'i';
+	name[2] = 'c';
+	name[3] = 'h';
+	name[4] = 'a';
+	name[5] = 'e';
+	name[6] = 'l';
+
+	i = 0;
+	while (i < n) {
+		print name[i + 1 - 1 * 1];
+		i = i + 1;
+	}
+}
+

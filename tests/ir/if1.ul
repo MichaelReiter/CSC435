@@ -1,0 +1,15 @@
+void main() {
+	int i;
+	string yes_string;
+	string no_string;
+
+	yes_string = "yes";
+	no_string = "no";
+	i = 4;
+	if (i == 5) {
+		println yes_string;
+	} else {
+		println no_string;
+	}
+}
+
