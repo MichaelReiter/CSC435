@@ -104,7 +104,12 @@ public class IRVisitor implements Visitor<Temp> {
     }
 
     public Temp visit(ArrayReferenceExpression a) {
-        return a.getArrayReference().accept(this);
+        Temp arrayReference = a.getArrayReference().accept(this);
+        Type type = arrayReference.getType();
+        Temp temp = this.tempFactory.getTemp(type, TempClass.TEMP);
+        Instruction assignment = new AssignmentInstruction(temp, arrayReference);
+        this.instructions.add(assignment);
+        return temp;
     }
 
     public Temp visit(AssignmentStatement a) {
@@ -357,22 +362,16 @@ public class IRVisitor implements Visitor<Temp> {
     }
 
     public Temp visit(PrintlnStatement s) {
-        Temp expression = s.getExpression().accept(this);
-        Type type = expression.getType();
-        Temp temp = this.tempFactory.getTemp(type, TempClass.TEMP);
-        Instruction assignment = new AssignmentInstruction(temp, expression);
-        this.instructions.add(assignment);
+        Temp temp = s.getExpression().accept(this);
+        Type type = temp.getType();
         Instruction println = new PrintlnInstruction(type, temp);
         this.instructions.add(println);
         return null;
     }
 
     public Temp visit(PrintStatement s) {
-        Temp expression = s.getExpression().accept(this);
-        Type type = expression.getType();
-        Temp temp = this.tempFactory.getTemp(type, TempClass.TEMP);
-        Instruction assignment = new AssignmentInstruction(temp, expression);
-        this.instructions.add(assignment);
+        Temp temp = s.getExpression().accept(this);
+        Type type = temp.getType();
         Instruction println = new PrintInstruction(type, temp);
         this.instructions.add(println);
         return null;

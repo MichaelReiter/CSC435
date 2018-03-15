@@ -4,7 +4,12 @@ void main() {
 
 void foo(int x) {
     int[3] int_array;
+    boolean[1] boolean_array;
 
     print int_array[x];
     println int_array[x];
+
+    if (boolean_array[x]) {
+        return;
+    }
 }
