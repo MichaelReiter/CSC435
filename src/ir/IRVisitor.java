@@ -246,6 +246,7 @@ public class IRVisitor implements Visitor<Temp> {
 
     public Temp visit(FunctionDeclaration f) {
         this.tempFactory = new TempFactory();
+        this.labelFactory = new LabelFactory();
         this.instructions = new ArrayList<Instruction>();
         f.getDeclaration().accept(this);
         f.getFormalParameters().accept(this);
