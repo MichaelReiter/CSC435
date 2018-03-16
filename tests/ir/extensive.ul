@@ -1,0 +1,168 @@
+void main() {
+	int i;
+	int[1] i_a;
+	int x;	
+
+	float f;
+	float[2] f_a;
+
+	char c;
+	char[3] c_a;
+
+	string s;
+	string[4] s_a;
+
+	boolean b;
+	boolean[5] b_a;
+
+	// integers
+	i = 1;
+	println i;
+	i = i + 1 * 2 + 3 - 4;
+	print i;
+	println "";
+
+	i = 0;
+	while (i < 1) {
+		i_a[i] = i;
+		println i_a[i];
+		x = i_a[i];
+		println x;
+		b = i < i;
+		println b;
+		b = i == i;
+		println b;
+		i = i + 1;
+	}
+
+	// floats
+	f = 1.0;
+	println f;
+	f = f + 1.0 * 2.0 + 3.0 - 4.5;
+	print f;
+	println "";
+	
+	i = 0;
+	while (i < 2) {
+		f_a[i] = 3.14;
+		println f_a[i];
+		f = f_a[i];
+		println f;
+		i = i + 1;
+		b = f < f;
+		println b;
+		b = f == f;
+		println b;
+		i = i + 1;
+	}
+
+	// characters
+	c = 'x';
+	println c;
+	c = 'a' + 'a' - 'a';
+	print c;
+	println "";
+
+	i = 0;
+	while (i < 3) {
+		c_a[i] = c;
+		println c_a[i];
+		c = c_a[i];
+		println c;
+		b = c < c;
+		println b;
+		b = c == c;
+		println b;
+		i = i + 1;
+	}
+
+	// strings
+	s = "hello";
+	println s;
+	s = "Michael" + " " + "Reiter";
+	println s;
+	
+	i = 0;
+	while (i < 4) {
+		s_a[i] = s;
+		println s_a[i];
+		s = s_a[i];
+		println s;
+		b = s < s;
+		println b;
+		b = s == s;
+		println b;
+		i = i + 1;
+	}
+
+	// booleans
+	b = true;
+	println b;
+	b = false;
+	println b;
+	b = (true == false);
+	println b;
+	
+	if (true) {
+		println "this should be printed";
+	}
+	
+	if (false) {
+		println "this should NOT be printed";
+	}
+
+	b = true;
+	if (b) {
+		println b;
+	} else {
+		println "should not reach here";
+	}
+
+	i = 0;
+	while (i < 3) {
+		if (i == 1) {
+			println "i equals 1";
+		} else {
+			println "i does not equal 1";
+		}
+		i = i + 1;
+	}
+	
+	i = 0;
+	while (i < 5) {
+		b_a[i] = true;
+		println b_a[i];
+		b = b_a[i];
+		println b;
+		b = b == b;
+		println b;
+		i = i + 1;
+	}
+	
+	println foo_i(1, 2, 3);
+	println foo_f(1.0, 2.0, 3.0);
+	println foo_c('a', 'b', 'c');
+	println foo_s("hello", " ", "world");
+	println foo_b(true, false);
+}
+
+int foo_i(int x, int y, int z) {
+	return x + y + z;
+}
+
+float foo_f(float x, float y, float z) {
+	return x + y + z;
+}
+
+char foo_c(char x, char y, char z) {
+	return x + y + z;
+}
+
+string foo_s(string x, string y, string z) {
+	return x + y + z;
+}
+
+boolean foo_b(boolean a, boolean b) {
+	return a == b;
+}
+

@@ -16,6 +16,6 @@ int foo (int x, int y)
 
 void main()
 {
-	foo(2,2);
+	println foo(2,2);
 }
 

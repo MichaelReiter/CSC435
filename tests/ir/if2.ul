@@ -15,8 +15,12 @@ void main() {
 
 	i = 0;
 	while (i < n) {
+		if (name[i] == 'M') {
+			print "Hello ";
+		}
 		print name[i + 1 - 1 * 1];
 		i = i + 1;
 	}
+	println "";
 }
 

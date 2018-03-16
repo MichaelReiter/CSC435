@@ -3,18 +3,21 @@ void foo (int x, int y)
 	int z;
 
 	z = x + 7 * y + 2;
-	
-	z = x + y;
+	println z;	
 
-	x == y;
+	z = x + y;
+	println z;
+
+	println (x == y);
 }
 
 void foo2 (float x, float y)
 {
 	float z;
 	z = x + 7.0 * y + 2.0;
-	
+	println z;
 	z = x + y;
+	println z;
 }
 
 
