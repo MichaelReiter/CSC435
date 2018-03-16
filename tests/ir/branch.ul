@@ -1,0 +1,25 @@
+void main() {
+	boolean b;
+	
+	b = true;
+	if (b) {
+		foo();
+	} else {
+		bar();
+	}
+}
+
+void foo() {
+	if (true) {
+		test();
+	}
+}
+
+void bar() {
+	println "bar";
+}
+
+void test() {
+	println "Hello world";
+}
+
