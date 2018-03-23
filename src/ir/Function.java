@@ -26,6 +26,10 @@ public class Function extends Instruction {
         this.instructions = instructions;
     }
 
+    public String getName() {
+        return this.name;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

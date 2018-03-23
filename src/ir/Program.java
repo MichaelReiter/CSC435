@@ -21,6 +21,10 @@ public class Program extends Instruction {
         return this.name;
     }
 
+    public List<Function> getFunctions() {
+        return this.functions;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder(1024);
