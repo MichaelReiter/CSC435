@@ -17,6 +17,10 @@ public class Program extends Instruction {
         this.functions.add(function);
     }
 
+    public String getName() {
+        return this.name;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder(1024);

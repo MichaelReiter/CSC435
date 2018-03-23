@@ -1,4 +1,5 @@
 import ast.Program;
+import codegen.JasminGenerator;
 import ir.IRVisitor;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -27,7 +28,8 @@ public class Compiler {
         IRVisitor irVisitor = new IRVisitor(programName);
         program.accept(irVisitor);
         ir.Program irProgram = irVisitor.getProgram();
-        System.out.println(irProgram);
+        JasminGenerator codegen = new JasminGenerator(irProgram);
+        codegen.generateCode();
     }
 
     public static void main(String[] args) {
