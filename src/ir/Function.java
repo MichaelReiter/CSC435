@@ -9,6 +9,7 @@ public class Function extends Instruction {
     private final String name;
     private final Type returnType;
     private final List<Type> parameterTypes;
+    private final String signature;
     private TempFactory tempFactory;
     private List<Instruction> instructions;
 
@@ -16,6 +17,14 @@ public class Function extends Instruction {
         this.name = name;
         this.returnType = returnType;
         this.parameterTypes = parameterTypes;
+        StringBuilder sb = new StringBuilder();
+        sb.append("(");
+        for (Type t : parameterTypes) {
+            sb.append(t.toChar());
+        }
+        sb.append(")");
+        sb.append(this.returnType.toChar());
+        this.signature = sb.toString();
     }
 
     public void setTempFactory(TempFactory tempFactory) {
@@ -26,8 +35,20 @@ public class Function extends Instruction {
         this.instructions = instructions;
     }
 
+    public TempFactory getTempFactory() {
+        return this.tempFactory;
+    }
+
     public String getName() {
         return this.name;
+    }
+
+    public String getSignature() {
+        return this.signature;
+    }
+
+    public List<Instruction> getInstructions() {
+        return this.instructions;
     }
 
     @Override
@@ -36,12 +57,8 @@ public class Function extends Instruction {
         // Function signature
         sb.append("FUNC ");
         sb.append(this.name);
-        sb.append(" (");
-        for (Type t : this.parameterTypes) {
-            sb.append(t.toChar());
-        }
-        sb.append(")");
-        sb.append(this.returnType.toChar());
+        sb.append(" ");
+        sb.append(this.signature);
         sb.append("\n{\n");
         // Temp declarations
         sb.append(tempFactory);

@@ -25,6 +25,10 @@ public class TempFactory {
         return temp;
     }
 
+    public int getTempCount() {
+        return this.temps.size();
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

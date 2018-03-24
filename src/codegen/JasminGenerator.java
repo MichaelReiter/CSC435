@@ -1,7 +1,8 @@
 package codegen;
 
-import ir.Program;
 import ir.Function;
+import ir.Instruction;
+import ir.Program;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -14,22 +15,44 @@ public class JasminGenerator {
         this.program = program;
     }
 
+    private String getJasmin(Function function) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(".method public static ");
+        String name = function.getName();
+        if (name.equals("main")) {
+            sb.append("__");
+        }
+        sb.append(name);
+        sb.append(function.getSignature());
+        sb.append("\n\t.limit locals ");
+        sb.append(function.getTempFactory().getTempCount());
+        // YOLO
+        sb.append("\n\t.limit stack 1000");
+        for (Instruction i : function.getInstructions()) {
+            sb.append(this.getJasmin(i));
+        }
+        sb.append("\n.end method\n");
+        return sb.toString();
+    }
+
+    private String getJasmin(Instruction instruction) {
+        return "";
+    }
+
     public void generateCode() throws IOException {
         StringBuilder sb = new StringBuilder();
-
         sb.append(".source ");
         sb.append(this.program.getName());
         sb.append(".ir\n");
         sb.append(".class public ");
         sb.append(this.program.getName());
         sb.append("\n");
-        sb.append(".super java/lang/Object\n");
-
+        sb.append(".super java/lang/Object\n\n");
         for (Function f : this.program.getFunctions()) {
-            // sb.append(f.getName());
+            sb.append(this.getJasmin(f));
+            sb.append("\n");
         }
-
-        sb.append("\n;--------------------------------------------;\n");
+        sb.append(";--------------------------------------------;\n");
         sb.append(";                                            ;\n");
         sb.append(";                Boilerplate                 ;\n");
         sb.append(";                                            ;\n");
@@ -47,7 +70,6 @@ public class JasminGenerator {
         sb.append("\tinvokenonvirtual java/lang/Object/<init>()V\n");
         sb.append("\treturn\n");
         sb.append(".end method\n");
-
         this.writeToFile(sb.toString());
     }
 
