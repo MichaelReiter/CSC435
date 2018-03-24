@@ -13,6 +13,10 @@ public class PrintlnInstruction extends Instruction {
         this.temp = temp;
     }
 
+    public Type getType() {
+        return this.type;
+    }
+
     public Temp getTemp() {
         return this.temp;
     }

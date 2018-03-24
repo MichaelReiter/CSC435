@@ -102,7 +102,29 @@ public class JasminVisitor implements CodeGenVisitor {
     }
 
     public void visit(PrintlnInstruction p) {
-        
+        this.stringBuilder.append("\tgetstatic java/lang/System/out Ljava/io/PrintStream;\n");
+        if (p.getType().equals(new IntegerType())) {
+            this.stringBuilder.append("\tiload ");
+            this.stringBuilder.append(p.getTemp().getNumber());
+            this.stringBuilder.append("\n\tinvokevirtual java/io/PrintStream/println(I)V\n");
+        } else if (p.getType().equals(new FloatType())) {
+            this.stringBuilder.append("\tfload ");
+            this.stringBuilder.append(p.getTemp().getNumber());
+            this.stringBuilder.append("\n\tinvokevirtual java/io/PrintStream/println(F)V\n");
+        } else if (p.getType().equals(new CharType())) {
+            this.stringBuilder.append("\tiload ");
+            this.stringBuilder.append(p.getTemp().getNumber());
+            this.stringBuilder.append("\n\tinvokevirtual java/io/PrintStream/println(C)V\n");
+        } else if (p.getType().equals(new StringType())) {
+            this.stringBuilder.append("\taload ");
+            this.stringBuilder.append(p.getTemp().getNumber());
+            this.stringBuilder.append(
+                "\n\tinvokevirtual java/io/PrintStream/println(Ljava/lang/String;)V\n");
+        } else if (p.getType().equals(new BooleanType())) {
+            this.stringBuilder.append("\tiload ");
+            this.stringBuilder.append(p.getTemp().getNumber());
+            this.stringBuilder.append("\n\tinvokevirtual java/io/PrintStream/println(Z)V\n");
+        }
     }
 
     public void visit(ReturnInstruction r) {

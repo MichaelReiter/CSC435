@@ -4,4 +4,10 @@ void main() {
     char c;
     string s;
     boolean b;
+
+    println i;
+    println f;
+    println c;
+    println s;
+    println b;
 }
