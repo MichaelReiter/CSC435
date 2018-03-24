@@ -25,6 +25,10 @@ public class TempFactory {
         return temp;
     }
 
+    public List<Temp> getTemps() {
+        return this.temps;
+    }
+
     public int getTempCount() {
         return this.temps.size();
     }

@@ -11,11 +11,18 @@ import ir.PrintlnInstruction;
 import ir.Program;
 import ir.ReturnInstruction;
 import ir.Temp;
+import ir.TempFactory;
 import ir.UnconditionalGotoInstruction;
+import ir.Temp.TempClass;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.StringBuilder;
+import type.BooleanType;
+import type.CharType;
+import type.FloatType;
+import type.IntegerType;
+import type.StringType;
 
 public class JasminVisitor implements CodeGenVisitor {
     private final Program program;
@@ -48,10 +55,34 @@ public class JasminVisitor implements CodeGenVisitor {
         this.stringBuilder.append(name);
         this.stringBuilder.append(f.getSignature());
         this.stringBuilder.append("\n\t.limit locals ");
-        this.stringBuilder.append(f.getTempFactory().getTempCount());
+        TempFactory tempFactory = f.getTempFactory();
+        this.stringBuilder.append(tempFactory.getTempCount());
         // Don't bother computing max stack size for toy compiler
         // Corless suggests setting arbitrary large value
         this.stringBuilder.append("\n\t.limit stack 1000\n");
+        // Initialize variables
+        for (Temp t : tempFactory.getTemps()) {
+            if (t.getTempClass() == TempClass.LOCAL) {
+                if (t.getType().equals(new IntegerType())) {
+                    this.stringBuilder.append("\tldc 0\n");
+                    this.stringBuilder.append("\tistore ");
+                } else if (t.getType().equals(new FloatType())) {
+                    this.stringBuilder.append("\tldc 0.0\n");
+                    this.stringBuilder.append("\tfstore ");
+                } else if (t.getType().equals(new CharType())) {
+                    this.stringBuilder.append("\tldc 0\n");
+                    this.stringBuilder.append("\tistore ");
+                } else if (t.getType().equals(new StringType())) {
+                    this.stringBuilder.append("\taconst_null\n");
+                    this.stringBuilder.append("\tastore ");
+                } else if (t.getType().equals(new BooleanType())) {
+                    this.stringBuilder.append("\tldc 0\n");
+                    this.stringBuilder.append("\tistore ");
+                }
+                this.stringBuilder.append(t.getNumber());
+                this.stringBuilder.append("\n");
+            }
+        }
         for (Instruction i : f.getInstructions()) {
             i.accept(this);
         }
