@@ -1,3 +1,5 @@
 package ir;
 
-public abstract class Instruction {}
+import codegen.CodeGenVisitable;
+
+public abstract class Instruction implements CodeGenVisitable {}

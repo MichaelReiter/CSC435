@@ -1,5 +1,6 @@
 package ir;
 
+import codegen.CodeGenVisitor;
 import java.lang.StringBuilder;
 
 public class Label extends Instruction {
@@ -11,6 +12,10 @@ public class Label extends Instruction {
 
     public int getNumber() {
         return this.number;
+    }
+
+    public void accept(CodeGenVisitor v) {
+        v.visit(this);
     }
 
     @Override

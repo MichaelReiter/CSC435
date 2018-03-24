@@ -1,5 +1,6 @@
 package ir;
 
+import codegen.CodeGenVisitor;
 import java.lang.StringBuilder;
 
 public class AssignmentInstruction extends Instruction {
@@ -9,6 +10,10 @@ public class AssignmentInstruction extends Instruction {
     public AssignmentInstruction(Operand operand1, Operand operand2) {
         this.operand1 = operand1;
         this.operand2 = operand2;
+    }
+
+    public void accept(CodeGenVisitor v) {
+        v.visit(this);
     }
 
     @Override

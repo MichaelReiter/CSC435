@@ -1,5 +1,6 @@
 package ir;
 
+import codegen.CodeGenVisitor;
 import java.lang.StringBuilder;
 
 public class ReturnInstruction extends Instruction {
@@ -11,6 +12,10 @@ public class ReturnInstruction extends Instruction {
 
     public ReturnInstruction(Temp temp) {
         this.temp = temp;
+    }
+
+    public void accept(CodeGenVisitor v) {
+        v.visit(this);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package ir;
 
+import codegen.CodeGenVisitor;
 import java.lang.StringBuilder;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +50,10 @@ public class Function extends Instruction {
 
     public List<Instruction> getInstructions() {
         return this.instructions;
+    }
+
+    public void accept(CodeGenVisitor v) {
+        v.visit(this);
     }
 
     @Override

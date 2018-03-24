@@ -1,5 +1,6 @@
 package ir;
 
+import codegen.CodeGenVisitor;
 import java.lang.StringBuilder;
 import type.Type;
 
@@ -10,6 +11,10 @@ public class PrintInstruction extends Instruction {
     public PrintInstruction(Type type, Temp temp) {
         this.type = type;
         this.temp = temp;
+    }
+
+    public void accept(CodeGenVisitor v) {
+        v.visit(this);
     }
 
     @Override

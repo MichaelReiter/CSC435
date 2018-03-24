@@ -1,5 +1,6 @@
 package ir;
 
+import codegen.CodeGenVisitor;
 import java.lang.StringBuilder;
 import java.util.List;
 
@@ -10,6 +11,10 @@ public class FunctionCallInstruction extends Instruction {
     public FunctionCallInstruction(String functionName, List<Temp> functionArguments) {
         this.functionName = functionName;
         this.functionArguments = functionArguments;
+    }
+
+    public void accept(CodeGenVisitor v) {
+        v.visit(this);
     }
 
     @Override

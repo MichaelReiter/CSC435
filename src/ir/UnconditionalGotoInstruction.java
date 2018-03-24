@@ -1,5 +1,6 @@
 package ir;
 
+import codegen.CodeGenVisitor;
 import java.lang.StringBuilder;
 
 public class UnconditionalGotoInstruction extends Instruction {
@@ -7,6 +8,10 @@ public class UnconditionalGotoInstruction extends Instruction {
 
     public UnconditionalGotoInstruction(Label label) {
         this.label = label;
+    }
+
+    public void accept(CodeGenVisitor v) {
+        v.visit(this);
     }
 
     @Override

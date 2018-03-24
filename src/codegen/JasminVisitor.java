@@ -47,7 +47,7 @@ public class JasminVisitor implements CodeGenVisitor {
         // Corless suggests setting arbitrary large value
         this.stringBuilder.append("\n\t.limit stack 1000");
         for (Instruction i : f.getInstructions()) {
-            // i.accept(this);
+            i.accept(this);
         }
         this.stringBuilder.append("\n.end method\n");
     }
@@ -85,7 +85,7 @@ public class JasminVisitor implements CodeGenVisitor {
         this.stringBuilder.append("\n");
         this.stringBuilder.append(".super java/lang/Object\n\n");
         for (Function f : this.program.getFunctions()) {
-            // f.accept(this);
+            f.accept(this);
             this.stringBuilder.append("\n");
         }
         this.stringBuilder.append(";--------------------------------------------;\n");

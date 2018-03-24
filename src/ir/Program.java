@@ -4,7 +4,7 @@ import java.lang.StringBuilder;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Program extends Instruction {
+public class Program {
     private final String name;
     private final List<Function> functions;
 
