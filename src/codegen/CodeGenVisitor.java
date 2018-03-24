@@ -8,6 +8,7 @@ import ir.Label;
 import ir.PrintInstruction;
 import ir.PrintlnInstruction;
 import ir.ReturnInstruction;
+import ir.Temp;
 import ir.UnconditionalGotoInstruction;
 
 public interface CodeGenVisitor {
@@ -19,5 +20,6 @@ public interface CodeGenVisitor {
     public void visit(PrintInstruction p);
     public void visit(PrintlnInstruction p);
     public void visit(ReturnInstruction r);
+    public void visit(Temp t);
     public void visit(UnconditionalGotoInstruction u);
 }

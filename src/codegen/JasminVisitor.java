@@ -10,6 +10,7 @@ import ir.PrintInstruction;
 import ir.PrintlnInstruction;
 import ir.Program;
 import ir.ReturnInstruction;
+import ir.Temp;
 import ir.UnconditionalGotoInstruction;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -26,11 +27,16 @@ public class JasminVisitor implements CodeGenVisitor {
     }
 
     public void visit(AssignmentInstruction a) {
-        
+        // a.getLeftOperand().accept(this);
+        // a.getRightOperand().accept(this);
     }
 
     public void visit(ConditionalGotoInstruction c) {
-        
+        this.stringBuilder.append("\tiload ");
+        this.stringBuilder.append(c.getCondition().getNumber());
+        this.stringBuilder.append("\n\tifne L");
+        this.stringBuilder.append(c.getLabel().getNumber());
+        this.stringBuilder.append("\n");
     }
 
     public void visit(Function f) {
@@ -45,11 +51,11 @@ public class JasminVisitor implements CodeGenVisitor {
         this.stringBuilder.append(f.getTempFactory().getTempCount());
         // Don't bother computing max stack size for toy compiler
         // Corless suggests setting arbitrary large value
-        this.stringBuilder.append("\n\t.limit stack 1000");
+        this.stringBuilder.append("\n\t.limit stack 1000\n");
         for (Instruction i : f.getInstructions()) {
             i.accept(this);
         }
-        this.stringBuilder.append("\n.end method\n");
+        this.stringBuilder.append(".end method\n");
     }
 
     public void visit(FunctionCallInstruction f) {
@@ -69,11 +75,17 @@ public class JasminVisitor implements CodeGenVisitor {
     }
 
     public void visit(ReturnInstruction r) {
-        
+        this.stringBuilder.append("\treturn\n");
+    }
+
+    public void visit(Temp t) {
+
     }
 
     public void visit(UnconditionalGotoInstruction u) {
-        
+        this.stringBuilder.append("\tgoto L");
+        this.stringBuilder.append(u.getLabel().getNumber());
+        this.stringBuilder.append("\n");
     }
 
     public void generateCode() throws IOException {

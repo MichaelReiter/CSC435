@@ -1,5 +1,6 @@
 package ir;
 
+import codegen.CodeGenVisitor;
 import java.lang.StringBuilder;
 import type.Type;
 
@@ -47,6 +48,10 @@ public class Temp extends Operand {
 
     public String getName() {
         return this.name;
+    }
+
+    public void accept(CodeGenVisitor v) {
+        v.visit(this);
     }
 
     @Override

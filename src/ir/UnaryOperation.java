@@ -14,6 +14,7 @@ public abstract class UnaryOperation extends Operand {
         this.operator = operator;
     }
 
+    @Override
     public final String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(this.type.toChar());

@@ -12,6 +12,14 @@ public class AssignmentInstruction extends Instruction {
         this.operand2 = operand2;
     }
 
+    public Operand getLeftOperand() {
+        return this.operand1;
+    }
+
+    public Operand getRightOperand() {
+        return this.operand2;
+    }
+
     public void accept(CodeGenVisitor v) {
         v.visit(this);
     }

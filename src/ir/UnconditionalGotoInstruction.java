@@ -10,6 +10,10 @@ public class UnconditionalGotoInstruction extends Instruction {
         this.label = label;
     }
 
+    public Label getLabel() {
+        return this.label;
+    }
+
     public void accept(CodeGenVisitor v) {
         v.visit(this);
     }
