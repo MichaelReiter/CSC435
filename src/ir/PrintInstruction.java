@@ -13,6 +13,14 @@ public class PrintInstruction extends Instruction {
         this.temp = temp;
     }
 
+    public Type getType() {
+        return this.type;
+    }
+
+    public Temp getTemp() {
+        return this.temp;
+    }
+
     public void accept(CodeGenVisitor v) {
         v.visit(this);
     }

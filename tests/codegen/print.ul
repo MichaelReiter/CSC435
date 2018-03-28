@@ -1,0 +1,19 @@
+void main() {
+    int i;
+    float f;
+    char c;
+    string s;
+    boolean b;
+
+    i = 0;
+    f = 0.0;
+    c = 'c';
+    s = "hello";
+    b = false;
+
+    print i;
+    print f;
+    print c;
+    print s;
+    print b;
+}

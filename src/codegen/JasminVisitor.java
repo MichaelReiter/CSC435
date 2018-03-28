@@ -62,26 +62,24 @@ public class JasminVisitor implements CodeGenVisitor {
         this.stringBuilder.append("\n\t.limit stack 1000\n");
         // Initialize variables
         for (Temp t : tempFactory.getTemps()) {
-            if (t.getTempClass() == TempClass.LOCAL) {
-                if (t.getType().equals(new IntegerType())) {
-                    this.stringBuilder.append("\tldc 0\n");
-                    this.stringBuilder.append("\tistore ");
-                } else if (t.getType().equals(new FloatType())) {
-                    this.stringBuilder.append("\tldc 0.0\n");
-                    this.stringBuilder.append("\tfstore ");
-                } else if (t.getType().equals(new CharType())) {
-                    this.stringBuilder.append("\tldc 0\n");
-                    this.stringBuilder.append("\tistore ");
-                } else if (t.getType().equals(new StringType())) {
-                    this.stringBuilder.append("\taconst_null\n");
-                    this.stringBuilder.append("\tastore ");
-                } else if (t.getType().equals(new BooleanType())) {
-                    this.stringBuilder.append("\tldc 0\n");
-                    this.stringBuilder.append("\tistore ");
-                }
-                this.stringBuilder.append(t.getNumber());
-                this.stringBuilder.append("\n");
+            if (t.getType().equals(new IntegerType())) {
+                this.stringBuilder.append("\tldc 0\n");
+                this.stringBuilder.append("\tistore ");
+            } else if (t.getType().equals(new FloatType())) {
+                this.stringBuilder.append("\tldc 0.0\n");
+                this.stringBuilder.append("\tfstore ");
+            } else if (t.getType().equals(new CharType())) {
+                this.stringBuilder.append("\tldc 0\n");
+                this.stringBuilder.append("\tistore ");
+            } else if (t.getType().equals(new StringType())) {
+                this.stringBuilder.append("\taconst_null\n");
+                this.stringBuilder.append("\tastore ");
+            } else if (t.getType().equals(new BooleanType())) {
+                this.stringBuilder.append("\tldc 0\n");
+                this.stringBuilder.append("\tistore ");
             }
+            this.stringBuilder.append(t.getNumber());
+            this.stringBuilder.append("\n");
         }
         for (Instruction i : f.getInstructions()) {
             i.accept(this);
@@ -98,7 +96,29 @@ public class JasminVisitor implements CodeGenVisitor {
     }
 
     public void visit(PrintInstruction p) {
-        
+        this.stringBuilder.append("\tgetstatic java/lang/System/out Ljava/io/PrintStream;\n");
+        if (p.getType().equals(new IntegerType())) {
+            this.stringBuilder.append("\tiload ");
+            this.stringBuilder.append(p.getTemp().getNumber());
+            this.stringBuilder.append("\n\tinvokevirtual java/io/PrintStream/print(I)V\n");
+        } else if (p.getType().equals(new FloatType())) {
+            this.stringBuilder.append("\tfload ");
+            this.stringBuilder.append(p.getTemp().getNumber());
+            this.stringBuilder.append("\n\tinvokevirtual java/io/PrintStream/print(F)V\n");
+        } else if (p.getType().equals(new CharType())) {
+            this.stringBuilder.append("\tiload ");
+            this.stringBuilder.append(p.getTemp().getNumber());
+            this.stringBuilder.append("\n\tinvokevirtual java/io/PrintStream/print(C)V\n");
+        } else if (p.getType().equals(new StringType())) {
+            this.stringBuilder.append("\taload ");
+            this.stringBuilder.append(p.getTemp().getNumber());
+            this.stringBuilder.append(
+                "\n\tinvokevirtual java/io/PrintStream/print(Ljava/lang/String;)V\n");
+        } else if (p.getType().equals(new BooleanType())) {
+            this.stringBuilder.append("\tiload ");
+            this.stringBuilder.append(p.getTemp().getNumber());
+            this.stringBuilder.append("\n\tinvokevirtual java/io/PrintStream/print(Z)V\n");
+        }
     }
 
     public void visit(PrintlnInstruction p) {
