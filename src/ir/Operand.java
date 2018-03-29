@@ -1,3 +1,5 @@
 package ir;
 
-public abstract class Operand {}
+import codegen.CodeGenVisitable;
+
+public abstract class Operand implements CodeGenVisitable {}

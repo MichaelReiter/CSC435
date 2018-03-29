@@ -1,5 +1,6 @@
 package ir;
 
+import codegen.CodeGenVisitor;
 import java.lang.StringBuilder;
 
 public class BooleanConstant extends Constant {
@@ -7,6 +8,10 @@ public class BooleanConstant extends Constant {
 
     public BooleanConstant(boolean value) {
         this.value = value;
+    }
+
+    public void accept(CodeGenVisitor v) {
+        v.visit(this);
     }
 
     @Override

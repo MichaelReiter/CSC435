@@ -1,5 +1,6 @@
 package ir;
 
+import codegen.CodeGenVisitor;
 import java.lang.StringBuilder;
 
 public class CharacterConstant extends Constant {
@@ -7,6 +8,10 @@ public class CharacterConstant extends Constant {
 
     public CharacterConstant(char value) {
         this.value = value;
+    }
+
+    public void accept(CodeGenVisitor v) {
+        v.visit(this);
     }
 
     @Override

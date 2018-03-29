@@ -1,5 +1,6 @@
 package ir;
 
+import codegen.CodeGenVisitor;
 import java.lang.StringBuilder;
 import type.ArrayType;
 
@@ -8,6 +9,10 @@ public class ArrayInitialization extends Operand {
 
     public ArrayInitialization(ArrayType type) {
         this.type = type;
+    }
+
+    public void accept(CodeGenVisitor v) {
+        v.visit(this);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package ir;
 
+import codegen.CodeGenVisitor;
 import java.lang.StringBuilder;
 import type.Type;
 
@@ -10,6 +11,10 @@ public class NewArrayOperand extends Operand {
     public NewArrayOperand(Type type, int length) {
         this.type = type;
         this.length = length;
+    }
+
+    public void accept(CodeGenVisitor v) {
+        v.visit(this);
     }
 
     @Override

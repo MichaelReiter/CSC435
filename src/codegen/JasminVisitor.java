@@ -1,16 +1,30 @@
 package codegen;
 
+import ir.AddOperation;
+import ir.ArrayInitialization;
 import ir.ArrayReference;
 import ir.AssignmentInstruction;
+import ir.BooleanConstant;
+import ir.BooleanNegationOperation;
+import ir.CharacterConstant;
 import ir.ConditionalGotoInstruction;
+import ir.EqualityOperation;
+import ir.FloatConstant;
 import ir.Function;
 import ir.FunctionCallInstruction;
+import ir.FunctionCallOperation;
+import ir.IntegerConstant;
 import ir.Instruction;
 import ir.Label;
+import ir.LessThanOperation;
+import ir.MultiplyOperation;
+import ir.NewArrayOperand;
 import ir.PrintInstruction;
 import ir.PrintlnInstruction;
 import ir.Program;
 import ir.ReturnInstruction;
+import ir.StringConstant;
+import ir.SubtractOperation;
 import ir.Temp;
 import ir.TempFactory;
 import ir.UnconditionalGotoInstruction;
@@ -33,6 +47,14 @@ public class JasminVisitor implements CodeGenVisitor {
     public JasminVisitor(Program program) {
         this.program = program;
         this.stringBuilder = new StringBuilder();
+    }
+
+    public void visit(AddOperation a) {
+
+    }
+
+    public void visit(ArrayInitialization a) {
+        
     }
 
     public void visitArrayAssignment(Temp left) {
@@ -98,7 +120,7 @@ public class JasminVisitor implements CodeGenVisitor {
     public void visitVariableAssignment(Temp left) {
         // Integer
         if (left.getType().equals(new IntegerType())) {
-                
+            
             this.stringBuilder.append("\n\tistore ");
         // Float
         } else if (left.getType().equals(new FloatType())) {
@@ -117,8 +139,7 @@ public class JasminVisitor implements CodeGenVisitor {
             
             this.stringBuilder.append("\n\tistore ");
         } else {
-
-            this.stringBuilder.append(left.getType());
+            System.out.println("this should not happen");
         }
         this.stringBuilder.append(left.getNumber());
         this.stringBuilder.append("\n");
@@ -126,7 +147,7 @@ public class JasminVisitor implements CodeGenVisitor {
 
     public void visit(AssignmentInstruction a) {
         Temp left = a.getLeftOperand();
-        // Temp right = a.getRightOperand();
+        // a.getRightOperand().accept(this);
         if (left.getType() instanceof ArrayType) {
             this.visitArrayDeclaration(left);
         } else if (left instanceof ArrayReference) {
@@ -136,12 +157,32 @@ public class JasminVisitor implements CodeGenVisitor {
         }
     }
 
+    public void visit(BooleanConstant b) {
+
+    }
+
+    public void visit(BooleanNegationOperation b) {
+
+    }
+
+    public void visit(CharacterConstant c) {
+
+    }
+
     public void visit(ConditionalGotoInstruction c) {
         this.stringBuilder.append("\tiload ");
         this.stringBuilder.append(c.getCondition().getNumber());
         this.stringBuilder.append("\n\tifne L");
         this.stringBuilder.append(c.getLabel().getNumber());
         this.stringBuilder.append("\n");
+    }
+
+    public void visit(EqualityOperation e) {
+
+    }
+
+    public void visit(FloatConstant f) {
+
     }
 
     public void visit(Function f) {
@@ -192,8 +233,28 @@ public class JasminVisitor implements CodeGenVisitor {
         
     }
 
+    public void visit(FunctionCallOperation f) {
+
+    }
+
+    public void visit(IntegerConstant i) {
+
+    }
+
     public void visit(Label l) {
         
+    }
+
+    public void visit(LessThanOperation l) {
+
+    }
+
+    public void visit(MultiplyOperation m) {
+
+    }
+
+    public void visit(NewArrayOperand n) {
+
     }
 
     public void visit(PrintInstruction p) {
@@ -250,6 +311,14 @@ public class JasminVisitor implements CodeGenVisitor {
 
     public void visit(ReturnInstruction r) {
         this.stringBuilder.append("\treturn\n");
+    }
+
+    public void visit(StringConstant s) {
+
+    }
+
+    public void visit(SubtractOperation s) {
+
     }
 
     public void visit(Temp t) {

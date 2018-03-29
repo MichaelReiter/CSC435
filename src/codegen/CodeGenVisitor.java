@@ -1,25 +1,53 @@
 package codegen;
 
+import ir.AddOperation;
+import ir.ArrayInitialization;
 import ir.AssignmentInstruction;
+import ir.BooleanConstant;
+import ir.BooleanNegationOperation;
+import ir.CharacterConstant;
 import ir.ConditionalGotoInstruction;
+import ir.EqualityOperation;
+import ir.FloatConstant;
 import ir.Function;
 import ir.FunctionCallInstruction;
+import ir.FunctionCallOperation;
+import ir.IntegerConstant;
 import ir.Label;
+import ir.LessThanOperation;
+import ir.MultiplyOperation;
+import ir.NewArrayOperand;
 import ir.PrintInstruction;
 import ir.PrintlnInstruction;
 import ir.ReturnInstruction;
+import ir.StringConstant;
+import ir.SubtractOperation;
 import ir.Temp;
 import ir.UnconditionalGotoInstruction;
 
 public interface CodeGenVisitor {
+    public void visit(AddOperation a);
+    public void visit(ArrayInitialization a);    
     public void visit(AssignmentInstruction a);
+    public void visit(BooleanConstant b);
+    public void visit(BooleanNegationOperation b);
+    public void visit(CharacterConstant c);
     public void visit(ConditionalGotoInstruction c);
+    public void visit(EqualityOperation e);
+    public void visit(FloatConstant f);
     public void visit(Function f);
     public void visit(FunctionCallInstruction f);
+    public void visit(FunctionCallOperation f);
+    public void visit(IntegerConstant i);
     public void visit(Label l);
+    public void visit(LessThanOperation l);
+    public void visit(MultiplyOperation m);
+    public void visit(NewArrayOperand n);
     public void visit(PrintInstruction p);
     public void visit(PrintlnInstruction p);
     public void visit(ReturnInstruction r);
+    public void visit(StringConstant s);
+    public void visit(SubtractOperation s);
     public void visit(Temp t);
     public void visit(UnconditionalGotoInstruction u);
 }
