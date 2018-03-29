@@ -52,7 +52,50 @@ public class JasminVisitor implements CodeGenVisitor {
     }
 
     public void visit(AddOperation a) {
-        
+        Type type = a.getType();
+        int leftNumber = a.getLeftOperand().getNumber();
+        int rightNumber = a.getRightOperand().getNumber();
+        if (type.equals(new IntegerType())) {
+            this.stringBuilder.append("\tiload ");
+            this.stringBuilder.append(leftNumber);
+            this.stringBuilder.append("\n\tiload ");
+            this.stringBuilder.append(rightNumber);
+            this.stringBuilder.append("\n\tiadd\n");
+        // Float
+        } else if (type.equals(new FloatType())) {
+            this.stringBuilder.append("\tfload ");
+            this.stringBuilder.append(leftNumber);
+            this.stringBuilder.append("\n\tfload ");
+            this.stringBuilder.append(rightNumber);
+            this.stringBuilder.append("\n\tfadd\n");
+        // Character
+        } else if (type.equals(new CharType())) {
+            this.stringBuilder.append("\tiload ");
+            this.stringBuilder.append(leftNumber);
+            this.stringBuilder.append("\n\tiload ");
+            this.stringBuilder.append(rightNumber);
+            this.stringBuilder.append("\n\tiadd\n");
+            this.stringBuilder.append("\ti2c\n");
+        // String
+        } else if (type.equals(new StringType())) {
+            this.stringBuilder.append("\tnew java/lang/StringBuffer\n");
+            this.stringBuilder.append("\tdup\n");
+            this.stringBuilder.append("\tinvokenonvirtual java/lang/StringBuffer/<init>()V\n");
+            this.stringBuilder.append("\taload ");
+            this.stringBuilder.append(leftNumber);
+            this.stringBuilder.append("\n\tinvokevirtual ");
+            this.stringBuilder.append(
+                "java/lang/StringBuffer/append(Ljava/lang/String;)Ljava/lang/StringBuffer;\n");
+            this.stringBuilder.append("\taload ");
+            this.stringBuilder.append(rightNumber);
+            this.stringBuilder.append("\n\tinvokevirtual ");
+            this.stringBuilder.append(
+                "java/lang/StringBuffer/append(Ljava/lang/String;)Ljava/lang/StringBuffer;\n");
+            this.stringBuilder.append(
+                "\tinvokevirtual java/lang/StringBuffer/toString()Ljava/lang/String;\n");
+        } else {
+            this.assertError();
+        }
     }
 
     public void visit(ArrayInitialization a) {
@@ -211,7 +254,7 @@ public class JasminVisitor implements CodeGenVisitor {
         this.stringBuilder.append(tempFactory.getTempCount());
         // Don't bother computing max stack size for toy compiler
         // Corless suggests setting arbitrary large value
-        this.stringBuilder.append("\n\t.limit stack 1000\n");
+        this.stringBuilder.append("\n\t.limit stack 16\n");
         // Initialize variables
         // for (Temp t : tempFactory.getTemps()) {
         //     if (t.getType().equals(new IntegerType())) {

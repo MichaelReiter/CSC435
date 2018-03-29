@@ -16,6 +16,18 @@ public abstract class BinaryOperation extends Operand {
         this.operator = operator;
     }
 
+    public final Type getType() {
+        return this.type;
+    }
+
+    public final Temp getLeftOperand() {
+        return this.leftOperand;
+    }
+
+    public final Temp getRightOperand() {
+        return this.rightOperand;
+    }
+
     @Override
     public final String toString() {
         StringBuilder sb = new StringBuilder();
