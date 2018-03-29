@@ -102,64 +102,68 @@ public class JasminVisitor implements CodeGenVisitor {
         
     }
 
-    public void visitArrayAssignment(Temp left, Operand right) {
+    private void visitArrayAssignment(Temp left, Operand right) {
         this.stringBuilder.append("\taload ");
         this.stringBuilder.append(((ArrayReference)left).getIdentifier().getNumber());
+        Type type = left.getType();
         // Integer
-        if (left.getType().equals(new IntegerType())) {
+        if (type.equals(new IntegerType())) {
             this.stringBuilder.append("\n\tiload ");
             this.stringBuilder.append(((ArrayReference)left).getIndex().getNumber());
             this.stringBuilder.append("\n");
             right.accept(this);
             this.stringBuilder.append("\tiastore\n");
         // Float
-        } else if (left.getType().equals(new FloatType())) {
+        } else if (type.equals(new FloatType())) {
             this.stringBuilder.append("\n\tiload ");
             this.stringBuilder.append(((ArrayReference)left).getIndex().getNumber());
             this.stringBuilder.append("\n");            
             right.accept(this);
             this.stringBuilder.append("\tfastore\n");
         // Character
-        } else if (left.getType().equals(new CharType())) {
+        } else if (type.equals(new CharType())) {
             this.stringBuilder.append("\n\tiload ");
             this.stringBuilder.append(((ArrayReference)left).getIndex().getNumber());
             this.stringBuilder.append("\n");            
             right.accept(this);
             this.stringBuilder.append("\tcastore\n");
         // String
-        } else if (left.getType().equals(new StringType())) {
+        } else if (type.equals(new StringType())) {
             this.stringBuilder.append("\n\tiload ");
             this.stringBuilder.append(((ArrayReference)left).getIndex().getNumber());
             this.stringBuilder.append("\n");            
             right.accept(this);
             this.stringBuilder.append("\taastore\n");
         // Boolean
-        } else if (left.getType().equals(new BooleanType())) {
+        } else if (type.equals(new BooleanType())) {
             this.stringBuilder.append("\n\tiload ");
             this.stringBuilder.append(((ArrayReference)left).getIndex().getNumber());
             this.stringBuilder.append("\n");        
             right.accept(this);
             this.stringBuilder.append("\tbastore\n");
+        } else {
+            this.assertError();
         }
     }
 
-    public void visitArrayDeclaration(Temp left) {
+    private void visitArrayDeclaration(Temp left) {
         this.stringBuilder.append("\tldc ");
-        this.stringBuilder.append(((ArrayType)left.getType()).getSize());
+        Type type = left.getType();
+        this.stringBuilder.append(((ArrayType)type).getSize());
         // Integer
-        if (((ArrayType)left.getType()).getType().equals(new IntegerType())) {
+        if (((ArrayType)type).getType().equals(new IntegerType())) {
             this.stringBuilder.append("\n\tnewarray int\n");
         // Float
-        } else if (((ArrayType)left.getType()).getType().equals(new FloatType())) {
+        } else if (((ArrayType)type).getType().equals(new FloatType())) {
             this.stringBuilder.append("\n\tnewarray float\n");
         // Character
-        } else if (((ArrayType)left.getType()).getType().equals(new CharType())) {
+        } else if (((ArrayType)type).getType().equals(new CharType())) {
             this.stringBuilder.append("\n\tnewarray char\n");
         // String
-        } else if (((ArrayType)left.getType()).getType().equals(new StringType())) {
+        } else if (((ArrayType)type).getType().equals(new StringType())) {
             this.stringBuilder.append("\n\tanewarray java/lang/String\n");
         // Boolean
-        } else if (((ArrayType)left.getType()).getType().equals(new BooleanType())) {
+        } else if (((ArrayType)type).getType().equals(new BooleanType())) {
             this.stringBuilder.append("\n\tnewarray boolean\n");
         }
         this.stringBuilder.append("\tastore ");
@@ -167,7 +171,7 @@ public class JasminVisitor implements CodeGenVisitor {
         this.stringBuilder.append("\n");
     }
 
-    public void visitVariableAssignment(Temp left, Operand right) {
+    private void visitVariableAssignment(Temp left, Operand right) {
         // Integer
         if (left.getType().equals(new IntegerType())) {
             right.accept(this);
@@ -396,7 +400,7 @@ public class JasminVisitor implements CodeGenVisitor {
     }
 
     public void visit(SubtractOperation s) {
-
+        
     }
 
     public void visit(Temp t) {
