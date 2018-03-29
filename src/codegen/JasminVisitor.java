@@ -51,46 +51,51 @@ public class JasminVisitor implements CodeGenVisitor {
     }
 
     public void visit(AddOperation a) {
-
+        
     }
 
     public void visit(ArrayInitialization a) {
         
     }
 
-    public void visitArrayAssignment(Temp left) {
+    public void visitArrayAssignment(Temp left, Operand right) {
         this.stringBuilder.append("\taload ");
         this.stringBuilder.append(((ArrayReference)left).getIdentifier().getNumber());
         // Integer
         if (left.getType().equals(new IntegerType())) {
             this.stringBuilder.append("\n\tiload ");
             this.stringBuilder.append(((ArrayReference)left).getIndex().getNumber());
-
-            this.stringBuilder.append("\n\tiastore\n");
+            this.stringBuilder.append("\n");
+            right.accept(this);
+            this.stringBuilder.append("\tiastore\n");
         // Float
         } else if (left.getType().equals(new FloatType())) {
             this.stringBuilder.append("\n\tiload ");
             this.stringBuilder.append(((ArrayReference)left).getIndex().getNumber());
-
-            this.stringBuilder.append("\n\tfastore\n");
+            this.stringBuilder.append("\n");            
+            right.accept(this);
+            this.stringBuilder.append("\tfastore\n");
         // Character
         } else if (left.getType().equals(new CharType())) {
             this.stringBuilder.append("\n\tiload ");
             this.stringBuilder.append(((ArrayReference)left).getIndex().getNumber());
-
-            this.stringBuilder.append("\n\tcastore\n");
+            this.stringBuilder.append("\n");            
+            right.accept(this);
+            this.stringBuilder.append("\tcastore\n");
         // String
         } else if (left.getType().equals(new StringType())) {
             this.stringBuilder.append("\n\tiload ");
             this.stringBuilder.append(((ArrayReference)left).getIndex().getNumber());
-
-            this.stringBuilder.append("\n\taastore\n");
+            this.stringBuilder.append("\n");            
+            right.accept(this);
+            this.stringBuilder.append("\taastore\n");
         // Boolean
         } else if (left.getType().equals(new BooleanType())) {
             this.stringBuilder.append("\n\tiload ");
             this.stringBuilder.append(((ArrayReference)left).getIndex().getNumber());
-
-            this.stringBuilder.append("\n\tbastore\n");
+            this.stringBuilder.append("\n");        
+            right.accept(this);
+            this.stringBuilder.append("\tbastore\n");
         }
     }
 
@@ -140,7 +145,7 @@ public class JasminVisitor implements CodeGenVisitor {
             right.accept(this);
             this.stringBuilder.append("\tistore ");
         } else {
-            System.out.println("this should not happen");
+            assert false : "Should never get here";
         }
         this.stringBuilder.append(left.getNumber());
         this.stringBuilder.append("\n");
@@ -152,7 +157,7 @@ public class JasminVisitor implements CodeGenVisitor {
         if (left.getType() instanceof ArrayType) {
             this.visitArrayDeclaration(left);
         } else if (left instanceof ArrayReference) {
-            this.visitArrayAssignment(left);
+            this.visitArrayAssignment(left, right);
         } else {
             this.visitVariableAssignment(left, right);
         }
@@ -354,7 +359,7 @@ public class JasminVisitor implements CodeGenVisitor {
         } else if (t.getType().equals(new BooleanType())) {
             this.stringBuilder.append("\tiload ");
         } else {
-            this.stringBuilder.append("THIS SHOULD NOT HAPPEN");
+            assert false : "Should never get here";
         }
         this.stringBuilder.append(t.getNumber());
         this.stringBuilder.append("\n");
