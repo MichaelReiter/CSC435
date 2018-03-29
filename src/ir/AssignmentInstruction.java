@@ -4,15 +4,15 @@ import codegen.CodeGenVisitor;
 import java.lang.StringBuilder;
 
 public class AssignmentInstruction extends Instruction {
-    private final Operand operand1;
+    private final Temp operand1;
     private final Operand operand2;
 
-    public AssignmentInstruction(Operand operand1, Operand operand2) {
+    public AssignmentInstruction(Temp operand1, Operand operand2) {
         this.operand1 = operand1;
         this.operand2 = operand2;
     }
 
-    public Operand getLeftOperand() {
+    public Temp getLeftOperand() {
         return this.operand1;
     }
 

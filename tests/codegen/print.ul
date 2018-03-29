@@ -1,19 +1,34 @@
 void main() {
     int i;
+    int[3] i_array;
     float f;
+    float[3] f_array;    
     char c;
+    char[3] c_array;
     string s;
+    string[3] s_array;
     boolean b;
+    boolean[3] b_array;
 
     i = 0;
+    i_array[0] = 1;
     f = 0.0;
+    f_array[0] = 1.0;
     c = 'c';
+    c_array[0] = 'a';
     s = "hello";
+    s_array[0] = "world";
     b = false;
+    b_array[0] = true;
 
     print i;
+    print i_array[0];
     print f;
+    print f_array[0];
     print c;
+    print c_array[0];
     print s;
+    print s_array[0];
     print b;
+    print b_array[0];
 }

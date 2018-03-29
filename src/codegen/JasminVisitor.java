@@ -1,5 +1,6 @@
 package codegen;
 
+import ir.ArrayReference;
 import ir.AssignmentInstruction;
 import ir.ConditionalGotoInstruction;
 import ir.Function;
@@ -18,6 +19,7 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.StringBuilder;
+import type.ArrayType;
 import type.BooleanType;
 import type.CharType;
 import type.FloatType;
@@ -33,9 +35,105 @@ public class JasminVisitor implements CodeGenVisitor {
         this.stringBuilder = new StringBuilder();
     }
 
+    public void visitArrayAssignment(Temp left) {
+        this.stringBuilder.append("\taload ");
+        this.stringBuilder.append(((ArrayReference)left).getIdentifier().getNumber());
+        // Integer
+        if (left.getType().equals(new IntegerType())) {
+            this.stringBuilder.append("\n\tiload ");
+            this.stringBuilder.append(((ArrayReference)left).getIndex().getNumber());
+
+            this.stringBuilder.append("\n\tiastore\n");
+        // Float
+        } else if (left.getType().equals(new FloatType())) {
+            this.stringBuilder.append("\n\tfload ");
+            this.stringBuilder.append(((ArrayReference)left).getIndex().getNumber());
+
+            this.stringBuilder.append("\n\tfastore\n");
+        // Character
+        } else if (left.getType().equals(new CharType())) {
+            this.stringBuilder.append("\n\tiload ");
+            this.stringBuilder.append(((ArrayReference)left).getIndex().getNumber());
+
+            this.stringBuilder.append("\n\tiastore\n");
+        // String
+        } else if (left.getType().equals(new StringType())) {
+            this.stringBuilder.append("\n\tiload ");
+            this.stringBuilder.append(((ArrayReference)left).getIndex().getNumber());
+
+            // this.stringBuilder.append("\n\tuastore\n");
+        // Boolean
+        } else if (left.getType().equals(new BooleanType())) {
+            this.stringBuilder.append("\n\tiload ");
+            this.stringBuilder.append(((ArrayReference)left).getIndex().getNumber());
+
+            // this.stringBuilder.append("\n\tiastore\n");
+        }
+    }
+
+    public void visitArrayDeclaration(Temp left) {
+        this.stringBuilder.append("\tldc ");
+        this.stringBuilder.append(((ArrayType)left.getType()).getSize());
+        // Integer
+        if (((ArrayType)left.getType()).getType().equals(new IntegerType())) {
+            this.stringBuilder.append("\n\tnewarray int\n");
+        // Float
+        } else if (((ArrayType)left.getType()).getType().equals(new FloatType())) {
+            this.stringBuilder.append("\n\tnewarray float\n");
+        // Character
+        } else if (((ArrayType)left.getType()).getType().equals(new CharType())) {
+            this.stringBuilder.append("\n\tnewarray char\n");
+        // String
+        } else if (((ArrayType)left.getType()).getType().equals(new StringType())) {
+            this.stringBuilder.append("\n\tanewarray java/lang/String\n");
+        // Boolean
+        } else if (((ArrayType)left.getType()).getType().equals(new BooleanType())) {
+            this.stringBuilder.append("\n\tnewarray boolean\n");
+        }
+        this.stringBuilder.append("\tastore ");
+        this.stringBuilder.append(left.getNumber());
+        this.stringBuilder.append("\n");
+    }
+
+    public void visitVariableAssignment(Temp left) {
+        // Integer
+        if (left.getType().equals(new IntegerType())) {
+                
+            this.stringBuilder.append("\n\tistore ");
+        // Float
+        } else if (left.getType().equals(new FloatType())) {
+            
+            this.stringBuilder.append("\n\tfstore ");
+        // Character
+        } else if (left.getType().equals(new CharType())) {
+            
+            this.stringBuilder.append("\n\tistore ");
+        // String
+        } else if (left.getType().equals(new StringType())) {
+            
+            this.stringBuilder.append("\n\tastore ");
+        // Boolean
+        } else if (left.getType().equals(new BooleanType())) {
+            
+            this.stringBuilder.append("\n\tistore ");
+        } else {
+
+            this.stringBuilder.append(left.getType());
+        }
+        this.stringBuilder.append(left.getNumber());
+        this.stringBuilder.append("\n");
+    }
+
     public void visit(AssignmentInstruction a) {
-        // a.getLeftOperand().accept(this);
-        // a.getRightOperand().accept(this);
+        Temp left = a.getLeftOperand();
+        // Temp right = a.getRightOperand();
+        if (left.getType() instanceof ArrayType) {
+            this.visitArrayDeclaration(left);
+        } else if (left instanceof ArrayReference) {
+            this.visitArrayAssignment(left);
+        } else {
+            this.visitVariableAssignment(left);
+        }
     }
 
     public void visit(ConditionalGotoInstruction c) {
@@ -61,27 +159,30 @@ public class JasminVisitor implements CodeGenVisitor {
         // Corless suggests setting arbitrary large value
         this.stringBuilder.append("\n\t.limit stack 1000\n");
         // Initialize variables
-        for (Temp t : tempFactory.getTemps()) {
-            if (t.getType().equals(new IntegerType())) {
-                this.stringBuilder.append("\tldc 0\n");
-                this.stringBuilder.append("\tistore ");
-            } else if (t.getType().equals(new FloatType())) {
-                this.stringBuilder.append("\tldc 0.0\n");
-                this.stringBuilder.append("\tfstore ");
-            } else if (t.getType().equals(new CharType())) {
-                this.stringBuilder.append("\tldc 0\n");
-                this.stringBuilder.append("\tistore ");
-            } else if (t.getType().equals(new StringType())) {
-                this.stringBuilder.append("\taconst_null\n");
-                this.stringBuilder.append("\tastore ");
-            } else if (t.getType().equals(new BooleanType())) {
-                this.stringBuilder.append("\tldc 0\n");
-                this.stringBuilder.append("\tistore ");
-            }
-            this.stringBuilder.append(t.getNumber());
-            this.stringBuilder.append("\n");
-        }
+        // for (Temp t : tempFactory.getTemps()) {
+        //     if (t.getType().equals(new IntegerType())) {
+        //         this.stringBuilder.append("\tldc 0\n");
+        //         this.stringBuilder.append("\tistore ");
+        //     } else if (t.getType().equals(new FloatType())) {
+        //         this.stringBuilder.append("\tldc 0.0\n");
+        //         this.stringBuilder.append("\tfstore ");
+        //     } else if (t.getType().equals(new CharType())) {
+        //         this.stringBuilder.append("\tldc 0\n");
+        //         this.stringBuilder.append("\tistore ");
+        //     } else if (t.getType().equals(new StringType())) {
+        //         this.stringBuilder.append("\taconst_null\n");
+        //         this.stringBuilder.append("\tastore ");
+        //     } else if (t.getType().equals(new BooleanType())) {
+        //         this.stringBuilder.append("\tldc 0\n");
+        //         this.stringBuilder.append("\tistore ");
+        //     }
+        //     this.stringBuilder.append(t.getNumber());
+        //     this.stringBuilder.append("\n");
+        // }
         for (Instruction i : f.getInstructions()) {
+            this.stringBuilder.append(";\t\t\t");
+            this.stringBuilder.append(i);
+            this.stringBuilder.append("\n");
             i.accept(this);
         }
         this.stringBuilder.append(".end method\n");

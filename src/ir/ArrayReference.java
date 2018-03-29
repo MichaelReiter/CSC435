@@ -14,6 +14,14 @@ public class ArrayReference extends Temp {
         this.index = index;
     }
 
+    public Temp getIdentifier() {
+        return this.identifier;
+    }
+
+    public Temp getIndex() {
+        return this.index;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
