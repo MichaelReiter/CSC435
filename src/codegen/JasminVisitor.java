@@ -46,7 +46,7 @@ public class JasminVisitor implements CodeGenVisitor {
             this.stringBuilder.append("\n\tiastore\n");
         // Float
         } else if (left.getType().equals(new FloatType())) {
-            this.stringBuilder.append("\n\tfload ");
+            this.stringBuilder.append("\n\tiload ");
             this.stringBuilder.append(((ArrayReference)left).getIndex().getNumber());
 
             this.stringBuilder.append("\n\tfastore\n");
@@ -55,19 +55,19 @@ public class JasminVisitor implements CodeGenVisitor {
             this.stringBuilder.append("\n\tiload ");
             this.stringBuilder.append(((ArrayReference)left).getIndex().getNumber());
 
-            this.stringBuilder.append("\n\tiastore\n");
+            this.stringBuilder.append("\n\tcastore\n");
         // String
         } else if (left.getType().equals(new StringType())) {
             this.stringBuilder.append("\n\tiload ");
             this.stringBuilder.append(((ArrayReference)left).getIndex().getNumber());
 
-            // this.stringBuilder.append("\n\tuastore\n");
+            this.stringBuilder.append("\n\taastore\n");
         // Boolean
         } else if (left.getType().equals(new BooleanType())) {
             this.stringBuilder.append("\n\tiload ");
             this.stringBuilder.append(((ArrayReference)left).getIndex().getNumber());
 
-            // this.stringBuilder.append("\n\tiastore\n");
+            this.stringBuilder.append("\n\tbastore\n");
         }
     }
 
