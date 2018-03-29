@@ -40,6 +40,7 @@ import type.CharType;
 import type.FloatType;
 import type.IntegerType;
 import type.StringType;
+import type.Type;
 
 public class JasminVisitor implements CodeGenVisitor {
     private final Program program;
@@ -145,7 +146,7 @@ public class JasminVisitor implements CodeGenVisitor {
             right.accept(this);
             this.stringBuilder.append("\tistore ");
         } else {
-            assert false : "Should never get here";
+            this.assertError();
         }
         this.stringBuilder.append(left.getNumber());
         this.stringBuilder.append("\n");
@@ -329,7 +330,41 @@ public class JasminVisitor implements CodeGenVisitor {
     }
 
     public void visit(ReturnInstruction r) {
-        this.stringBuilder.append("\treturn\n");
+        Temp temp = r.getTemp();
+        if (temp == null) {
+            this.stringBuilder.append("\treturn\n");
+        } else {
+            // Integer
+            Type type = temp.getType();
+            int tempNumber = temp.getNumber();
+            if (type.equals(new IntegerType())) {
+                this.stringBuilder.append("\tiload ");
+                this.stringBuilder.append(tempNumber);
+                this.stringBuilder.append("\n\tireturn\n");
+            // Float
+            } else if (type.equals(new FloatType())) {
+                this.stringBuilder.append("\tfload ");
+                this.stringBuilder.append(tempNumber);
+                this.stringBuilder.append("\n\tfreturn\n");
+            // Character
+            } else if (type.equals(new CharType())) {
+                this.stringBuilder.append("\tiload ");
+                this.stringBuilder.append(tempNumber);
+                this.stringBuilder.append("\n\tireturn\n");
+            // String
+            } else if (type.equals(new StringType())) {
+                this.stringBuilder.append("\taload ");
+                this.stringBuilder.append(tempNumber);
+                this.stringBuilder.append("\n\tareturn\n");
+            // Boolean
+            } else if (type.equals(new BooleanType())) {
+                this.stringBuilder.append("\tiload ");
+                this.stringBuilder.append(tempNumber);
+                this.stringBuilder.append("\n\tireturn\n");
+            } else {
+                this.assertError();
+            }
+        }
     }
 
     public void visit(StringConstant s) {
@@ -359,7 +394,7 @@ public class JasminVisitor implements CodeGenVisitor {
         } else if (t.getType().equals(new BooleanType())) {
             this.stringBuilder.append("\tiload ");
         } else {
-            assert false : "Should never get here";
+            this.assertError();
         }
         this.stringBuilder.append(t.getNumber());
         this.stringBuilder.append("\n");
@@ -402,6 +437,10 @@ public class JasminVisitor implements CodeGenVisitor {
         this.stringBuilder.append("\treturn\n");
         this.stringBuilder.append(".end method\n");
         this.writeToFile(this.stringBuilder.toString());
+    }
+
+    private void assertError() {
+        assert false : "Should never get here";
     }
 
     private void writeToFile(String str) throws IOException {

@@ -14,6 +14,10 @@ public class ReturnInstruction extends Instruction {
         this.temp = temp;
     }
 
+    public Temp getTemp() {
+        return this.temp;
+    }
+
     public void accept(CodeGenVisitor v) {
         v.visit(this);
     }
