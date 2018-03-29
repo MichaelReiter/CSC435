@@ -255,27 +255,6 @@ public class JasminVisitor implements CodeGenVisitor {
         // Don't bother computing max stack size for toy compiler
         // Corless suggests setting arbitrary large value
         this.stringBuilder.append("\n\t.limit stack 16\n");
-        // Initialize variables
-        // for (Temp t : tempFactory.getTemps()) {
-        //     if (t.getType().equals(new IntegerType())) {
-        //         this.stringBuilder.append("\tldc 0\n");
-        //         this.stringBuilder.append("\tistore ");
-        //     } else if (t.getType().equals(new FloatType())) {
-        //         this.stringBuilder.append("\tldc 0.0\n");
-        //         this.stringBuilder.append("\tfstore ");
-        //     } else if (t.getType().equals(new CharType())) {
-        //         this.stringBuilder.append("\tldc 0\n");
-        //         this.stringBuilder.append("\tistore ");
-        //     } else if (t.getType().equals(new StringType())) {
-        //         this.stringBuilder.append("\taconst_null\n");
-        //         this.stringBuilder.append("\tastore ");
-        //     } else if (t.getType().equals(new BooleanType())) {
-        //         this.stringBuilder.append("\tldc 0\n");
-        //         this.stringBuilder.append("\tistore ");
-        //     }
-        //     this.stringBuilder.append(t.getNumber());
-        //     this.stringBuilder.append("\n");
-        // }
         for (Instruction i : f.getInstructions()) {
             this.stringBuilder.append(";\t\t\t");
             this.stringBuilder.append(i);
