@@ -19,6 +19,7 @@ import ir.Label;
 import ir.LessThanOperation;
 import ir.MultiplyOperation;
 import ir.NewArrayOperand;
+import ir.Operand;
 import ir.PrintInstruction;
 import ir.PrintlnInstruction;
 import ir.Program;
@@ -117,27 +118,27 @@ public class JasminVisitor implements CodeGenVisitor {
         this.stringBuilder.append("\n");
     }
 
-    public void visitVariableAssignment(Temp left) {
+    public void visitVariableAssignment(Temp left, Operand right) {
         // Integer
         if (left.getType().equals(new IntegerType())) {
-            
-            this.stringBuilder.append("\n\tistore ");
+            right.accept(this);
+            this.stringBuilder.append("\tistore ");
         // Float
         } else if (left.getType().equals(new FloatType())) {
-            
-            this.stringBuilder.append("\n\tfstore ");
+            right.accept(this);
+            this.stringBuilder.append("\tfstore ");
         // Character
         } else if (left.getType().equals(new CharType())) {
-            
-            this.stringBuilder.append("\n\tistore ");
+            right.accept(this);
+            this.stringBuilder.append("\tistore ");
         // String
         } else if (left.getType().equals(new StringType())) {
-            
-            this.stringBuilder.append("\n\tastore ");
+            right.accept(this);
+            this.stringBuilder.append("\tastore ");
         // Boolean
         } else if (left.getType().equals(new BooleanType())) {
-            
-            this.stringBuilder.append("\n\tistore ");
+            right.accept(this);
+            this.stringBuilder.append("\tistore ");
         } else {
             System.out.println("this should not happen");
         }
@@ -147,18 +148,20 @@ public class JasminVisitor implements CodeGenVisitor {
 
     public void visit(AssignmentInstruction a) {
         Temp left = a.getLeftOperand();
-        // a.getRightOperand().accept(this);
+        Operand right = a.getRightOperand();
         if (left.getType() instanceof ArrayType) {
             this.visitArrayDeclaration(left);
         } else if (left instanceof ArrayReference) {
             this.visitArrayAssignment(left);
         } else {
-            this.visitVariableAssignment(left);
+            this.visitVariableAssignment(left, right);
         }
     }
 
     public void visit(BooleanConstant b) {
-
+        this.stringBuilder.append("\tldc ");
+        this.stringBuilder.append(b.getValue() ? 1 : 0);
+        this.stringBuilder.append("\n");
     }
 
     public void visit(BooleanNegationOperation b) {
@@ -166,7 +169,9 @@ public class JasminVisitor implements CodeGenVisitor {
     }
 
     public void visit(CharacterConstant c) {
-
+        this.stringBuilder.append("\tldc ");
+        this.stringBuilder.append((int)c.getValue());
+        this.stringBuilder.append("\n");
     }
 
     public void visit(ConditionalGotoInstruction c) {
@@ -182,7 +187,9 @@ public class JasminVisitor implements CodeGenVisitor {
     }
 
     public void visit(FloatConstant f) {
-
+        this.stringBuilder.append("\tldc ");
+        this.stringBuilder.append(String.format("%.6f", f.getValue()));
+        this.stringBuilder.append("\n");
     }
 
     public void visit(Function f) {
@@ -238,7 +245,9 @@ public class JasminVisitor implements CodeGenVisitor {
     }
 
     public void visit(IntegerConstant i) {
-
+        this.stringBuilder.append("\tldc ");
+        this.stringBuilder.append(i.getValue());
+        this.stringBuilder.append("\n");
     }
 
     public void visit(Label l) {
@@ -259,23 +268,28 @@ public class JasminVisitor implements CodeGenVisitor {
 
     public void visit(PrintInstruction p) {
         this.stringBuilder.append("\tgetstatic java/lang/System/out Ljava/io/PrintStream;\n");
+        // Integer
         if (p.getType().equals(new IntegerType())) {
             this.stringBuilder.append("\tiload ");
             this.stringBuilder.append(p.getTemp().getNumber());
             this.stringBuilder.append("\n\tinvokevirtual java/io/PrintStream/print(I)V\n");
+        // Float
         } else if (p.getType().equals(new FloatType())) {
             this.stringBuilder.append("\tfload ");
             this.stringBuilder.append(p.getTemp().getNumber());
             this.stringBuilder.append("\n\tinvokevirtual java/io/PrintStream/print(F)V\n");
+        // Character
         } else if (p.getType().equals(new CharType())) {
             this.stringBuilder.append("\tiload ");
             this.stringBuilder.append(p.getTemp().getNumber());
             this.stringBuilder.append("\n\tinvokevirtual java/io/PrintStream/print(C)V\n");
+        // String
         } else if (p.getType().equals(new StringType())) {
             this.stringBuilder.append("\taload ");
             this.stringBuilder.append(p.getTemp().getNumber());
             this.stringBuilder.append(
                 "\n\tinvokevirtual java/io/PrintStream/print(Ljava/lang/String;)V\n");
+        // Boolean
         } else if (p.getType().equals(new BooleanType())) {
             this.stringBuilder.append("\tiload ");
             this.stringBuilder.append(p.getTemp().getNumber());
@@ -314,7 +328,9 @@ public class JasminVisitor implements CodeGenVisitor {
     }
 
     public void visit(StringConstant s) {
-
+        this.stringBuilder.append("\tldc ");
+        this.stringBuilder.append(s.getValue());
+        this.stringBuilder.append("\n");
     }
 
     public void visit(SubtractOperation s) {
@@ -322,7 +338,26 @@ public class JasminVisitor implements CodeGenVisitor {
     }
 
     public void visit(Temp t) {
-
+        // Integer
+        if (t.getType().equals(new IntegerType())) {
+            this.stringBuilder.append("\tiload ");
+        // Float
+        } else if (t.getType().equals(new FloatType())) {
+            this.stringBuilder.append("\tfload ");
+        // Character
+        } else if (t.getType().equals(new CharType())) {
+            this.stringBuilder.append("\tiload ");
+        // String
+        } else if (t.getType().equals(new StringType())) {
+            this.stringBuilder.append("\taload ");
+        // Boolean
+        } else if (t.getType().equals(new BooleanType())) {
+            this.stringBuilder.append("\tiload ");
+        } else {
+            this.stringBuilder.append("THIS SHOULD NOT HAPPEN");
+        }
+        this.stringBuilder.append(t.getNumber());
+        this.stringBuilder.append("\n");
     }
 
     public void visit(UnconditionalGotoInstruction u) {

@@ -2,9 +2,7 @@ package ir;
 
 import codegen.CodeGenVisitor;
 
-public class StringConstant extends Constant {
-    private final String value;
-
+public class StringConstant extends Constant<String> {
     public StringConstant(String value) {
         this.value = value;
     }

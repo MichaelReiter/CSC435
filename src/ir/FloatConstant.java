@@ -2,9 +2,7 @@ package ir;
 
 import codegen.CodeGenVisitor;
 
-public class FloatConstant extends Constant {
-    private final float value;
-
+public class FloatConstant extends Constant<Float> {
     public FloatConstant(float value) {
         this.value = value;
     }

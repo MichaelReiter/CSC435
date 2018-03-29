@@ -3,9 +3,7 @@ package ir;
 import codegen.CodeGenVisitor;
 import java.lang.StringBuilder;
 
-public class CharacterConstant extends Constant {
-    private final char value;
-
+public class CharacterConstant extends Constant<Character> {
     public CharacterConstant(char value) {
         this.value = value;
     }
