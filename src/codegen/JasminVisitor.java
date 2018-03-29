@@ -400,7 +400,34 @@ public class JasminVisitor implements CodeGenVisitor {
     }
 
     public void visit(SubtractOperation s) {
-        
+        Type type = s.getType();
+        int leftNumber = s.getLeftOperand().getNumber();
+        int rightNumber = s.getRightOperand().getNumber();
+        if (type.equals(new IntegerType())) {
+            this.stringBuilder.append("\tiload ");
+            this.stringBuilder.append(leftNumber);
+            this.stringBuilder.append("\n\tiload ");
+            this.stringBuilder.append(rightNumber);
+            this.stringBuilder.append("\n\tisub\n");
+        // Float
+        } else if (type.equals(new FloatType())) {
+            this.stringBuilder.append("\tfload ");
+            this.stringBuilder.append(leftNumber);
+            this.stringBuilder.append("\n\tfload ");
+            this.stringBuilder.append(rightNumber);
+            this.stringBuilder.append("\n\tfsub\n");
+        // Character
+        } else if (type.equals(new CharType())) {
+            this.stringBuilder.append("\tiload ");
+            this.stringBuilder.append(leftNumber);
+            this.stringBuilder.append("\n\tiload ");
+            this.stringBuilder.append(rightNumber);
+            this.stringBuilder.append("\n\tisub\n");
+            this.stringBuilder.append("\ti2c\n");
+        // String
+        } else {
+            this.assertError();
+        }
     }
 
     public void visit(Temp t) {
