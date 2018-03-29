@@ -14,6 +14,10 @@ public abstract class UnaryOperation extends Operand {
         this.operator = operator;
     }
 
+    public Temp getOperand() {
+        return this.operand;
+    }
+
     @Override
     public final String toString() {
         StringBuilder sb = new StringBuilder();

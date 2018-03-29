@@ -218,7 +218,10 @@ public class JasminVisitor implements CodeGenVisitor {
     }
 
     public void visit(BooleanNegationOperation b) {
-
+        this.stringBuilder.append("\tiload ");
+        this.stringBuilder.append(b.getOperand().getNumber());
+        this.stringBuilder.append("\n\tldc 1\n");
+        this.stringBuilder.append("\tixor\n");
     }
 
     public void visit(CharacterConstant c) {
