@@ -294,7 +294,25 @@ public class JasminVisitor implements CodeGenVisitor {
     }
 
     public void visit(MultiplyOperation m) {
-
+        Type type = m.getType();
+        int leftNumber = m.getLeftOperand().getNumber();
+        int rightNumber = m.getRightOperand().getNumber();
+        if (type.equals(new IntegerType())) {
+            this.stringBuilder.append("\tiload ");
+            this.stringBuilder.append(leftNumber);
+            this.stringBuilder.append("\n\tiload ");
+            this.stringBuilder.append(rightNumber);
+            this.stringBuilder.append("\n\timul\n");
+        // Float
+        } else if (type.equals(new FloatType())) {
+            this.stringBuilder.append("\tfload ");
+            this.stringBuilder.append(leftNumber);
+            this.stringBuilder.append("\n\tfload ");
+            this.stringBuilder.append(rightNumber);
+            this.stringBuilder.append("\n\tfmul\n");
+        } else {
+            this.assertError();
+        }
     }
 
     public void visit(NewArrayOperand n) {
