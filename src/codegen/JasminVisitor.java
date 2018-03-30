@@ -45,16 +45,19 @@ import type.Type;
 public class JasminVisitor implements CodeGenVisitor {
     private final Program program;
     private final StringBuilder stringBuilder;
+    private int labelNumber;
 
     public JasminVisitor(Program program) {
         this.program = program;
         this.stringBuilder = new StringBuilder();
+        this.labelNumber = 0;
     }
 
     public void visit(AddOperation a) {
         Type type = a.getType();
         int leftNumber = a.getLeftOperand().getNumber();
         int rightNumber = a.getRightOperand().getNumber();
+        // Integer
         if (type.equals(new IntegerType())) {
             this.stringBuilder.append("\tiload ");
             this.stringBuilder.append(leftNumber);
@@ -239,7 +242,106 @@ public class JasminVisitor implements CodeGenVisitor {
     }
 
     public void visit(EqualityOperation e) {
-
+        Type type = e.getType();
+        int leftNumber = e.getLeftOperand().getNumber();
+        int rightNumber = e.getRightOperand().getNumber();
+        // Integer
+        if (type.equals(new IntegerType())) {
+            this.stringBuilder.append("\tiload ");
+            this.stringBuilder.append(leftNumber);
+            this.stringBuilder.append("\n\tiload ");
+            this.stringBuilder.append(rightNumber);
+            this.stringBuilder.append("\n\tisub\n");
+            this.stringBuilder.append("\tifeq L_");
+            this.stringBuilder.append(this.labelNumber);
+            this.labelNumber++;
+            this.stringBuilder.append("\n\tldc 0\n");
+            this.stringBuilder.append("\tgoto L_");
+            this.stringBuilder.append(this.labelNumber);
+            this.labelNumber++;
+            this.stringBuilder.append("\nL_");
+            this.stringBuilder.append(this.labelNumber - 2);
+            this.stringBuilder.append(":\n");
+            this.stringBuilder.append("\tldc 1\n");
+            this.stringBuilder.append("L_");
+            this.stringBuilder.append(this.labelNumber - 1);
+            this.stringBuilder.append(":\n");
+        // Float
+        } else if (type.equals(new FloatType())) {
+            this.stringBuilder.append("\tfload ");
+            this.stringBuilder.append(leftNumber);
+            this.stringBuilder.append("\n\tfload ");
+            this.stringBuilder.append(rightNumber);
+            this.stringBuilder.append("\n\tfcmpg\n");
+            this.stringBuilder.append("\tifeq L_");
+            this.stringBuilder.append(this.labelNumber);
+            this.labelNumber++;
+            this.stringBuilder.append("\n\tldc 0\n");
+            this.stringBuilder.append("\tgoto L_");
+            this.stringBuilder.append(this.labelNumber);
+            this.labelNumber++;
+            this.stringBuilder.append("\nL_");
+            this.stringBuilder.append(this.labelNumber - 2);
+            this.stringBuilder.append(":\n");
+            this.stringBuilder.append("\tldc 1\n");
+            this.stringBuilder.append("L_");
+            this.stringBuilder.append(this.labelNumber - 1);
+            this.stringBuilder.append(":\n");
+        // Character
+        } else if (type.equals(new CharType())) {
+            this.stringBuilder.append("\tiload ");
+            this.stringBuilder.append(leftNumber);
+            this.stringBuilder.append("\n\tiload ");
+            this.stringBuilder.append(rightNumber);
+            this.stringBuilder.append("\n\tisub\n");
+            this.stringBuilder.append("\tifeq L_");
+            this.stringBuilder.append(this.labelNumber);
+            this.labelNumber++;
+            this.stringBuilder.append("\n\tldc 0\n");
+            this.stringBuilder.append("\tgoto L_");
+            this.stringBuilder.append(this.labelNumber);
+            this.labelNumber++;
+            this.stringBuilder.append("\nL_");
+            this.stringBuilder.append(this.labelNumber - 2);
+            this.stringBuilder.append(":\n");
+            this.stringBuilder.append("\tldc 1\n");
+            this.stringBuilder.append("L_");
+            this.stringBuilder.append(this.labelNumber - 1);
+            this.stringBuilder.append(":\n");
+        // String
+        } else if (type.equals(new StringType())) {
+            this.stringBuilder.append("\taload ");
+            this.stringBuilder.append(leftNumber);
+            this.stringBuilder.append("\n\taload ");
+            this.stringBuilder.append(rightNumber);
+            this.stringBuilder.append(
+                "\n\tinvokevirtual java/lang/String/compareTo(Ljava/lang/String;)I\n");
+            this.stringBuilder.append("\tifeq L_");
+            this.stringBuilder.append(this.labelNumber);
+            this.labelNumber++;
+            this.stringBuilder.append("\n\tldc 0\n");
+            this.stringBuilder.append("\tgoto L_");
+            this.stringBuilder.append(this.labelNumber);
+            this.labelNumber++;
+            this.stringBuilder.append("\nL_");
+            this.stringBuilder.append(this.labelNumber - 2);
+            this.stringBuilder.append(":\n");
+            this.stringBuilder.append("\tldc 1\n");
+            this.stringBuilder.append("L_");
+            this.stringBuilder.append(this.labelNumber - 1);
+            this.stringBuilder.append(":\n");
+        } else if (type.equals(new BooleanType())) {
+            this.stringBuilder.append("\tiload ");
+            this.stringBuilder.append(leftNumber);
+            this.stringBuilder.append("\n\tiload ");
+            this.stringBuilder.append(rightNumber);
+            this.stringBuilder.append("\n\txor\n");
+            this.stringBuilder.append("\tldc 1\n");
+            this.stringBuilder.append("\tixor\n");
+        }
+        else {
+            this.assertError();
+        }
     }
 
     public void visit(FloatConstant f) {
@@ -286,7 +388,9 @@ public class JasminVisitor implements CodeGenVisitor {
     }
 
     public void visit(Label l) {
-        
+        this.stringBuilder.append("L");
+        this.stringBuilder.append(l.getNumber());
+        this.stringBuilder.append(":\n");
     }
 
     public void visit(LessThanOperation l) {
@@ -297,6 +401,7 @@ public class JasminVisitor implements CodeGenVisitor {
         Type type = m.getType();
         int leftNumber = m.getLeftOperand().getNumber();
         int rightNumber = m.getRightOperand().getNumber();
+        // Integer
         if (type.equals(new IntegerType())) {
             this.stringBuilder.append("\tiload ");
             this.stringBuilder.append(leftNumber);
@@ -424,6 +529,7 @@ public class JasminVisitor implements CodeGenVisitor {
         Type type = s.getType();
         int leftNumber = s.getLeftOperand().getNumber();
         int rightNumber = s.getRightOperand().getNumber();
+        // Integer
         if (type.equals(new IntegerType())) {
             this.stringBuilder.append("\tiload ");
             this.stringBuilder.append(leftNumber);
