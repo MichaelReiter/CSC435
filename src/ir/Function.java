@@ -48,6 +48,14 @@ public class Function extends Instruction {
         return this.signature;
     }
 
+    public Type getReturnType() {
+        return this.returnType;
+    }
+
+    public List<Type> getParameterTypes() {
+        return this.parameterTypes;
+    }
+
     public List<Instruction> getInstructions() {
         return this.instructions;
     }

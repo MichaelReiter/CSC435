@@ -361,7 +361,7 @@ public class JasminVisitor implements CodeGenVisitor {
             this.stringBuilder.append(leftNumber);
             this.stringBuilder.append("\n\tiload ");
             this.stringBuilder.append(rightNumber);
-            this.stringBuilder.append("\n\txor\n");
+            this.stringBuilder.append("\n\tixor\n");
             this.stringBuilder.append("\tldc 1\n");
             this.stringBuilder.append("\tixor\n");
         } else {
@@ -382,7 +382,21 @@ public class JasminVisitor implements CodeGenVisitor {
             this.stringBuilder.append("__");
         }
         this.stringBuilder.append(name);
-        this.stringBuilder.append(f.getSignature());
+        this.stringBuilder.append("(");
+        for (Type t : f.getParameterTypes()) {
+            if (t.equals(new StringType())) {
+                this.stringBuilder.append("Ljava/lang/String;");
+            } else {
+                this.stringBuilder.append(t.toChar());
+            }
+        }
+        this.stringBuilder.append(")");
+        Type returnType = f.getReturnType();
+        if (returnType.equals(new StringType())) {
+            this.stringBuilder.append("Ljava/lang/String;");
+        } else {
+            this.stringBuilder.append(returnType.toChar());
+        }
         this.stringBuilder.append("\n\t.limit locals ");
         TempFactory tempFactory = f.getTempFactory();
         this.stringBuilder.append(tempFactory.getTempCount());
