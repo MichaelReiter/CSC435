@@ -18,7 +18,6 @@ import ir.Instruction;
 import ir.Label;
 import ir.LessThanOperation;
 import ir.MultiplyOperation;
-import ir.NewArrayOperand;
 import ir.Operand;
 import ir.PrintInstruction;
 import ir.PrintlnInstruction;
@@ -102,7 +101,7 @@ public class JasminVisitor implements CodeGenVisitor {
     }
 
     public void visit(ArrayInitialization a) {
-        
+        // covered in visitArrayAssignment()
     }
 
     private void visitArrayAssignment(Temp left, Operand right) {
@@ -418,10 +417,6 @@ public class JasminVisitor implements CodeGenVisitor {
         } else {
             this.assertError();
         }
-    }
-
-    public void visit(NewArrayOperand n) {
-
     }
 
     public void visit(PrintInstruction p) {

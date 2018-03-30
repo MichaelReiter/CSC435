@@ -16,7 +16,6 @@ import ir.IntegerConstant;
 import ir.Label;
 import ir.LessThanOperation;
 import ir.MultiplyOperation;
-import ir.NewArrayOperand;
 import ir.PrintInstruction;
 import ir.PrintlnInstruction;
 import ir.ReturnInstruction;
@@ -42,7 +41,6 @@ public interface CodeGenVisitor {
     public void visit(Label l);
     public void visit(LessThanOperation l);
     public void visit(MultiplyOperation m);
-    public void visit(NewArrayOperand n);
     public void visit(PrintInstruction p);
     public void visit(PrintlnInstruction p);
     public void visit(ReturnInstruction r);
