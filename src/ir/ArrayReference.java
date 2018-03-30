@@ -1,5 +1,6 @@
 package ir;
 
+import codegen.CodeGenVisitor;
 import ir.Temp.TempClass;
 import java.lang.StringBuilder;
 import type.ArrayType;
@@ -20,6 +21,11 @@ public class ArrayReference extends Temp {
 
     public Temp getIndex() {
         return this.index;
+    }
+
+    @Override
+    public void accept(CodeGenVisitor v) {
+        v.visit(this);
     }
 
     @Override

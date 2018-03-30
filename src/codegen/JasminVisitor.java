@@ -104,6 +104,32 @@ public class JasminVisitor implements CodeGenVisitor {
         // covered in visitArrayAssignment()
     }
 
+    public void visit(ArrayReference a) {
+        Type type = a.getType();
+        this.stringBuilder.append("\taload ");
+        this.stringBuilder.append(a.getIdentifier().getNumber());
+        this.stringBuilder.append("\n\tiload ");
+        this.stringBuilder.append(a.getIndex().getNumber());
+        // Integer
+        if (type.equals(new IntegerType())) {
+            this.stringBuilder.append("\n\tiaload\n");
+        // Float
+        } else if (type.equals(new FloatType())) {
+            this.stringBuilder.append("\n\tfaload\n");
+        // Character
+        } else if (type.equals(new CharType())) {
+            this.stringBuilder.append("\n\tcaload\n");
+        // String
+        } else if (type.equals(new StringType())) {
+            this.stringBuilder.append("\n\taaload\n");
+        // Boolean
+        } else if (type.equals(new BooleanType())) {
+            this.stringBuilder.append("\n\tbaload\n");
+        } else {
+            this.assertError();
+        }
+    }
+
     private void visitArrayAssignment(Temp left, Operand right) {
         this.stringBuilder.append("\taload ");
         this.stringBuilder.append(((ArrayReference)left).getIdentifier().getNumber());
@@ -796,7 +822,9 @@ public class JasminVisitor implements CodeGenVisitor {
         this.stringBuilder.append("\t; set limits used by this method\n");
         this.stringBuilder.append("\t.limit locals 1\n");
         this.stringBuilder.append("\t.limit stack 4\n");
-        this.stringBuilder.append("\tinvokestatic accept1/__main()V\n");
+        this.stringBuilder.append("\tinvokestatic ");
+        this.stringBuilder.append(this.program.getName());
+        this.stringBuilder.append("/__main()V\n");
         this.stringBuilder.append("\treturn\n");
         this.stringBuilder.append(".end method\n\n");
         this.stringBuilder.append("; standard initializer\n");

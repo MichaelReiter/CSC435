@@ -1,0 +1,19 @@
+void main() {
+    int i;
+    char[7] name;
+
+    name[0] = 'M';
+    name[1] = 'i';
+    name[2] = 'c';
+    name[3] = 'h';
+    name[4] = 'a';
+    name[5] = 'e';
+    name[6] = 'l';
+
+    i = 0;
+    while (i < 7) {
+        print name[i];
+        i = i + 1;
+    }
+    println "";
+}

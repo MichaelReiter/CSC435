@@ -2,6 +2,7 @@ package codegen;
 
 import ir.AddOperation;
 import ir.ArrayInitialization;
+import ir.ArrayReference;
 import ir.AssignmentInstruction;
 import ir.BooleanConstant;
 import ir.BooleanNegationOperation;
@@ -26,7 +27,8 @@ import ir.UnconditionalGotoInstruction;
 
 public interface CodeGenVisitor {
     public void visit(AddOperation a);
-    public void visit(ArrayInitialization a);    
+    public void visit(ArrayInitialization a);
+    public void visit(ArrayReference a);
     public void visit(AssignmentInstruction a);
     public void visit(BooleanConstant b);
     public void visit(BooleanNegationOperation b);
