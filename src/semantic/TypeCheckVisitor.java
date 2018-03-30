@@ -339,8 +339,7 @@ public class TypeCheckVisitor implements Visitor<Type> {
                 leftExpressionType.equals(new IntegerType()) ||
                 leftExpressionType.equals(new FloatType()) ||
                 leftExpressionType.equals(new CharType()) ||
-                leftExpressionType.equals(new StringType()) ||
-                leftExpressionType.equals(new BooleanType()))) {
+                leftExpressionType.equals(new StringType()))) {
                 return new BooleanType();
             } else {
                 throw new SemanticException(
