@@ -230,14 +230,14 @@ public class IRVisitor implements Visitor<Temp> {
         String functionName = f.getIdentifier().getName();
         Type functionReturnType = this.functionEnvironment.lookup(functionName);
         Instruction functionCallInstruction =
-            new FunctionCallInstruction(functionName, this.expressionList);
+            new FunctionCallInstruction(functionName, this.expressionList, functionReturnType);
         if (functionReturnType.equals(new VoidType())) {
             this.instructions.add(functionCallInstruction);
             return null;
         } else {
             Temp temp = this.tempFactory.getTemp(functionReturnType, TempClass.TEMP);
             Operand functionCallOperation =
-                new FunctionCallOperation(functionName, this.expressionList);
+                new FunctionCallOperation(functionName, this.expressionList, functionReturnType);
             Instruction assign = new AssignmentInstruction(temp, functionCallOperation);
             this.instructions.add(assign);
             return temp;

@@ -144,6 +144,8 @@ void main() {
 	println foo_c('a', 'b', 'c');
 	println foo_s("hello", " ", "world");
 	println foo_b(true, false);
+
+	foo_v(1, 'a');
 }
 
 int foo_i(int x, int y, int z) {
@@ -166,3 +168,7 @@ boolean foo_b(boolean a, boolean b) {
 	return a == b;
 }
 
+void foo_v(int a, char c) {
+    println a;
+    println c;
+}

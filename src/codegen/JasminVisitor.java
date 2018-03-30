@@ -329,6 +329,7 @@ public class JasminVisitor implements CodeGenVisitor {
             this.stringBuilder.append("L_");
             this.stringBuilder.append(this.labelNumber - 1);
             this.stringBuilder.append(":\n");
+        // Boolean
         } else if (type.equals(new BooleanType())) {
             this.stringBuilder.append("\tiload ");
             this.stringBuilder.append(leftNumber);
@@ -337,8 +338,7 @@ public class JasminVisitor implements CodeGenVisitor {
             this.stringBuilder.append("\n\txor\n");
             this.stringBuilder.append("\tldc 1\n");
             this.stringBuilder.append("\tixor\n");
-        }
-        else {
+        } else {
             this.assertError();
         }
     }
@@ -373,11 +373,111 @@ public class JasminVisitor implements CodeGenVisitor {
     }
 
     public void visit(FunctionCallInstruction f) {
-        
+        Type type = f.getFunctionReturnType();
+        for (Temp t : f.getFunctionArguments()) {
+            // Integer
+            if (t.getType().equals(new IntegerType())) {
+                this.stringBuilder.append("\tiload ");
+                this.stringBuilder.append(t.getNumber());
+                this.stringBuilder.append("\n");
+            // Float
+            } else if (t.getType().equals(new FloatType())) {
+                this.stringBuilder.append("\tfload ");
+                this.stringBuilder.append(t.getNumber());
+                this.stringBuilder.append("\n");
+            // Character
+            } else if (t.getType().equals(new CharType())) {
+                this.stringBuilder.append("\tiload ");
+                this.stringBuilder.append(t.getNumber());
+                this.stringBuilder.append("\n");
+            // String
+            } else if (t.getType().equals(new StringType())) {
+                this.stringBuilder.append("\taload ");
+                this.stringBuilder.append(t.getNumber());
+                this.stringBuilder.append("\n");
+            // Boolean
+            } else if (t.getType().equals(new BooleanType())) {
+                this.stringBuilder.append("\tiload ");
+                this.stringBuilder.append(t.getNumber());
+                this.stringBuilder.append("\n");
+            } else {
+                this.assertError();
+            }
+        }
+        this.stringBuilder.append("\tinvokestatic ");
+        this.stringBuilder.append(this.program.getName());
+        this.stringBuilder.append("/");
+        this.stringBuilder.append(f.getFunctionName());
+        this.stringBuilder.append("(");
+        for (Temp t : f.getFunctionArguments()) {
+            if (t.getType().equals(new StringType())) {
+                this.stringBuilder.append("Ljava/lang/String;");
+            } else {
+                this.stringBuilder.append(t.getType().toChar());
+            }
+        }
+        this.stringBuilder.append(")");
+        Type returnType = f.getFunctionReturnType();
+        if (returnType.equals(new StringType())) {
+            this.stringBuilder.append("Ljava/lang/String;");
+        } else {
+            this.stringBuilder.append(returnType.toChar());
+        }
+        this.stringBuilder.append("\n");
     }
 
     public void visit(FunctionCallOperation f) {
-
+        Type type = f.getFunctionReturnType();
+        for (Temp t : f.getFunctionArguments()) {
+            // Integer
+            if (t.getType().equals(new IntegerType())) {
+                this.stringBuilder.append("\tiload ");
+                this.stringBuilder.append(t.getNumber());
+                this.stringBuilder.append("\n");
+            // Float
+            } else if (t.getType().equals(new FloatType())) {
+                this.stringBuilder.append("\tfload ");
+                this.stringBuilder.append(t.getNumber());
+                this.stringBuilder.append("\n");
+            // Character
+            } else if (t.getType().equals(new CharType())) {
+                this.stringBuilder.append("\tiload ");
+                this.stringBuilder.append(t.getNumber());
+                this.stringBuilder.append("\n");
+            // String
+            } else if (t.getType().equals(new StringType())) {
+                this.stringBuilder.append("\taload ");
+                this.stringBuilder.append(t.getNumber());
+                this.stringBuilder.append("\n");
+            // Boolean
+            } else if (t.getType().equals(new BooleanType())) {
+                this.stringBuilder.append("\tiload ");
+                this.stringBuilder.append(t.getNumber());
+                this.stringBuilder.append("\n");
+            } else {
+                this.assertError();
+            }
+        }
+        this.stringBuilder.append("\tinvokestatic ");
+        this.stringBuilder.append(this.program.getName());
+        this.stringBuilder.append("/");
+        this.stringBuilder.append(f.getFunctionName());
+        this.stringBuilder.append("(");
+        for (Temp t : f.getFunctionArguments()) {
+            if (t.getType().equals(new StringType())) {
+                this.stringBuilder.append("Ljava/lang/String;");
+            } else {
+                this.stringBuilder.append(t.getType().toChar());
+            }
+        }
+        this.stringBuilder.append(")");
+        Type returnType = f.getFunctionReturnType();
+        if (returnType.equals(new StringType())) {
+            this.stringBuilder.append("Ljava/lang/String;");
+        } else {
+            this.stringBuilder.append(returnType.toChar());
+        }
+        this.stringBuilder.append("\n");
     }
 
     public void visit(IntegerConstant i) {
@@ -393,9 +493,9 @@ public class JasminVisitor implements CodeGenVisitor {
     }
 
     public void visit(LessThanOperation l) {
-        Type type = e.getType();
-        int leftNumber = e.getLeftOperand().getNumber();
-        int rightNumber = e.getRightOperand().getNumber();
+        Type type = l.getType();
+        int leftNumber = l.getLeftOperand().getNumber();
+        int rightNumber = l.getRightOperand().getNumber();
         // Integer
         if (type.equals(new IntegerType())) {
             this.stringBuilder.append("\tiload ");

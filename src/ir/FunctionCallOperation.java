@@ -3,14 +3,31 @@ package ir;
 import codegen.CodeGenVisitor;
 import java.lang.StringBuilder;
 import java.util.List;
+import type.Type;
 
 public class FunctionCallOperation extends Operand {
     private final String functionName;
     private final List<Temp> functionArguments;
+    private final Type functionReturnType;    
 
-    public FunctionCallOperation(String functionName, List<Temp> functionArguments) {
+    public FunctionCallOperation(String functionName,
+                                 List<Temp> functionArguments,
+                                 Type functionReturnType) {
         this.functionName = functionName;
         this.functionArguments = functionArguments;
+        this.functionReturnType = functionReturnType;
+    }
+
+    public String getFunctionName() {
+        return this.functionName;
+    }
+
+    public List<Temp> getFunctionArguments() {
+        return this.functionArguments;
+    }
+
+    public Type getFunctionReturnType() {
+        return this.functionReturnType;
     }
 
     public void accept(CodeGenVisitor v) {
