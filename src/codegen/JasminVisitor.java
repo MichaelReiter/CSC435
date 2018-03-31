@@ -200,43 +200,37 @@ public class JasminVisitor implements CodeGenVisitor {
         this.stringBuilder.append("\n");
     }
 
-    private void visitVariableAssignment(Temp left, Operand right) {
-        // Integer
-        if (left.getType().equals(new IntegerType())) {
-            right.accept(this);
-            this.stringBuilder.append("\tistore ");
-        // Float
-        } else if (left.getType().equals(new FloatType())) {
-            right.accept(this);
-            this.stringBuilder.append("\tfstore ");
-        // Character
-        } else if (left.getType().equals(new CharType())) {
-            right.accept(this);
-            this.stringBuilder.append("\tistore ");
-        // String
-        } else if (left.getType().equals(new StringType())) {
-            right.accept(this);
-            this.stringBuilder.append("\tastore ");
-        // Boolean
-        } else if (left.getType().equals(new BooleanType())) {
-            right.accept(this);
-            this.stringBuilder.append("\tistore ");
-        } else {
-            this.assertError();
-        }
-        this.stringBuilder.append(left.getNumber());
-        this.stringBuilder.append("\n");
-    }
-
     public void visit(AssignmentInstruction a) {
         Temp left = a.getLeftOperand();
         Operand right = a.getRightOperand();
-        if (left.getType() instanceof ArrayType) {
+        if (right instanceof ArrayInitialization) {
             this.visitArrayDeclaration(left);
         } else if (left instanceof ArrayReference) {
             this.visitArrayAssignment(left, right);
         } else {
-            this.visitVariableAssignment(left, right);
+            right.accept(this);
+            // Arrays
+            if (left.getType().equals(new IntegerType())) {
+                this.stringBuilder.append("\tistore ");
+            // Float
+            } else if (left.getType().equals(new FloatType())) {
+                this.stringBuilder.append("\tfstore ");
+            // Character
+            } else if (left.getType().equals(new CharType())) {
+                this.stringBuilder.append("\tistore ");
+            // String
+            } else if (left.getType().equals(new StringType())) {
+                this.stringBuilder.append("\tastore ");
+            // Boolean
+            } else if (left.getType().equals(new BooleanType())) {
+                this.stringBuilder.append("\tistore ");
+            } else if (left.getType() instanceof ArrayType) {
+                this.stringBuilder.append("\tastore ");                
+            } else {
+                this.assertError();
+            }
+            this.stringBuilder.append(left.getNumber());
+            this.stringBuilder.append("\n");
         }
     }
 
@@ -704,6 +698,11 @@ public class JasminVisitor implements CodeGenVisitor {
                 this.stringBuilder.append("\tiload ");
                 this.stringBuilder.append(tempNumber);
                 this.stringBuilder.append("\n\tireturn\n");
+            // Arrays
+            } else if (type instanceof ArrayType) {
+                this.stringBuilder.append("\taload ");
+                this.stringBuilder.append(tempNumber);
+                this.stringBuilder.append("\n\tareturn\n");                
             } else {
                 this.assertError();
             }
@@ -764,6 +763,9 @@ public class JasminVisitor implements CodeGenVisitor {
         // Boolean
         } else if (t.getType().equals(new BooleanType())) {
             this.stringBuilder.append("\tiload ");
+        // Arrays
+        } else if (t.getType() instanceof ArrayType) {
+            this.stringBuilder.append("\taload ");
         } else {
             this.assertError();
         }
