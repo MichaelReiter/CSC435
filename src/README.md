@@ -1,11 +1,18 @@
-# Instructions
-Compile with `make`.
-Run with `java Compiler <testfilename.ul>`.
+# The Unnamed Language Compiler
+This is a compiler for [The Unnamed Language](https://github.com/MichaelReiter/CSC435/blob/master/assignments/refmanual.pdf). It was built during Winter 2018 for CSC 435: Compiler Construction at the University of Victoria.
 
-## Lexer and Parser
-This follows the Unnamed Language specification V1.3
+## Technical Details
+- It is primarily is implemented in Java 7
+- The lexer and parser were built using Antlr 3
+- The backend translates the [IR](https://github.com/MichaelReiter/CSC435/blob/master/assignments/a3.pdf) to JVM assembly instructions known as [Jasmin](https://en.wikipedia.org/wiki/Jasmin_(software))
 
-## Notes
+## Usage
+Compile the compiler code using javac with `make`
+Once the compiler is built, compile UL files with `java Compiler <filename.ul>`
+Generate a .class from Jasmin with `java jasmin.Main <filename.j>`
+Finally, execute compiler code with `java <filename>`
+
+## Miscellaneous Notes
 - Accessing uninitializing is undefined behaviour, resulting in a runtime error
 - integerconstant is "a sequence of decimal digits", so 0123 is a valid integer literal
 - stringconstant and characterconstant are "characters" enclosed by quotations where a "character" is defined as a lowercase or uppercase letter, a decimal digit, a space or an underscore, so '_' is a valid characterliteral and "I am happy" is a valid stringconstant while "I'm happy" and "I am happy." are not
