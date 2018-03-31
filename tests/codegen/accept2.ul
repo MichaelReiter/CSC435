@@ -5,6 +5,12 @@ void main() {
     string s;
     boolean b;
 
+    i = 0;
+    f = 0.0;
+    c = 'M';
+    s = "test";
+    b = true;
+
     println i;
     println f;
     println c;

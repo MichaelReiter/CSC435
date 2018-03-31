@@ -1,0 +1,103 @@
+void main() {
+    int[3] i_a;
+    float[3] f_a;
+    char[3] c_a;
+    string[3] s_a;
+    boolean[3] b_a;
+
+    i_a = i(i_a);
+    f_a = f(f_a);
+    c_a = c(c_a);
+    s_a = s(s_a);
+    b_a = b(b_a);
+}
+
+int[3] i(int[3] i_a) {
+    int i;
+
+    i = 0;
+    while (i < 3) {
+        i_a[i] = 1 + i;
+        i = i + 1;
+    }
+
+    i = 0;
+    while (i < 3) {
+        println i_a[i];
+        i = i + 1;
+    }
+
+    return i_a;
+}
+
+float[3] f(float[3] f_a) {
+    int i;
+
+    i = 0;
+    while (i < 3) {
+        f_a[i] = 1.0;
+        i = i + 1;
+    }
+
+    i = 0;
+    while (i < 3) {
+        println f_a[i];
+        i = i + 1;
+    }
+
+    return f_a;
+}
+
+char[3] c(char[3] c_a) {
+    int i;
+
+    i = 0;
+    while (i < 3) {
+        c_a[i] = 'f' + 'b';
+        i = i + 1;
+    }
+
+    i = 0;
+    while (i < 3) {
+        println c_a[i];
+        i = i + 1;
+    }
+
+    return c_a;
+}
+
+string[3] s(string[3] s_a) {
+    int i;
+
+    i = 0;
+    while (i < 3) {
+        s_a[i] = "hello" + " " + "world";
+        i = i + 1;
+    }
+
+    i = 0;
+    while (i < 3) {
+        println s_a[i];
+        i = i + 1;
+    }
+
+    return s_a;
+}
+
+boolean[3] b(boolean[3] b_a) {
+    int i;
+
+    i = 0;
+    while (i < 3) {
+        b_a[i] = i == 1;
+        i = i + 1;
+    }
+
+    i = 0;
+    while (i < 3) {
+        println b_a[i];
+        i = i + 1;
+    }
+
+    return b_a;
+}
