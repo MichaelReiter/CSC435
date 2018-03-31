@@ -7,10 +7,10 @@ This is a compiler for [The Unnamed Language](https://github.com/MichaelReiter/C
 - The backend translates the [IR](https://github.com/MichaelReiter/CSC435/blob/master/assignments/a3.pdf) to JVM assembly instructions known as [Jasmin](https://en.wikipedia.org/wiki/Jasmin_(software))
 
 ## Usage
-- Compile the compiler code using javac with `make`
+- [Compile the compiler](https://www.youtube.com/watch?v=1khghXRGb6k) with `make`
 - Once the compiler is built, compile UL files with `java Compiler <filename.ul>`
 - Generate a .class from Jasmin with `java jasmin.Main <filename.j>`
-- Finally, execute compiler code with `java <filename>`
+- Finally, execute compiled code with `java <filename>`
 
 ## Miscellaneous Notes
 - Accessing uninitializing is undefined behaviour, resulting in a runtime error
