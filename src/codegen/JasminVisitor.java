@@ -40,6 +40,7 @@ import type.FloatType;
 import type.IntegerType;
 import type.StringType;
 import type.Type;
+import type.VoidType;
 
 public class JasminVisitor implements CodeGenVisitor {
     private final Program program;
@@ -384,19 +385,10 @@ public class JasminVisitor implements CodeGenVisitor {
         this.stringBuilder.append(name);
         this.stringBuilder.append("(");
         for (Type t : f.getParameterTypes()) {
-            if (t.equals(new StringType())) {
-                this.stringBuilder.append("Ljava/lang/String;");
-            } else {
-                this.stringBuilder.append(t.toChar());
-            }
+            this.stringBuilder.append(this.getStringForType(t));
         }
         this.stringBuilder.append(")");
-        Type returnType = f.getReturnType();
-        if (returnType.equals(new StringType())) {
-            this.stringBuilder.append("Ljava/lang/String;");
-        } else {
-            this.stringBuilder.append(returnType.toChar());
-        }
+        this.stringBuilder.append(this.getStringForType(f.getReturnType()));
         this.stringBuilder.append("\n\t.limit locals ");
         TempFactory tempFactory = f.getTempFactory();
         this.stringBuilder.append(tempFactory.getTempCount());
@@ -413,36 +405,30 @@ public class JasminVisitor implements CodeGenVisitor {
     }
 
     public void visit(FunctionCallInstruction f) {
-        Type type = f.getFunctionReturnType();
         for (Temp t : f.getFunctionArguments()) {
             // Integer
             if (t.getType().equals(new IntegerType())) {
                 this.stringBuilder.append("\tiload ");
-                this.stringBuilder.append(t.getNumber());
-                this.stringBuilder.append("\n");
             // Float
             } else if (t.getType().equals(new FloatType())) {
                 this.stringBuilder.append("\tfload ");
-                this.stringBuilder.append(t.getNumber());
-                this.stringBuilder.append("\n");
             // Character
             } else if (t.getType().equals(new CharType())) {
                 this.stringBuilder.append("\tiload ");
-                this.stringBuilder.append(t.getNumber());
-                this.stringBuilder.append("\n");
             // String
             } else if (t.getType().equals(new StringType())) {
                 this.stringBuilder.append("\taload ");
-                this.stringBuilder.append(t.getNumber());
-                this.stringBuilder.append("\n");
             // Boolean
             } else if (t.getType().equals(new BooleanType())) {
                 this.stringBuilder.append("\tiload ");
-                this.stringBuilder.append(t.getNumber());
-                this.stringBuilder.append("\n");
+            // Arrays
+            } else if (t.getType() instanceof ArrayType) {
+                this.stringBuilder.append("\taload ");
             } else {
                 this.assertError();
             }
+            this.stringBuilder.append(t.getNumber());
+            this.stringBuilder.append("\n");
         }
         this.stringBuilder.append("\tinvokestatic ");
         this.stringBuilder.append(this.program.getName());
@@ -450,53 +436,38 @@ public class JasminVisitor implements CodeGenVisitor {
         this.stringBuilder.append(f.getFunctionName());
         this.stringBuilder.append("(");
         for (Temp t : f.getFunctionArguments()) {
-            if (t.getType().equals(new StringType())) {
-                this.stringBuilder.append("Ljava/lang/String;");
-            } else {
-                this.stringBuilder.append(t.getType().toChar());
-            }
+            this.stringBuilder.append(this.getStringForType(t.getType()));
         }
         this.stringBuilder.append(")");
-        Type returnType = f.getFunctionReturnType();
-        if (returnType.equals(new StringType())) {
-            this.stringBuilder.append("Ljava/lang/String;");
-        } else {
-            this.stringBuilder.append(returnType.toChar());
-        }
+        this.stringBuilder.append(this.getStringForType(f.getFunctionReturnType()));
         this.stringBuilder.append("\n");
     }
 
     public void visit(FunctionCallOperation f) {
-        Type type = f.getFunctionReturnType();
         for (Temp t : f.getFunctionArguments()) {
             // Integer
             if (t.getType().equals(new IntegerType())) {
                 this.stringBuilder.append("\tiload ");
-                this.stringBuilder.append(t.getNumber());
-                this.stringBuilder.append("\n");
             // Float
             } else if (t.getType().equals(new FloatType())) {
                 this.stringBuilder.append("\tfload ");
-                this.stringBuilder.append(t.getNumber());
-                this.stringBuilder.append("\n");
             // Character
             } else if (t.getType().equals(new CharType())) {
                 this.stringBuilder.append("\tiload ");
-                this.stringBuilder.append(t.getNumber());
-                this.stringBuilder.append("\n");
             // String
             } else if (t.getType().equals(new StringType())) {
                 this.stringBuilder.append("\taload ");
-                this.stringBuilder.append(t.getNumber());
-                this.stringBuilder.append("\n");
             // Boolean
             } else if (t.getType().equals(new BooleanType())) {
                 this.stringBuilder.append("\tiload ");
-                this.stringBuilder.append(t.getNumber());
-                this.stringBuilder.append("\n");
+            // Arrays
+            } else if (t.getType() instanceof ArrayType) {
+                this.stringBuilder.append("\taload ");
             } else {
                 this.assertError();
             }
+            this.stringBuilder.append(t.getNumber());
+            this.stringBuilder.append("\n");
         }
         this.stringBuilder.append("\tinvokestatic ");
         this.stringBuilder.append(this.program.getName());
@@ -504,19 +475,10 @@ public class JasminVisitor implements CodeGenVisitor {
         this.stringBuilder.append(f.getFunctionName());
         this.stringBuilder.append("(");
         for (Temp t : f.getFunctionArguments()) {
-            if (t.getType().equals(new StringType())) {
-                this.stringBuilder.append("Ljava/lang/String;");
-            } else {
-                this.stringBuilder.append(t.getType().toChar());
-            }
+            this.stringBuilder.append(this.getStringForType(t.getType()));
         }
         this.stringBuilder.append(")");
-        Type returnType = f.getFunctionReturnType();
-        if (returnType.equals(new StringType())) {
-            this.stringBuilder.append("Ljava/lang/String;");
-        } else {
-            this.stringBuilder.append(returnType.toChar());
-        }
+        this.stringBuilder.append(this.getStringForType(f.getFunctionReturnType()));
         this.stringBuilder.append("\n");
     }
 
@@ -848,6 +810,50 @@ public class JasminVisitor implements CodeGenVisitor {
         this.stringBuilder.append("\treturn\n");
         this.stringBuilder.append(".end method\n");
         this.writeToFile(this.stringBuilder.toString());
+    }
+
+    private String getStringForType(Type t) {
+        // Arrays
+        if (t instanceof ArrayType) {
+            if (((ArrayType)t).getType().equals(new BooleanType())) {
+                return "[Z";
+            // Character
+            } else if (((ArrayType)t).getType().equals(new CharType())) {
+                return "[C";
+            // Float
+            } else if (((ArrayType)t).getType().equals(new FloatType())) {
+                return "[F";
+            // Integer
+            } else if (((ArrayType)t).getType().equals(new IntegerType())) {
+                return "[I";
+            // String
+            } else if (((ArrayType)t).getType().equals(new StringType())) {
+                return "[Ljava/lang/String;";
+            } else {
+                this.assertError();
+            }
+        // Boolean
+        } else if (t.equals(new BooleanType())) {
+            return "Z";
+        // Character
+        } else if (t.equals(new CharType())) {
+            return "C";
+        // Float
+        } else if (t.equals(new FloatType())) {
+            return "F";
+        // Integer
+        } else if (t.equals(new IntegerType())) {
+            return "I";
+        // String
+        } else if (t.equals(new StringType())) {
+            return "Ljava/lang/String;";
+        // Void
+        } else if (t.equals(new VoidType())) {
+            return "V";
+        } else {
+            this.assertError();
+        }
+        return null;
     }
 
     private void assertError() {
