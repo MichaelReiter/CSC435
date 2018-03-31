@@ -15,3 +15,5 @@ clean:
 	rm -rf .antlr
 	rm -rf *.class
 	rm -rf .antlr
+	rm *.j
+	rm *.ir
