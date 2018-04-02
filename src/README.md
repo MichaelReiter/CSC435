@@ -13,7 +13,7 @@ This is a compiler for [The Unnamed Language](https://github.com/MichaelReiter/C
 - Finally, execute compiled code with `java <filename>`
 
 ## Miscellaneous Notes
-- Accessing uninitializing is undefined behaviour, resulting in a runtime error
+- Accessing uninitialized variables is undefined behaviour, resulting in a runtime error
 - integerconstant is "a sequence of decimal digits", so 0123 is a valid integer literal
 - stringconstant and characterconstant are "characters" enclosed by quotations where a "character" is defined as a lowercase or uppercase letter, a decimal digit, a space or an underscore, so '_' is a valid characterliteral and "I am happy" is a valid stringconstant while "I'm happy" and "I am happy." are not
 - the empty string is a valid stringconstant (i.e. "" is valid)
