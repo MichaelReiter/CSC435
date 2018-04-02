@@ -2,7 +2,7 @@
 This is a compiler for [The Unnamed Language](https://github.com/MichaelReiter/CSC435/blob/master/spec/ul.pdf). It was built during Winter 2018 for CSC 435: Compiler Construction at the University of Victoria.
 
 ## Technical Details
-- It is primarily is implemented in Java 7
+- It is primarily implemented in Java 7
 - The lexer and parser were built using Antlr 3
 - The backend translates the [IR](https://github.com/MichaelReiter/CSC435/blob/master/spec/ir.pdf) to JVM assembly instructions known as [Jasmin](https://en.wikipedia.org/wiki/Jasmin_(software))
 
